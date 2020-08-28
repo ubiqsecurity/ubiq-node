@@ -1,0 +1,30 @@
+{
+  "name": "ubiq-security",
+  "version": "1.0.0",
+  "description": "Ubiq Client Node.js Implementation",
+  "main": "index.js",
+  "author": "Ubiq Security, Inc. <support@ubiqsecurity.com> (https://www.ubiqsecurity.com/)",
+  "license": "SEE LICENSE IN LICENSE.txt",
+  "keywords": [
+    "ubiq security",
+    "ubiq",
+    "security",
+    "encryption",
+    "client"
+  ],
+  "dependencies": {
+    "fs": "latest",
+    "node-fetch": "^2.6.0",
+    "node-forge": "^0.9.1",
+    "python-struct": "^1.1.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.com/ubiqsecurity/ubiq-node.git"
+  },
+  "files": [
+    "lib",
+    "index.js"
+  ],
+  "homepage": "https://github.com/ubiqsecurity/ubiq-node"
+}

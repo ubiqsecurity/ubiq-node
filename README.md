@@ -28,6 +28,15 @@ npm install ubiq-security
 # or
 yarn add ubiq-security
 ```
+
+To build and install directly from a clone of the gitlab repository source:
+
+```sh
+git clone https://gitlab.com/ubiqsecurity/ubiq-node.git
+cd ubiq-node
+npm install
+```
+
 ### Requirements
 
 All dependencies are pre-required in the module itself.

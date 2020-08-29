@@ -83,11 +83,6 @@ if(!mode){
   invalid_option = true;
 }
 
-if(!credentials_file){
-  console.log('Credentials File Not Present')
-  invalid_option = true;
-}
-
 function display_prompt() {
   console.log()
   console.log('usage: ubiq_sample.js [-h] [-V] [-e] [-d] [-s] [-p] -i INFILE -o OUTFILE')

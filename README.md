@@ -112,12 +112,12 @@ const ubiq = require('ubiq-security')
 // Process 1 MiB of plaintext data at a time
 const BLOCK_SIZE = 1024 * 1024
 
-/Rest of the program
+//Rest of the program
 ...
   var readStream = fs.createReadStream(input_file,{ highWaterMark: BLOCK_SIZE  });
 
   let enc = await new ubiq.Encryption(credentials, 1);
-  # Write out the header information
+  // Write out the header information
   let encrypted_data = enc.begin()
   
   readStream.on('data', function(chunk) {

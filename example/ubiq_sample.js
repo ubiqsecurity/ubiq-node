@@ -113,7 +113,7 @@ function display_help() {
   console.log('-i INFILE,       Set input file name')
   console.log('-o OUTFILE,      Set output file name')
   console.log('-c CREDENTIALS   Set the file name with the API credentials')
-  console.log('                 (default: )~/.ubiq/credentials.json)')
+  console.log('                 (default: ~/.ubiq/credentials[.json]) ')
   console.log('  -P PROFILE     Identify the profile within the credentials file')
   console.log('                 (default: default)')
 }
@@ -128,8 +128,6 @@ if (invalid_option) {
   display_prompt()
   return
 }
-
-
 
 let credentials = new ubiq.ConfigCredentials(credentials_file, profile)
 

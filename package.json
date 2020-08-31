@@ -13,6 +13,7 @@
     "client"
   ],
   "dependencies": {
+    "configparser": "^0.3.6",
     "fs": "latest",
     "os": "latest",
     "node-fetch": "^2.6.0",

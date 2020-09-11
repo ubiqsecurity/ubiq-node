@@ -1,5 +1,8 @@
 # Changelog
 
+* Remove dead code
+* pass client library name and version to server
+
 ## 1.0.1 - 2020-08-29
 * bug fixes loading credentials file and install from source
 

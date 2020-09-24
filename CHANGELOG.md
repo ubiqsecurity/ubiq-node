@@ -1,5 +1,6 @@
 # Changelog
 
+## 1.0.2 - 2020-09-23
 * Remove dead code
 * Pass client library name and version to server
 * Added AAD information to ciphers for encrypt and decrypy

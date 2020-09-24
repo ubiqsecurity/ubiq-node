@@ -5,7 +5,6 @@
   "description": "Sample application demonstrating the Node.js Ubiq Client Library",
   "license": "SEE LICENSE IN LICENSE.txt",
   "dependencies": {
-    "fs": "latest",
     "ubiq-security": "latest",
     "yargs": "^15.4.1"
   }

@@ -47,7 +47,7 @@ All dependencies are pre-required in the module itself.
 The library needs to be configured with your account credentials which is
 available in your [Ubiq Dashboard][dashboard] [Credentials][credentials]   The credentials can be 
 explicitly set, set using environment variables, loaded from an explicit file
-or read from the default location [~/.ubiq/credentials.json]
+or read from the default location [~/.ubiq/credentials]
 
 Require the Security Client module in your JS class.
 
@@ -61,7 +61,7 @@ Read credentials from a specific file and use a specific profile
 const credentials = new ubiq.ConfigCredentials(credentials_file, profile)
 ```
 
-### Read credentials from ~/.ubiq/credentials.json and use the default profile
+### Read credentials from ~/.ubiq/credentials and use the default profile
 ```javascript
 const credentials = new ubiq.ConfigCredentials()
 ```

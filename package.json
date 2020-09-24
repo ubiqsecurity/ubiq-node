@@ -14,8 +14,6 @@
   ],
   "dependencies": {
     "configparser": "^0.3.6",
-    "fs": "latest",
-    "os": "latest",
     "node-fetch": "^2.6.0",
     "node-forge": "^0.9.1",
     "python-struct": "^1.1.3"

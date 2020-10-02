@@ -1,6 +1,6 @@
 {
   "name": "ubiq-security",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Ubiq Client Node.js Implementation",
   "main": "index.js",
   "author": "Ubiq Security, Inc. <support@ubiqsecurity.com> (https://www.ubiqsecurity.com/)",
@@ -15,7 +15,7 @@
   "dependencies": {
     "configparser": "^0.3.6",
     "node-fetch": "^2.6.0",
-    "node-forge": "^0.9.1",
+    "node-forge": "^0.10.0",
     "python-struct": "^1.1.3"
   },
   "repository": {

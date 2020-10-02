@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0.3 - 2020-10-02
+* Updated to use latest version of node-forge library
+
 ## 1.0.2 - 2020-09-23
 * Remove dead code
 * Pass client library name and version to server

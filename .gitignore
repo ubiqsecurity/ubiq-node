@@ -1,0 +1,3 @@
+node_modules/
+.project
+example/package-lock.json

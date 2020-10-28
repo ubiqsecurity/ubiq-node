@@ -1,5 +1,8 @@
 # Changelog
 
+## TBD - TBD
+* Change to MIT license
+
 ## 1.0.3 - 2020-10-02
 * Updated to use latest version of node-forge library
 

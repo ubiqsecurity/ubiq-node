@@ -1,6 +1,6 @@
 # Changelog
 
-## TBD - TBD
+## 1.0.4 - 2020-10-28
 * Change to MIT license
 
 ## 1.0.3 - 2020-10-02

@@ -131,6 +131,15 @@ if (invalid_option) {
 
 let credentials = new ubiq.ConfigCredentials(credentials_file, profile)
 
+// Test to see if the credentials have been found and loaded properly
+if (credentials.access_key_id == undefined ||
+    credentials.secret_signing_key == undefined ||
+    credentials.secret_crypto_access_key == undefined) {
+  console.log ("  Unable to load credentials file properly.")
+  console.log ("  Check credentials file pathname and selected profile")
+  return
+}
+
 const readFile = util.promisify(fs.readFile);
 
 function getStuff(infile) {

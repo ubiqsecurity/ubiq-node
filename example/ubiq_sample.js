@@ -220,7 +220,7 @@ if (mode == 'simple' && fileSizeInBytes > MAX_SIMPLE_SIZE) {
 	console.log ("NOTE: This is only for demonstration purposes and is designed to work on memory")
     console.log ("      constrained devices.  Therefore, this sample application will switch to")
     console.log ("      the piecewise APIs for files larger than " + MAX_SIMPLE_SIZE + " bytes in order to reduce")
-    console.log ("      excesive resource usages on resource constrained IoT devices")
+    console.log ("      excessive resource usages on resource constrained IoT devices")
     mode = 'piecewise'
 }
 

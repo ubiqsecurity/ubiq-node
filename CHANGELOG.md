@@ -1,5 +1,9 @@
 # Changelog
 
+## ***
+* Added requirement for Node 12 or higher
+* Updated copyright notice and comments
+
 ## 1.0.4 - 2020-10-28
 * Change to MIT license
 

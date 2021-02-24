@@ -7,5 +7,9 @@
   "dependencies": {
     "ubiq-security": "latest",
     "yargs": "^15.4.1"
+  },
+  "engines": {
+    "node": ">=12.0.0",
+    "npm": ">=6.0.0"
   }
 }

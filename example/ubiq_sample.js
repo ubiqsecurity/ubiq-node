@@ -91,10 +91,10 @@ function display_prompt() {
 
 function display_help() {
   console.log()
-  console.log('  Sample application to provide examples of using the Ubiq Platform Python Client Library')
+  console.log('  Sample application to provide examples of using the Ubiq Platform Node.js Client Library')
   console.log()
   console.log('  Created by Ubiq Security, Inc.')
-  console.log('  Copyright 2020 Ubiq Security, Inc., All rights reserved.')
+  console.log('  Copyright 2020- Ubiq Security, Inc., All rights reserved.')
   console.log()
   console.log('  Distributed on an "AS IS" basis without warranties')
   console.log('  or conditions of any kind, either express or implied.')

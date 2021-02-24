@@ -1,6 +1,6 @@
 # Changelog
 
-## ***
+## 1.0.5 - 2020-02-24
 * Added requirement for Node 12 or higher
 * Updated copyright notice and comments
 

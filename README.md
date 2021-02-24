@@ -39,6 +39,9 @@ npm install
 
 ### Requirements
 
+Node.js version 12 or later
+npm version 6 or later
+
 All dependencies are pre-required in the module itself.
 
 

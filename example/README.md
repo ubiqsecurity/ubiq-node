@@ -10,6 +10,11 @@ See the [Node.js API docs][apidocs].
 
 ## Installation
 
+### Requirements
+
+Node.js version 12 or later
+npm version 6 or later
+
 From within the example directory using [npm] or [yarn]
 
 ```sh

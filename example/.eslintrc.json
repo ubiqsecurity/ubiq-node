@@ -1,0 +1,20 @@
+{
+	"root": true,
+	"extends": [
+		"airbnb-base"
+	],
+	"rules": {
+		"no-bitwise": "off",
+		"camelcase": "off",
+		"no-console": "off",
+		"no-plusplus": "off",
+		"no-useless-escape": "warn",
+		"indent": "off",
+		"no-tabs": "off",
+		"no-restricted-properties": "off",
+		"prefer-exponentiation-operator": "off"
+	},
+	"globals": {
+		"BigInt": true
+	}
+}

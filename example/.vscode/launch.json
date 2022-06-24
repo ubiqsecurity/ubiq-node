@@ -1,0 +1,135 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "runtimeExecutable": "/Users/edurna/.nvm/versions/node/v16.15.0/bin/node",
+            "name": "ubiq_sample",
+            "program": "${workspaceFolder}/ubiq_sample_fpe.js",
+            "request": "launch",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node",
+            "args": [
+                "-e",
+                "1234",
+                "-s",
+                "-c",
+                "./credentials",
+                "-n",
+                "SO_ALPHANUM_PIN"
+            ]
+        },
+        {
+            "runtimeExecutable": "/Users/edurna/.nvm/versions/node/v16.15.0/bin/node",
+            "name": "ubiq_sample decrypt",
+            "program": "${workspaceFolder}/ubiq_sample_fpe.js",
+            "request": "launch",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node",
+            "args": [
+                "-d",
+                "$9e*",
+                "-s",
+                "-c",
+                "./credentials",
+                "-n",
+                "SO_ALPHANUM_PIN"
+            ]
+        },
+        {
+            "runtimeExecutable": "/Users/edurna/.nvm/versions/node/v16.15.0/bin/node",
+            "name": "ubiq_sample help",
+            "program": "${workspaceFolder}/ubiq_sample_fpe.js",
+            "request": "launch",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node",
+            "args": [
+                "--help"
+            ]
+        },
+        {
+            "runtimeExecutable": "/Users/edurna/.nvm/versions/node/v16.15.0/bin/node",
+            "name": "ubiq_sample leading zero ",
+            "program": "${workspaceFolder}/ubiq_sample_fpe.js",
+            "request": "launch",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node",
+            "args": [
+                "-e",
+                " 123-45-6789",
+                "-s",
+                "-c",
+                "./credentials",
+                "-n",
+                "ALPHANUM_SSN"
+            ]
+        },
+        {
+            "runtimeExecutable": "/Users/edurna/.nvm/versions/node/v16.15.0/bin/node",
+            "name": "ubiq_sample leading zero decrypt ",
+            "program": "${workspaceFolder}/ubiq_sample_fpe.js",
+            "request": "launch",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node",
+            "args": [
+                "-d",
+                " !!)-2c-JU7d",
+                "-s",
+                "-c",
+                "./credentials",
+                "-n",
+                "ALPHANUM_SSN"
+            ]
+        },
+        {
+            "runtimeExecutable": "/Users/edurna/.nvm/versions/node/v16.15.0/bin/node",
+            "name": "ubiq_sample test 1 encrypt",
+            "program": "${workspaceFolder}/ubiq_sample_fpe.js",
+            "request": "launch",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node",
+            "args": [
+                "-e",
+                "DWOWLY9SY|^X",
+                "-c",
+                "./credentials",
+                "-n",
+                "ALPHANUM_SSN"
+            ]
+        },
+        {
+            "runtimeExecutable": "/Users/edurna/.nvm/versions/node/v16.15.0/bin/node",
+            "name": "ubiq_sample test 1 decrypt",
+            "program": "${workspaceFolder}/ubiq_sample_fpe.js",
+            "request": "launch",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node",
+            "args": [
+                "-d",
+                "#!(KinC(3|^7",
+                "-c",
+                "./credentials",
+                "-n",
+                "ALPHANUM_SSN"
+            ]
+        }
+        //' !!)-2c-JU7d'
+        //-c credentials  -n ALPHANUM_SSN -e 'DWOWLY9SY|^X'
+    ]
+}

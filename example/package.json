@@ -5,11 +5,17 @@
   "description": "Sample application demonstrating the Node.js Ubiq Client Library",
   "license": "MIT",
   "dependencies": {
-    "ubiq-security": "latest",
+    "commander": "^9.3.0",
+    "ubiq-security": "../",
     "yargs": "^15.4.1"
   },
   "engines": {
     "node": ">=12.0.0",
     "npm": ">=6.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.4"
   }
 }

@@ -5,6 +5,9 @@ Ubiq Security Platform API from applications written in the Javascript language.
 It includes a pre-defined set of classes that will provide simple interfaces
 to encrypt and decrypt data
 
+This library also incorporates Ubiq Format Preserving Encryption (eFPE).  eFPE allows encrypting so that the output cipher text is in the same format as the original plaintext. This includes preserving special characters and control over what characters are permitted in the cipher text. For example, consider encrypting a social security number '123-45-6789'. The cipher text will maintain the dashes and look something like: 'W$+-qF-oMMV'.
+
+
 ## Documentation
 
 See the [Node API docs][apidocs].
@@ -90,7 +93,7 @@ Pass credentials and data into the encryption function.  The encrypted data will
 ```javascript
 const ubiq = require('ubiq-security')
 
-const encrypted_data = await ubiq.encrypt(credentials, plainntext_data)
+const encrypted_data = await ubiq.encrypt(credentials, plaintext_data)
 ```
 ### Decrypt a simple block of data
 
@@ -161,6 +164,117 @@ const BLOCK_SIZE = 1024 * 1024
       dec.close()
   });
 ```
+
+## Ubiq Format Preserving Encryption
+
+This library incorporates Ubiq Format Preserving Encryption (eFPE).
+
+## Requirements
+
+-   Please follow the same requirements as described above for the non-eFPE functionality.
+-   This library has dependencies on ubiqsecurity-fpe library available for download in the Ubiq GitHub/GitLab repository.
+
+## Usage
+
+You will need to obtain account credentials in the same way as described above for conventional encryption/decryption. When
+you do this in your [Ubiq Dashboard][dashboard] [credentials][credentials], you'll need to enable the eFPE option.
+The credentials can be set using environment variables, loaded from an explicitly
+specified file, or read from the default location (~/.ubiq/credentials).
+
+
+Require the Security Client module in your JS class.
+
+```javascript
+const ubiq = require('ubiq-security')
+```
+
+
+### Encrypt a social security text field - simple interface
+Pass credentials, the name of a Field Format Specification, FFS, and data into the encryption function.
+The encrypted data will be returned.
+
+```javascript
+const FfsName = "SSN";
+const plainText = "123-45-6789";
+
+const ubiqCredentials = new ubiq.ConfigCredentials('./credentials', 'default');
+
+const encrypted_data = await ubiq.fpeEncryptDecrypt.Encrypt({
+        ubiqCredentials,
+        ffsname: FfsName,
+        data: plainText});
+        
+console.log('ENCRYPTED ciphertext= ' + encrypted_data + '\n');
+```
+
+### Decrypt a social security text field - simple interface
+Pass credentials, the name of a Field Format Specification, FFS, and data into the decryption function.
+The decrypted data will be returned.
+
+```javascript
+
+const FfsName = "SSN";
+const cipher_text = "300-0E-274t";
+
+const ubiqCredentials = new ubiq.ConfigCredentials('./credentials', 'default');
+
+const decrypted_text = await ubiq.fpeEncryptDecrypt.Decrypt({
+        ubiqCredentials,
+        ffsname: FfsName,
+        data: cipher_text});
+        
+console.log('DECRYPTED decrypted_text= ' + decrypted_text + '\n');
+
+```
+
+
+### Encrypt a social security text field - bulk interface
+Create an FpeEncryptDecrypt object with credentials and then allow repeated calls to encrypt / decrypt
+data using a Field Format Specification and the data.  Cipher text will be returned.
+
+```javascript
+const FfsName = "SSN";
+const plainText = "123-45-6789";
+
+const ubiqCredentials = new ubiq.ConfigCredentials('./credentials', 'default');
+
+const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
+
+const encrypted_data = await ubiqEncryptDecrypt.EncryptAsync(
+        FfsName,
+        plainText
+      );
+        
+console.log('ENCRYPTED ciphertext= ' + encrypted_data + '\n');
+```
+### Decrypt a social security text field - bulk interface
+Create an Encryption / Decryption object with the credentials and then repeatedly decrypt
+data using a Field Format Specification, FFS, and the data.  The decrypted data will be returned after each call.
+
+
+Note that you would only need to create the "ubiqEncrFpeEncryptDecryptyptDecrypt" object once for any number of EncryptAsync and DecryptAsync calls, for example when you are bulk processing many such encrypt / decrypt operations in a session.
+
+
+```javascript
+const cipher_text = "300-0E-274t";
+const ubiqCredentials = new ubiq.ConfigCredentials('./credentials', 'default');
+
+const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
+
+const decrypted_text = await ubiqEncryptDecrypt.DecryptAsync(
+        FfsName,
+        cipher_text
+      );
+console.log('DECRYPTED decrypted_text= ' + decrypted_text + '\n');
+```
+
+Additional information on how to use these FFS models in your own applications is available by contacting
+Ubiq. You may also view some use-cases implemented in the unit test [UbiqSecurityFpeEncryptDecrypt.test.js] and the sample application [UbiqSampleFPE.js] source code
+
+
+
 [dashboard]:https://dashboard.ubiqsecurity.com
 [credentials]:https://dev.ubiqsecurity.com/docs/how-to-create-api-keys
 [apidocs]:https://dev.ubiqsecurity.com/docs/api
+[UbiqSecurityFpeEncryptDecrypt.test.js]:https://gitlab.com/ubiqsecurity/ubiq-node/-/blob/schneir/pre-release/test/UbiqSecurityFpeEncryptDecrypt.test.js
+[UbiqSampleFPE.js]:https://gitlab.com/ubiqsecurity/ubiq-node/-/blob/schneir/pre-release/example/ubiq_sample_fpe.js

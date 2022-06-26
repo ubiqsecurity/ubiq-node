@@ -1,6 +1,6 @@
 {
   "name": "ubiq-security",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Ubiq Client Node.js Implementation",
   "main": "index.js",
   "author": "Ubiq Security, Inc. <support@ubiqsecurity.com> (https://www.ubiqsecurity.com/)",
@@ -34,7 +34,7 @@
     "node-fetch": "^2.6.0",
     "node-forge": "^1.3.1",
     "python-struct": "^1.1.3",
-    "ubiq-security-fpe": "file:../ubiq-fpe-node",
+    "ubiq-security-fpe": "^1.0.1",
     "uuid": "^8.3.2"
   },
   "devDependencies": {

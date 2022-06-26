@@ -1,6 +1,6 @@
 # Changelog
 
-##  2022-06-21
+## 1.0.6 2022-06-25
 * Added support for Format Preserving Encryption (FPE)
 * Added example program for Format Preserving Encryption (FPE)
 

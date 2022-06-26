@@ -6,7 +6,7 @@
   "license": "MIT",
   "dependencies": {
     "commander": "^9.3.0",
-    "ubiq-security": "../",
+    "ubiq-security": "^1.0.6",
     "yargs": "^15.4.1"
   },
   "engines": {

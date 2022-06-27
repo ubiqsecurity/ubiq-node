@@ -1,12 +1,12 @@
 {
   "name": "ubiq-sample",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "ubiq_sample.js",
   "description": "Sample application demonstrating the Node.js Ubiq Client Library",
   "license": "MIT",
   "dependencies": {
     "commander": "^9.3.0",
-    "ubiq-security": "^1.0.6",
+    "ubiq-security": "^1.0.7",
     "yargs": "^15.4.1"
   },
   "engines": {

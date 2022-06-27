@@ -38,7 +38,7 @@ const program = new Command();
 async function main() {
   /*
 
-  Usage: ./src/examples/ubiq_sample_fpe-c -e|-d INPUT -s|-p -n FFS [-c CREDENTIALS] [-P PROFILE]
+  Usage: ./src/examples/ubiq_sample_fpe -e|-d INPUT -s|-p -n FFS [-c CREDENTIALS] [-P PROFILE]
 Encrypt or decrypt data using the Ubiq eFPE service
   -h                       Show this help message and exit
   -V                       Show program's version number and exit

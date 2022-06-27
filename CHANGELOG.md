@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0.7 2022-06-27
+* Fixed issue with FPE decrypt with key_number 0
+
 ## 1.0.6 2022-06-25
 * Added support for Format Preserving Encryption (FPE)
 * Added example program for Format Preserving Encryption (FPE)

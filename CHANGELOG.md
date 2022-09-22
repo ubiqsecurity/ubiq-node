@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0.8 2022-09-22
+* Fixed missing named parameters for ubiqCredentials in fpe sample application
+
 ## 1.0.7 2022-06-27
 * Fixed issue with FPE decrypt with key_number 0
 

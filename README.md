@@ -197,10 +197,10 @@ The encrypted data will be returned.
 const FfsName = "SSN";
 const plainText = "123-45-6789";
 
-const ubiqCredentials = new ubiq.ConfigCredentials('./credentials', 'default');
+const credentials = new ubiq.ConfigCredentials('./credentials', 'default');
 
 const encrypted_data = await ubiq.fpeEncryptDecrypt.Encrypt({
-        ubiqCredentials,
+        ubiqCredentials: credentials,
         ffsname: FfsName,
         data: plainText});
         
@@ -216,10 +216,10 @@ The decrypted data will be returned.
 const FfsName = "SSN";
 const cipher_text = "300-0E-274t";
 
-const ubiqCredentials = new ubiq.ConfigCredentials('./credentials', 'default');
+const credentials = new ubiq.ConfigCredentials('./credentials', 'default');
 
 const decrypted_text = await ubiq.fpeEncryptDecrypt.Decrypt({
-        ubiqCredentials,
+        ubiqCredentials: credentials,
         ffsname: FfsName,
         data: cipher_text});
         
@@ -236,9 +236,9 @@ data using a Field Format Specification and the data.  Cipher text will be retur
 const FfsName = "SSN";
 const plainText = "123-45-6789";
 
-const ubiqCredentials = new ubiq.ConfigCredentials('./credentials', 'default');
+const credentials = new ubiq.ConfigCredentials('./credentials', 'default');
 
-const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
+const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials : credentials });
 
 const encrypted_data = await ubiqEncryptDecrypt.EncryptAsync(
         FfsName,
@@ -257,9 +257,9 @@ Note that you would only need to create the "ubiqEncrFpeEncryptDecryptyptDecrypt
 
 ```javascript
 const cipher_text = "300-0E-274t";
-const ubiqCredentials = new ubiq.ConfigCredentials('./credentials', 'default');
+const credentials = new ubiq.ConfigCredentials('./credentials', 'default');
 
-const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
+const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials: credentials });
 
 const decrypted_text = await ubiqEncryptDecrypt.DecryptAsync(
         FfsName,

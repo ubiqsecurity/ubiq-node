@@ -97,12 +97,12 @@ Encrypt or decrypt data using the Ubiq eFPE service
     process.exit();
   }
   try {
-    const ubiqCredentials = new ubiq.ConfigCredentials(options.credentials, options.profile);
+    const credentials = new ubiq.ConfigCredentials(options.credentials, options.profile);
 
     // Test to see if the credentials have been found and loaded properly
-    if (ubiqCredentials.access_key_id === undefined
-      || ubiqCredentials.secret_signing_key === undefined
-      || ubiqCredentials.secret_crypto_access_key === undefined) {
+    if (credentials.access_key_id === undefined
+      || credentials.secret_signing_key === undefined
+      || credentials.secret_crypto_access_key === undefined) {
       console.log('  Unable to load credentials file properly.');
       console.log('  Check credentials file pathname and selected profile');
       process.exit();
@@ -111,14 +111,14 @@ Encrypt or decrypt data using the Ubiq eFPE service
     if (options.simple) {
       if (options.encrypt) {
         const encrypted_data = await ubiq.fpeEncryptDecrypt.Encrypt({
-          ubiqCredentials,
+          ubiqCredentials: credentials,
           ffsname: options.ffsname,
           data: options.encrypt,
         });
         console.log(encrypted_data);
       } else if (options.decrypt) {
         const decrypted_data = await ubiq.fpeEncryptDecrypt.Decrypt({
-          ubiqCredentials,
+          ubiqCredentials: credentials,
           ffsname: options.ffsname,
           data: options.decrypt,
         });
@@ -126,7 +126,7 @@ Encrypt or decrypt data using the Ubiq eFPE service
       }
     } else {
       if (options.encrypt) {
-        const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
+        const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials: credentials });
         const cipherText = await ubiqEncryptDecrypt.EncryptAsync(
           options.ffsname,
           options.encrypt,
@@ -135,7 +135,7 @@ Encrypt or decrypt data using the Ubiq eFPE service
         console.log(cipherText);
       }
       if (options.decrypt) {
-        const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
+        const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials: credentials });
         const plainText = await ubiqEncryptDecrypt.DecryptAsync(
           options.ffsname,
           options.decrypt,

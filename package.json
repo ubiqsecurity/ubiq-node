@@ -29,7 +29,7 @@
   },
   "homepage": "https://gitlab.com/ubiqsecurity/ubiq-node",
   "dependencies": {
-    "configparser": "^0.3.6",
+    "configparser": "^0.3.10",
     "dotenv": "^16.0.1",
     "node-fetch": "^2.6.0",
     "node-forge": "^1.3.1",

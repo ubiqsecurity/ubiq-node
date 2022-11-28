@@ -138,7 +138,7 @@ function main() {
   }
 
   function getStuff(infile) {
-    return fs.readFileSync(path.join(__dirname, infile), 'utf-8');
+    return fs.readFileSync(infile);
   }
 
   async function getData(infile) {
@@ -199,7 +199,7 @@ function main() {
         }
       });
       readStream.resume();
-    }).on('end', async () => {
+    }).on('close', async () => {
       ws.write(dec.end());
       ws.close();
       dec.close();

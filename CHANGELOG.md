@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.9 2022-11-27
+* Fixed some compatibility issues with latest versions of node and updated
+  npm libraries.
+
 ## 1.0.8 2022-09-22
 * Fixed missing named parameters for ubiqCredentials in fpe sample application
 

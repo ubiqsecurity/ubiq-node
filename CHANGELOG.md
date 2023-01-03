@@ -1,5 +1,8 @@
 # Changelog
 
+## 
+* Add trim statement to credentials read from file
+
 ## 1.0.9 2022-11-27
 * Fixed some compatibility issues with latest versions of node and updated
   npm libraries.

@@ -224,7 +224,6 @@ const decrypted_text = await ubiq.fpeEncryptDecrypt.Decrypt({
         data: cipher_text});
         
 console.log('DECRYPTED decrypted_text= ' + decrypted_text + '\n');
-
 ```
 
 
@@ -246,6 +245,7 @@ const encrypted_data = await ubiqEncryptDecrypt.EncryptAsync(
       );
         
 console.log('ENCRYPTED ciphertext= ' + encrypted_data + '\n');
+ubiqEncryptDecrypt.close();
 ```
 ### Decrypt a social security text field - bulk interface
 Create an Encryption / Decryption object with the credentials and then repeatedly decrypt
@@ -266,6 +266,7 @@ const decrypted_text = await ubiqEncryptDecrypt.DecryptAsync(
         cipher_text
       );
 console.log('DECRYPTED decrypted_text= ' + decrypted_text + '\n');
+ubiqEncryptDecrypt.close();
 ```
 
 Additional information on how to use these FFS models in your own applications is available by contacting

@@ -1,7 +1,12 @@
 # Changelog
 
-## 
+## 2.0.0 2023-04-21
+* Updated default usage configuration values
+* Updated library version
+
+## 1.0.10 2023-04-04
 * Add trim statement to credentials read from file
+* Add code to address improve caching and memory handling in specific conditions
 
 ## 1.0.9 2022-11-27
 * Fixed some compatibility issues with latest versions of node and updated

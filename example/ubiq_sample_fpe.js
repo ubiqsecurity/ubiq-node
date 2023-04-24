@@ -133,6 +133,7 @@ Encrypt or decrypt data using the Ubiq eFPE service
           tweakFF1,
         );
         console.log(cipherText);
+        ubiqEncryptDecrypt.close();
       }
       if (options.decrypt) {
         const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials: credentials });
@@ -142,6 +143,7 @@ Encrypt or decrypt data using the Ubiq eFPE service
           tweakFF1,
         );
         console.log(plainText);
+        ubiqEncryptDecrypt.close();
       }
     }
   } catch (err) {

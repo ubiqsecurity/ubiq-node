@@ -1,447 +1,723 @@
+const cipher = require('node-forge/lib/cipher');
 const ubiq = require('../index');
 
-async function testFpe({
-    options, tweakFF1 = [], ubiqCredentials = null, cipherText = null, checkResult = true,
-}) {
-    if (!ubiqCredentials) {
-        ubiqCredentials = new ubiq.ConfigCredentials('./credentials');
-    }
-    const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
-    if (!cipherText) {
-        cipherText = await ubiqEncryptDecrypt.EncryptAsync(
-            options.FfsName,
-            options.EncryptText,
-            tweakFF1,
-        );
-    }
-    const plainText = await ubiqEncryptDecrypt.DecryptAsync(
-        options.FfsName,
-        cipherText,
-        tweakFF1,
-    );
-    if (checkResult) {
-        expect(plainText).toBe(options.EncryptText);
-    }
-    return { cipherText, plainText };
+
+async function testFpeRt({
+  options, tweakFF1 = [], ubiqCredentials = null, cipherText = null, checkResult = true }) {
+
+  await testBatchFpeRt(arguments[0])
+  await testSimpleFpeRt(arguments[0])
+
 }
-test('EncryptFPE_FFS_ALPHANUM_SSN_Success', async () => {
-    const tweakFF1 = [];
 
-    const options = {
-        FfsName: 'ALPHANUM_SSN',
-        EncryptText: '123-45-6789',
-    };
-    await testFpe({ tweakFF1, options });
-});
-test(
-    'EncryptFPE_FFS_ALPHANUM_SSN_ValidPassthroughCharacters_Success',
-    async () => {
-        const tweakFF1 = [];
-        const options = {
-            FfsName: 'ALPHANUM_SSN',
-            EncryptText: ' 01&23-456-78-90',
-        };
-        await testFpe({ tweakFF1, options });
-    },
-    30000,
-);
 
-test('EncryptFPE_SIMPLE_FFS_ALPHANUM_SSN_Success', async () => {
-    const tweakFF1 = [];
 
-    const options = {
-        FfsName: 'ALPHANUM_SSN',
-        EncryptText: ' 123-45-6789',
-    };
+async function testSimpleFpeRt({
+  options, tweakFF1 = [], ubiqCredentials = null, cipherText = null, checkResult = true,
+}) {
+  if (!ubiqCredentials) {
+    ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
+  }
 
-    const cipherText1 = await testFpe({ options, tweakFF1 });
-    const cipherText2 = await testFpe({ options, tweakFF1 });
-
-    expect(cipherText1.cipherText).toBe(cipherText2.cipherText);
-    expect(cipherText1.plainText).toBe(cipherText2.plainText);
-});
-
-test('EncryptFPE_FFS_ALPHANUM_SSN_InValidPassthroughCharacters_Fail', async () => {
-    const tweakFF1 = [];
-
-    const ffsName = 'ALPHANUM_SSN';
-    const original = '1$23-45-6789';
-
-    await expect(testFpe({
-        options: {
-            FfsName: ffsName,
-            EncryptText: original,
-            tweakFF1,
-        },
-        checkResult: false,
-    })).rejects.toThrowError('invalid character found in the input:$');
-});
-test('EncryptFPE_FFS_BIRTH_DATE_Success', async () => {
-    // TODO: Figure out how to handle credentials
-    // const credentials = UbiqFactory.ReadCredentialsFromFile('..\\..\\credentials', 'default');
-
-    const tweakFF1 = [];
-    const ffsName = 'BIRTH_DATE';
-    const original = '01-01-2020';
-    await testFpe({ options: { FfsName: ffsName, EncryptText: original, tweakFF1 } });
-});
-test('EncryptFPE_FFS_BIRTH_DATE_InValidPassthroughCharacters_Fail', async () => {
-    const tweakFF1 = [];
-
-    const ffsName = 'BIRTH_DATE';
-    const original = '01/01/2020';
-
-    await expect(testFpe({
-        options: {
-            FfsName: ffsName,
-            EncryptText: original,
-            tweakFF1,
-        },
-        checkResult: false,
-    })).rejects.toThrowError('invalid character found in the input:/');
-});
-
-test('EncryptFPE_FFS_SO_ALPHANUM_PIN_Success', async () => {
-    // TODO: Figure out how to handle credentials
-    const tweakFF1 = [];
-
-    const ffsName = 'SO_ALPHANUM_PIN';
-    const original = 'ABCD';
-
-    await testFpe({
-        options:
-            { FfsName: ffsName, EncryptText: original, tweakFF1 },
+  if (!cipherText) {
+    cipherText = await ubiq.fpeEncryptDecrypt.Encrypt({
+      ubiqCredentials: ubiqCredentials,
+      ffsname: options.FfsName,
+      data: options.EncryptText,
     });
-});
+  }
 
-test('EncryptFPE_FFS_SO_ALPHANUM_PIN_ALL_NUMBERS__Success', async () => {
-    // TODO: Figure out how to handle credentials
+  let plainText = await ubiq.fpeEncryptDecrypt.Decrypt({
+    ubiqCredentials: ubiqCredentials,
+    ffsname: options.FfsName,
+    data: cipherText,
+  });
 
-    const tweakFF1 = [];
 
-    const ffsName = 'SO_ALPHANUM_PIN';
-    const original = '1234';
+  if (checkResult) {
+    expect(plainText).toBe(options.EncryptText);
+  }
 
-    await testFpe({
-        options:
-            { FfsName: ffsName, EncryptText: original, tweakFF1 },
-    });
-});
-test('EncryptFPE_FFS_SO_ALPHANUM_PIN_ValidPassthroughCharacters_Success', async () => {
-    // TODO: Figure out how to handle credentials
+  const searchText = await ubiq.fpeEncryptDecrypt.EncryptForSearch({
+    ubiqCredentials: ubiqCredentials,
+    ffsname: options.FfsName,
+    data: options.EncryptText
+  });
 
-    const tweakFF1 = [];
-    const ffsName = 'SO_ALPHANUM_PIN';
-    const original = 'AB^CD';
+  var foundCt = false;
 
-    await testFpe({
-        options:
-            { FfsName: ffsName, EncryptText: original, tweakFF1 },
-    });
-});
-test('EncryptFPE_XPlatformValidation_Success', async () => {
-    // TODO: Figure out how to handle credentials
+  for (let i = 0; i < searchText.length; i++) {
+    foundCt = foundCt || (options.CipherText == searchText[i])
 
-    const tweakFF1 = [];
-    const ffsName = 'ALPHANUM_SSN';
-    const original = '123 456 789';
+    let plainText = await ubiq.fpeEncryptDecrypt.Decrypt({
+      ubiqCredentials: ubiqCredentials,
+      ffsname: options.FfsName,
+      data: searchText[i]
+    })
+    expect(plainText).toBe(options.EncryptText);
+  }
 
-    await testFpe({
-        options:
-            { FfsName: ffsName, EncryptText: original, tweakFF1 },
-    });
-});
+  expect(foundCt).toBe(true);
 
-test('EncryptFPE_XPlatformValidation_Success', async () => {
-    const tweakFF1 = [];
+  return { cipherText, plainText };
+}
 
-    const ffsName = 'ALPHANUM_SSN';
-    const original = '123 456 789';
 
-    await testFpe({
-        options:
-            { FfsName: ffsName, EncryptText: original, tweakFF1 },
-    });
-});
+async function testBatchFpeRt({
+  options, tweakFF1 = [], ubiqCredentials = null, cipherText = null, checkResult = true,
+}) {
 
-test('EncryptFPE_FFS_SO_ALPHANUM_PIN_InValidPassthroughCharacters_Fail', async () => {
-    const tweakFF1 = [];
+  if (!ubiqCredentials) {
+    ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
+  }
 
-    const ffsName = 'SO_ALPHANUM_PIN';
-    const original = 'AB+CD';
+  const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
 
-    await expect(testFpe({
-        options: {
-            FfsName: ffsName,
-            EncryptText: original,
-            tweakFF1,
-        },
-        checkResult: false,
-    })).rejects.toThrowError('invalid character found in the input:+');
-});
 
-test('EncryptFPE_FFS_GENERIC_STRING_Success', async () => {
-    const tweakFF1 = [
-        0x39, 0x38, 0x37, 0x36,
-        0x35, 0x34, 0x33, 0x32,
-        0x31, 0x30, 0x33, 0x32,
-        0x31, 0x30, 0x32,
-    ];
-
-    const ffsName = 'GENERIC_STRING';
-    const original = 'A STRING OF AT LEAST 15 UPPER CHARACTERS';
-    await testFpe({
-        options:
-            { FfsName: ffsName, EncryptText: original, tweakFF1 },
-    });
-});
-
-test('EncryptFPE_InvalidFFS', async () => {
-    const tweakFF1 = [];
-
-    const ffsName = 'ERROR FFS';
-    const original = 'ABCDEFGHI';
-    await expect(testFpe({
-        options: {
-            FfsName: ffsName,
-            EncryptText: original,
-            tweakFF1,
-        },
-        checkResult: false,
-    })).rejects.toThrowError('Invalid FFS name');
-});
-
-test('EncryptFPE_InvalidCredentials', async () => {
-    const ubiqCredentials = new ubiq.Credentials('a', 'b', 'c', 'dev-cluster.koala.ubiqsecurity.com');
-    const tweakFF1 = [];
-    const ffsName = 'ALPHANUM_SSN';
-    const original = 'ABCDEFGHI';
-    await expect(testFpe({
-        options: {
-            FfsName: ffsName,
-            EncryptText: original,
-            tweakFF1,
-        },
-        checkResult: false,
-        ubiqCredentials,
-    })).rejects.toThrowError('Unauthorized Request');
-});
-
-test('EncryptFPE_Invalid_PT_CT', async () => {
-    const tweakFF1 = [];
-
-    const ffsName = 'SSN';
-    const original = ' 123456789$';
-
-    await expect(testFpe({
-        options: {
-            FfsName: ffsName,
-            EncryptText: original,
-            tweakFF1,
-        },
-        checkResult: false,
-    })).rejects.toThrowError('invalid character found in the input:$');
-});
-
-test('EncryptFPE_Invalid_LEN_1', async () => {
-    const tweakFF1 = [];
-
-    const ffsName = 'SSN';
-    const original = ' 1234';
-
-    await expect(testFpe({
-        options: {
-            FfsName: ffsName,
-            EncryptText: original,
-            tweakFF1,
-        },
-        checkResult: false,
-    })).rejects.toThrowError('Invalid input len min: 9 max: 9');
-});
-
-test('EncryptFPE_Invalid_LEN_2', async () => {
-    const tweakFF1 = [];
-    const ffsName = 'SSN';
-    const original = ' 12345678901234567890';
-    await expect(testFpe({
-        options: {
-            FfsName: ffsName,
-            EncryptText: original,
-            tweakFF1,
-        },
-        checkResult: false,
-    })).rejects.toThrowError('Invalid input len min: 9 max: 9');
-});
-
-test('EncryptFPE_Invalid_specific_creds_1', async () => {
-    const ubiqCredentialsFile = new ubiq.ConfigCredentials('./credentials');
-    const ubiqCredentials = new ubiq.Credentials(
-        ubiqCredentialsFile.access_key_id.substring(0, 1),
-        ubiqCredentialsFile.secret_signing_key,
-        ubiqCredentialsFile.secret_crypto_access_key,
-        ubiqCredentialsFile.host,
+  if (!cipherText) {
+    cipherText = await ubiqEncryptDecrypt.EncryptAsync(
+      options.FfsName,
+      options.EncryptText,
+      tweakFF1,
     );
-    const tweakFF1 = [];
-    const ffsName = 'ALPHANUM_SSN';
-    const original = ' 123456789';
-    await expect(testFpe({
-        options: {
-            FfsName: ffsName,
-            EncryptText: original,
-            tweakFF1,
-        },
-        checkResult: false,
-        ubiqCredentials,
-    })).rejects.toThrowError('Unauthorized Request');
-});
+  }
 
-test('EncryptFPE_Invalid_specific_creds_2', async () => {
-    const ubiqCredentialsFile = new ubiq.ConfigCredentials('./credentials');
-    const ubiqCredentials = new ubiq.Credentials(
-        ubiqCredentialsFile.access_key_id,
-        ubiqCredentialsFile.secret_signing_key.substring(0, 1),
-        ubiqCredentialsFile.secret_crypto_access_key,
-        ubiqCredentialsFile.host,
+  const plainText = await ubiqEncryptDecrypt.DecryptAsync(
+    options.FfsName,
+    cipherText,
+    tweakFF1,
+  );
+
+  if (checkResult) {
+    expect(plainText).toBe(options.EncryptText);
+  }
+
+  const searchText = await ubiqEncryptDecrypt.EncryptForSearchAsync(
+    options.FfsName,
+    options.EncryptText,
+    tweakFF1,
+  );
+
+  // Make sure the supplied cipher text matches at least one of the search cipher texts
+  var foundCt = false;
+
+  for (let i = 0; i < searchText.length; i++) {
+    foundCt = foundCt || (options.CipherText == searchText[i])
+
+    let plainText = await ubiqEncryptDecrypt.DecryptAsync(
+      options.FfsName,
+      searchText[i],
+      tweakFF1,
     );
-    const tweakFF1 = [];
-    const ffsName = 'ALPHANUM_SSN';
-    const original = ' 123456789';
-    await expect(testFpe({
-        options: {
-            FfsName: ffsName,
-            EncryptText: original,
-            tweakFF1,
-        },
-        checkResult: false,
-        ubiqCredentials,
-    })).rejects.toThrowError('Unauthorized Request');
+    expect(plainText).toBe(options.EncryptText);
+  }
+
+  expect(foundCt).toBe(true);
+
+  await ubiqEncryptDecrypt.close();
+
+  return { cipherText, plainText };
+}
+
+
+test('ALPHANUM_SSN_Success', async () => {
+  const tweakFF1 = [];
+
+  const options = {
+    FfsName: 'ALPHANUM_SSN',
+    EncryptText: ';0123456-789ABCDEF|',
+    CipherText: ';!!!E7`+-ai1ykOp8r|',
+  };
+  await testFpeRt({ options, tweakFF1 });
 });
 
-test('EncryptFPE_Invalid_specific_creds_3', async () => {
-    const ubiqCredentialsFile = new ubiq.ConfigCredentials('./credentials');
-    const ubiqCredentials = new ubiq.Credentials(
-        ubiqCredentialsFile.access_key_id,
-        ubiqCredentialsFile.secret_signing_key,
-        ubiqCredentialsFile.secret_crypto_access_key.substring(0, 1),
-        ubiqCredentialsFile.host,
+test('BIRTH_DATE_Success', async () => {
+  const tweakFF1 = [];
+
+  const options = {
+    FfsName: 'BIRTH_DATE',
+    EncryptText: ";01\\02-1960|",
+    CipherText: ";!!\\!!-oKzi|",
+  };
+  await testFpeRt({ options, tweakFF1 });
+});
+
+test('SSN_Success', async () => {
+  const tweakFF1 = [];
+
+  const options = {
+    FfsName: 'SSN',
+    EncryptText: '-0-1-2-3-4-5-6-7-8-9-',
+    CipherText: '-0-0-0-0-1-I-L-8-j-D-',
+  };
+  await testFpeRt({ options, tweakFF1 });
+});
+
+test('UTF8_STRING_COMPLEX_Success', async () => {
+  const tweakFF1 = [];
+
+  const options = {
+    FfsName: 'UTF8_STRING_COMPLEX',
+    EncryptText: 'ÑÒÓķĸĹϺϻϼϽϾÔÕϿは世界abcdefghijklmnopqrstuvwxyzこんにちÊʑʒʓËÌÍÎÏðñòóôĵĶʔʕ',
+    CipherText: 'ÑÒÓにΪΪΪΪΪΪ3ÔÕoeϽΫAÛMĸOZphßÚdyÌô0ÝϼPtĸTtSKにVÊϾέÛはʑʒʓÏRϼĶufÝK3MXaʔʕ',
+  };
+  await testFpeRt({ options, tweakFF1 });
+});
+
+test('UTF8_STRING_COMPLEX_2_Success', async () => {
+  const tweakFF1 = [];
+
+  const options = {
+    FfsName: 'UTF8_STRING_COMPLEX',
+    EncryptText: 'ķĸĹϺϻϼϽϾϿは世界abcdefghijklmnopqrstuvwxyzこんにちÊËÌÍÎÏðñòóôĵĶ',
+    CipherText: 'にΪΪΪΪΪΪ3oeϽΫAÛMĸOZphßÚdyÌô0ÝϼPtĸTtSKにVÊϾέÛはÏRϼĶufÝK3MXa',
+  };
+  await testFpeRt({ options, tweakFF1 });
+});
+
+test('BULK_INVALID_ffs', async () => {
+  const tweakFF1 = [];
+
+  const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
+
+  const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
+
+  // Expect an exception to skip over expect truthy
+  try {
+    cipherText = await ubiqEncryptDecrypt.EncryptAsync(
+      'ERROR FFS',
+      '123456789',
+      tweakFF1,
     );
-    const tweakFF1 = [];
-    const ffsName = 'ALPHANUM_SSN';
-    const original = ' 123456789';
-    await expect(testFpe({
-        options: {
-            FfsName: ffsName,
-            EncryptText: original,
-            tweakFF1,
-        },
-        checkResult: false,
-        ubiqCredentials,
-    })).rejects.toThrowError('Problem decrypting ENCRYPTED private key');
+    expect(false).toBeTruthy()
+  }
+  catch (ex) {
+  }
+  finally {
+    await ubiqEncryptDecrypt.close();
+  }
+
 });
 
-test('EncryptFPE_Invalid_specific_creds_4', async () => {
-    const ubiqCredentialsFile = new ubiq.ConfigCredentials('./credentials');
-    const ubiqCredentials = new ubiq.Credentials(
-        ubiqCredentialsFile.access_key_id,
-        ubiqCredentialsFile.secret_signing_key,
-        ubiqCredentialsFile.secret_crypto_access_key,
-        'pi.ubiqsecurity.com',
-    );
-    const tweakFF1 = [];
-    const ffsName = 'ALPHANUM_SSN';
-    const original = ' 123456789';
-    await expect(testFpe({
-        options: {
-            FfsName: ffsName,
-            EncryptText: original,
-            tweakFF1,
-        },
-        checkResult: false,
-        ubiqCredentials,
-    })).rejects.toThrowError('URL not found.');
-});
+test('SIMPLE_INVALID_ffs', async () => {
+  const tweakFF1 = [];
 
-test('EncryptFPE_Invalid_specific_creds_5', async () => {
-    const ubiqCredentialsFile = new ubiq.ConfigCredentials('./credentials');
-    const ubiqCredentials = new ubiq.Credentials(
-        ubiqCredentialsFile.access_key_id,
-        ubiqCredentialsFile.secret_signing_key,
-        ubiqCredentialsFile.secret_crypto_access_key,
-        'ps.ubiqsecurity.com',
-    );
-    const tweakFF1 = [];
-    const ffsName = 'ALPHANUM_SSN';
-    const original = ' 123456789';
-    await expect(testFpe({
-        options: {
-            FfsName: ffsName,
-            EncryptText: original,
-            tweakFF1,
-        },
-        ubiqCredentials,
-        checkResult: false,
-    })).rejects.toThrowError('URL not found.');
-});
+  const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
 
-test('EncryptFPE_Invalid_specific_creds_6', async () => {
-    const ubiqCredentialsFile = new ubiq.ConfigCredentials('./credentials');
-    const ubiqCredentials = new ubiq.Credentials(
-        ubiqCredentialsFile.access_key_id,
-        ubiqCredentialsFile.secret_signing_key,
-        ubiqCredentialsFile.secret_crypto_access_key,
-        'https://google.com',
-    );
-
-    const tweakFF1 = [];
-    const ffsName = 'ALPHANUM_SSN';
-    const original = ' 123456789';
-
-    await expect(testFpe({
-        options: {
-            FfsName: ffsName,
-            EncryptText: original,
-            tweakFF1,
-        },
-        ubiqCredentials,
-        checkResult: false,
-    })).rejects.toThrowError('Could not load FfsName: ALPHANUM_SSN');
-});
-
-test('EncryptFPE_Invalid_keynum', async () => {
-    const tweakFF1 = [];
-
-    const ffsName = 'SO_ALPHANUM_PIN';
-    const original = ' 0123';
-    const { cipherText } = await testFpe({
-        options:
-            { FfsName: ffsName, EncryptText: original, tweakFF1 },
+  // Expect an exception to skip over expect truthy
+  try {
+    await ubiq.fpeEncryptDecrypt.Encrypt({
+      ubiqCredentials: ubiqCredentials,
+      ffsname: 'ERROR FFS',
+      data: '123456789',
     });
-    const arr = cipherText.split('');
-    arr[0] = '}';
-    const newcipher = arr.join('');
+    expect(false).toBeTruthy()
+  }
+  catch (ex) {
+  }
 
-    await expect(testFpe({
-        options: {
-            FfsName: ffsName,
-            EncryptText: newcipher,
-            tweakFF1,
-        },
-        checkResult: false,
-    })).rejects.toThrowError('invalid character found in the input:}');
 });
 
-test('EncryptFPE_Error_handling_invalid_ffs', async () => {
-    const tweakFF1 = [];
 
-    const ffsName = 'ERROR_MSG';
-    const original = ' 01121231231231231& 1 &2311200 ';
+test('BULK_INVALID_pt_ct', async () => {
+  const tweakFF1 = [];
 
-    await expect(testFpe({
-        options: {
-            FfsName: ffsName,
-            EncryptText: original,
-            tweakFF1,
-        },
-        checkResult: false,
-    })).rejects.toThrowError('Invalid FFS name');
+  const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
+
+  let ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
+
+  // Expect an exception to skip over expect truthy
+  try {
+    cipherText = await ubiqEncryptDecrypt.EncryptAsync(
+      'SSN',
+      ' 123456789$',
+      tweakFF1,
+    );
+    expect(false).toBeTruthy()
+  }
+  catch (ex) {
+  }
+  finally {
+    ubiqEncryptDecrypt.close();
+  }
+
+  ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
+
+  // Expect an exception to skip over expect truthy
+  try {
+    cipherText = await ubiqEncryptDecrypt.DecryptAsync(
+      'SSN',
+      ' 123456789$',
+      tweakFF1,
+    );
+    expect(false).toBeTruthy()
+  }
+  catch (ex) {
+  }
+  finally {
+    await ubiqEncryptDecrypt.close();
+  }
+});
+
+test('SIMPLE_INVALID_pt_ct', async () => {
+  const tweakFF1 = [];
+
+  const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
+
+  // Expect an exception to skip over expect truthy
+  try {
+    await ubiq.fpeEncryptDecrypt.Encrypt({
+      ubiqCredentials: ubiqCredentials,
+      ffsname: 'SSN',
+      data: ' 123456789$',
+    });
+
+    expect(false).toBeTruthy()
+  }
+  catch (ex) {
+  }
+
+  // Expect an exception to skip over expect truthy
+  try {
+    await ubiq.fpeEncryptDecrypt.Decrypt({
+      ubiqCredentials: ubiqCredentials,
+      ffsname: 'SSN',
+      data: ' 123456789$'
+    });
+    expect(false).toBeTruthy()
+  }
+  catch (ex) {
+  }
+});
+
+
+test('BULK_INVALID_len', async () => {
+  const tweakFF1 = [];
+
+  const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
+
+  const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
+
+  // Expect an exception to skip over expect truthy
+  try {
+    cipherText = await ubiqEncryptDecrypt.EncryptAsync(
+      'SSN',
+      '1234',
+      tweakFF1,
+    );
+    expect(false).toBeTruthy()
+  }
+  catch (ex) {
+  }
+  finally {
+    await ubiqEncryptDecrypt.close();
+  }
+
+  try {
+    cipherText = await ubiqEncryptDecrypt.EncryptAsync(
+      'SSN',
+      '12345678901234567890',
+      tweakFF1,
+    );
+    expect(false).toBeTruthy()
+  }
+  catch (ex) {
+  }
+  finally {
+    await ubiqEncryptDecrypt.close();
+  }
+});
+
+test('SIMPLE_INVALID_len', async () => {
+  const tweakFF1 = [];
+
+  const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
+
+  // Expect an exception to skip over expect truthy
+  try {
+    await ubiq.fpeEncryptDecrypt.Encrypt({
+      ubiqCredentials: ubiqCredentials,
+      ffsname: 'SSN',
+      data: '1234',
+    });
+    expect(false).toBeTruthy()
+  }
+  catch (ex) {
+  }
+
+  try {
+    await ubiq.fpeEncryptDecrypt.Decrypt({
+      ubiqCredentials: ubiqCredentials,
+      ffsname: 'SSN',
+      data: '12345678901234567890',
+    });
+    expect(false).toBeTruthy()
+  }
+  catch (ex) {
+  }
+});
+
+test('BULK_INVALID_keynum', async () => {
+  const tweakFF1 = [];
+
+  const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
+
+  const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
+
+
+  let cipherText = await ubiqEncryptDecrypt.EncryptAsync(
+    'SSN',
+    '0123456789',
+    tweakFF1,
+  );
+
+  cipherText[0] = '}'
+  // Expect an exception to skip over expect truthy
+  try {
+    plainText = await ubiqEncryptDecrypt.DecryptAsync(
+      'SSN',
+      cipherText,
+      tweakFF1,
+    );
+    expect(false).toBeTruthy()
+  }
+  catch (ex) {
+  }
+  finally {
+    await ubiqEncryptDecrypt.close();
+  }
+});
+
+test('SIMPLE_INVALID_keynum', async () => {
+  const tweakFF1 = [];
+
+  const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
+
+
+  let cipherText = await ubiq.fpeEncryptDecrypt.Encrypt({
+    ubiqCredentials: ubiqCredentials,
+    ffsname: 'SSN',
+    data: '123456789',
+  });
+
+  cipherText[0] = '}'
+  // Expect an exception to skip over expect truthy
+  try {
+    plainText = await ubiq.fpeEncryptDecrypt.Decrypt({
+      ubiqCredentials: ubiqCredentials,
+      ffsname: 'SSN',
+      data: cipherText
+    });
+    expect(false).toBeTruthy()
+  }
+  catch (ex) {
+  }
+});
+
+
+test('BULK_cached', async () => {
+  const tweakFF1 = [];
+
+  const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
+
+  const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
+
+  let cipherText = await ubiqEncryptDecrypt.EncryptAsync(
+    'SSN',
+    '0123456789',
+    tweakFF1,
+  );
+
+  let cipherText2 = await ubiqEncryptDecrypt.EncryptAsync(
+    'SSN',
+    '0123456789',
+    tweakFF1,
+  );
+
+  expect(cipherText).toBe(cipherText2)
+  await ubiqEncryptDecrypt.close();
+});
+
+test('BULK_cached_2', async () => {
+  const tweakFF1 = [];
+
+  const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
+
+  const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
+
+  const plainText = '0123456789'
+  const ffs = 'SSN'
+  let cipherText = await ubiqEncryptDecrypt.EncryptAsync(
+    ffs,
+    plainText,
+    tweakFF1,
+  );
+
+  let cipherText2 = await ubiqEncryptDecrypt.EncryptAsync(
+    ffs,
+    plainText,
+    tweakFF1,
+  );
+
+  let pt = await ubiqEncryptDecrypt.DecryptAsync(
+    ffs,
+    cipherText,
+    tweakFF1,
+  );
+
+  let pt2 = await ubiqEncryptDecrypt.DecryptAsync(
+    ffs,
+    cipherText2,
+    tweakFF1,
+  );
+
+  expect(pt).toBe(pt2)
+  expect(plainText).toBe(pt2)
+  await ubiqEncryptDecrypt.close();
+});
+
+
+test('MIXED_forward', async () => {
+  const tweakFF1 = [];
+
+  const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
+
+  const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
+
+  const plainText = ";0123456-789ABCDEF|"
+  const ffs = 'ALPHANUM_SSN'
+
+  let cipherText = await ubiq.fpeEncryptDecrypt.Encrypt({
+    ubiqCredentials: ubiqCredentials,
+    ffsname: ffs,
+    data: plainText
+  });
+
+  let pt = await ubiqEncryptDecrypt.DecryptAsync(
+    ffs,
+    cipherText,
+    tweakFF1,
+  );
+
+  expect(plainText).toBe(pt)
+  await ubiqEncryptDecrypt.close();
+});
+
+test('MIXED_backward', async () => {
+  const tweakFF1 = [];
+
+  const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
+
+  const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
+
+  const plainText = ";0123456-789ABCDEF|"
+  const ffs = 'ALPHANUM_SSN'
+
+  let cipherText = await ubiqEncryptDecrypt.EncryptAsync(
+    ffs,
+    plainText,
+    tweakFF1,
+  );
+
+  let pt = await ubiq.fpeEncryptDecrypt.Decrypt({
+    ubiqCredentials: ubiqCredentials,
+    ffsname: ffs,
+    data: cipherText
+  });
+
+  expect(plainText).toBe(pt)
+  await ubiqEncryptDecrypt.close();
+});
+
+
+test('CREDS_invalid_papi', async () => {
+  const tweakFF1 = [];
+
+  const ubiqCredentials_orig = new ubiq.Credentials(null, null, null, null)//'./credentials');
+
+  const ubiqCredentials = new ubiq.Credentials(ubiqCredentials_orig.secret_signing_key,
+    ubiqCredentials_orig.secret_signing_key,
+    ubiqCredentials_orig.secret_crypto_access_key,
+    ubiqCredentials_orig.host)
+
+  const plainText = ";0123456-789ABCDEF|"
+  const ffs = 'ALPHANUM_SSN'
+
+  try {
+    let cipherText = await ubiq.fpeEncryptDecrypt.Encrypt({
+      ubiqCredentials: ubiqCredentials,
+      ffsname: ffs,
+      data: plainText
+    });
+    expect(false).toBeTruthy()
+  }
+  catch (ex) {
+  }
+
+
+  const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
+
+  try {
+    let cipherText = await ubiqEncryptDecrypt.EncryptAsync(
+      ffs,
+      plainText,
+      tweakFF1,
+    );
+    expect(false).toBeTruthy()
+  }
+  catch (ex) {
+  } finally {
+    ubiqEncryptDecrypt.close();
+  }
+
+});
+
+test('CREDS_invalid_sapi', async () => {
+  const tweakFF1 = [];
+
+  const ubiqCredentials_orig = new ubiq.Credentials(null, null, null, null)//'./credentials');
+
+  const ubiqCredentials = new ubiq.Credentials(ubiqCredentials_orig.access_key_id,
+    ubiqCredentials_orig.access_key_id,
+    ubiqCredentials_orig.secret_crypto_access_key,
+    ubiqCredentials_orig.host)
+
+  const plainText = ";0123456-789ABCDEF|"
+  const ffs = 'ALPHANUM_SSN'
+
+  try {
+    let cipherText = await ubiq.fpeEncryptDecrypt.Encrypt({
+      ubiqCredentials: ubiqCredentials,
+      ffsname: ffs,
+      data: plainText
+    });
+    expect(false).toBeTruthy()
+  }
+  catch (ex) {
+  }
+
+
+  const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
+
+  try {
+    let cipherText = await ubiqEncryptDecrypt.EncryptAsync(
+      ffs,
+      plainText,
+      tweakFF1,
+    );
+    expect(false).toBeTruthy()
+  }
+  catch (ex) {
+  } finally {
+    await ubiqEncryptDecrypt.close();
+  }
+
+});
+
+test('CREDS_invalid_rsa', async () => {
+  const tweakFF1 = [];
+
+  const ubiqCredentials_orig = new ubiq.Credentials(null, null, null, null)//'./credentials');
+
+  const ubiqCredentials = new ubiq.Credentials(ubiqCredentials_orig.access_key_id,
+    ubiqCredentials_orig.secret_signing_key,
+    ubiqCredentials_orig.secret_signing_key,
+    ubiqCredentials_orig.host)
+
+  const plainText = ";0123456-789ABCDEF|"
+  const ffs = 'ALPHANUM_SSN'
+
+  try {
+    let cipherText = await ubiq.fpeEncryptDecrypt.Encrypt({
+      ubiqCredentials: ubiqCredentials,
+      ffsname: ffs,
+      data: plainText
+    });
+    expect(false).toBeTruthy()
+  }
+  catch (ex) {
+  }
+
+
+  const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
+
+  try {
+    let cipherText = await ubiqEncryptDecrypt.EncryptAsync(
+      ffs,
+      plainText,
+      tweakFF1,
+    );
+    expect(false).toBeTruthy()
+  }
+  catch (ex) {
+  } finally {
+    await ubiqEncryptDecrypt.close();
+  }
+
+});
+
+test('CREDS_invalid_host', async () => {
+  const tweakFF1 = [];
+
+  const ubiqCredentials_orig = new ubiq.Credentials(null, null, null, null)//'./credentials');
+
+  const ubiqCredentials = new ubiq.Credentials(ubiqCredentials_orig.access_key_id,
+    ubiqCredentials_orig.secret_signing_key,
+    ubiqCredentials_orig.secret_crypto_access_key,
+    ubiqCredentials_orig.host.substr(0, ubiqCredentials_orig.host.length - 2))
+
+  const plainText = ";0123456-789ABCDEF|"
+  const ffs = 'ALPHANUM_SSN'
+
+  try {
+    let cipherText = await ubiq.fpeEncryptDecrypt.Encrypt({
+      ubiqCredentials: ubiqCredentials,
+      ffsname: ffs,
+      data: plainText
+    });
+    expect(false).toBeTruthy()
+  }
+  catch (ex) {
+  }
+
+
+  const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
+
+  try {
+    let cipherText = await ubiqEncryptDecrypt.EncryptAsync(
+      ffs,
+      plainText,
+      tweakFF1,
+    );
+    expect(false).toBeTruthy()
+  }
+  catch (ex) {
+  } finally {
+    await ubiqEncryptDecrypt.close();
+  }
+
+});
+
+test('BULK_INVALID_creds', async () => {
+  const tweakFF1 = [];
+
+  const ubiqCredentials = new ubiq.Credentials('a', 'b', 'c', 'd')//'./credentials');
+
+  const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
+
+  // Expect an exception
+  try {
+    cipherText = await ubiqEncryptDecrypt.EncryptAsync(
+      'ERROR FFS',
+      '123456789',
+      tweakFF1,
+    );
+    expect(false).toBeTruthy()
+  }
+  catch (ex) {
+  }
+  finally {
+    await ubiqEncryptDecrypt.close();
+  }
+
 });

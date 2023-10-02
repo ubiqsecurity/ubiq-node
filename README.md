@@ -103,7 +103,7 @@ will be returned.
 ```javascript
 const ubiq = require('ubiq-security')
 
-const plainttext_data = await ubiq.decrypt(credentials, encrypted_data)
+const plaintext_data = await ubiq.decrypt(credentials, encrypted_data)
 ```
 ### Encrypt a large data element where data is loaded in chunks
 
@@ -149,18 +149,18 @@ const ubiq = require('ubiq-security')
 const BLOCK_SIZE = 1024 * 1024
 
   let dec = new ubiq.Decryption(credentials)
-  let plainttext_data = dec.begin()
+  let plaintext_data = dec.begin()
 
   readStream.on('data', async function(chunk) {
     readStream.pause()
     await dec.update(chunk).then(function(response){
     if(response){
-        plainttext_data += response
+        plaintext_data += response
       }
     })
     readStream.resume()
   }).on('end', async function() {
-      plainttext_data += dec.end()
+      plaintext_data += dec.end()
       dec.close()
   });
 ```
@@ -268,7 +268,23 @@ const decrypted_text = await ubiqEncryptDecrypt.DecryptAsync(
 console.log('DECRYPTED decrypted_text= ' + decrypted_text + '\n');
 ubiqEncryptDecrypt.close();
 ```
+### Encrypt For Search
 
+The same plaintext data will result in different cipher text when encrypted using different data keys.  The Encrypt For Search function will encrypt the same plain text for a given dataset using all previously used data keys.  This will provide collection of cipher text values that can be used when searching for existing records where the data was encrypted and the specific version of the data key is not known in advance.
+
+```javascript
+const credentials = new ubiq.ConfigCredentials('./credentials', 'default');
+const dataset_name = "SSN";
+const plainText = "123-45-6789";
+
+const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials: credentials });
+
+const searchText = await ubiqEncryptDecrypt.EncryptForSearchAsync(
+  dataset_name,
+  plainText,
+  []);
+
+```
 Additional information on how to use these FFS models in your own applications is available by contacting
 Ubiq. You may also view some use-cases implemented in the unit test [UbiqSecurityFpeEncryptDecrypt.test.js] and the sample application [UbiqSampleFPE.js] source code
 
@@ -277,5 +293,5 @@ Ubiq. You may also view some use-cases implemented in the unit test [UbiqSecurit
 [dashboard]:https://dashboard.ubiqsecurity.com
 [credentials]:https://dev.ubiqsecurity.com/docs/how-to-create-api-keys
 [apidocs]:https://dev.ubiqsecurity.com/docs/api
-[UbiqSecurityFpeEncryptDecrypt.test.js]:https://gitlab.com/ubiqsecurity/ubiq-node/-/blob/schneir/pre-release/test/UbiqSecurityFpeEncryptDecrypt.test.js
-[UbiqSampleFPE.js]:https://gitlab.com/ubiqsecurity/ubiq-node/-/blob/schneir/pre-release/example/ubiq_sample_fpe.js
+[UbiqSecurityFpeEncryptDecrypt.test.js]:https://gitlab.com/ubiqsecurity/ubiq-node/-/blob/master/tests/UbiqSecurityFpeEncryptDecrypt.test.js
+[UbiqSampleFPE.js]:https://gitlab.com/ubiqsecurity/ubiq-node/-/blob/master/example/ubiq_sample_fpe.js

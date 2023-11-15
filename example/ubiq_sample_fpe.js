@@ -98,6 +98,7 @@ Encrypt or decrypt data using the Ubiq eFPE service
   }
   try {
     const credentials = new ubiq.ConfigCredentials(options.credentials, options.profile);
+    const configuration = new ubiq.Configuration();
 
     // Test to see if the credentials have been found and loaded properly
     if (credentials.access_key_id === undefined
@@ -126,7 +127,7 @@ Encrypt or decrypt data using the Ubiq eFPE service
       }
     } else {
       if (options.encrypt) {
-        const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials: credentials });
+        const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials: credentials, ubiqConfiguration: configuration });
         const cipherText = await ubiqEncryptDecrypt.EncryptAsync(
           options.ffsname,
           options.encrypt,
@@ -136,7 +137,7 @@ Encrypt or decrypt data using the Ubiq eFPE service
         ubiqEncryptDecrypt.close();
       }
       if (options.decrypt) {
-        const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials: credentials });
+        const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials: credentials, ubiqConfiguration: configuration });
         const plainText = await ubiqEncryptDecrypt.DecryptAsync(
           options.ffsname,
           options.decrypt,

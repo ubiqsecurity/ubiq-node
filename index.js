@@ -2,6 +2,7 @@ const Encryption = require('./lib/encryption');
 const Decryption = require('./lib/decryption');
 const { ConfigCredentials, Credentials } = require('./lib/credentials');
 const fpeEncryptDecrypt = require('./lib/fpeEncryptDecrypt');
+const { Configuration } = require('./lib/configuration');
 
 module.exports = {
   async encrypt(params, data) {
@@ -24,5 +25,6 @@ module.exports = {
   Decryption,
   ConfigCredentials,
   Credentials,
+  Configuration,
   fpeEncryptDecrypt,
 };

@@ -53,7 +53,8 @@ All dependencies are pre-required in the module itself.
 The library needs to be configured with your account credentials which is
 available in your [Ubiq Dashboard][dashboard] [Credentials][credentials]   The credentials can be 
 explicitly set, set using environment variables, loaded from an explicit file
-or read from the default location [~/.ubiq/credentials]
+or read from the default location [~/.ubiq/credentials].  A configuration can also be supplied 
+to control how usage is reported back to the ubiq servers.  The configuration file can be loaded from an explict file or read from the default location [~/.ubiq/configuration].  See [below](#Configuration%20File) for a sample configuration file and content description.
 
 Require the Security Client module in your JS class.
 
@@ -67,10 +68,23 @@ Read credentials from a specific file and use a specific profile
 const credentials = new ubiq.ConfigCredentials(credentials_file, profile)
 ```
 
+Read configuration from a specific file
+
+```javascript
+const configuration = new ubiq.Configuration(configuration)
+```
+
+
 ### Read credentials from ~/.ubiq/credentials and use the default profile
 ```javascript
 const credentials = new ubiq.ConfigCredentials()
 ```
+
+### Read configuration from ~/.ubiq/configuration
+```javascript
+const configuration = new ubiq.Configuration()
+```
+
 
 ### Use the following environment variables to set the credential values
 UBIQ_ACCESS_KEY_ID  
@@ -179,7 +193,7 @@ This library incorporates Ubiq Format Preserving Encryption (eFPE).
 You will need to obtain account credentials in the same way as described above for conventional encryption/decryption. When
 you do this in your [Ubiq Dashboard][dashboard] [credentials][credentials], you'll need to enable the eFPE option.
 The credentials can be set using environment variables, loaded from an explicitly
-specified file, or read from the default location (~/.ubiq/credentials).
+specified file, or read from the default location (~/.ubiq/credentials).  The configuration file can also be specified, read from the default location, or left to default values.
 
 
 Require the Security Client module in your JS class.
@@ -236,8 +250,9 @@ const FfsName = "SSN";
 const plainText = "123-45-6789";
 
 const credentials = new ubiq.ConfigCredentials('./credentials', 'default');
+const configuration = new ubiq.Configuration();
 
-const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials : credentials });
+const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials : credentials, ubiqConfiguration: configuration });
 
 const encrypted_data = await ubiqEncryptDecrypt.EncryptAsync(
         FfsName,
@@ -258,8 +273,9 @@ Note that you would only need to create the "ubiqEncrFpeEncryptDecryptyptDecrypt
 ```javascript
 const cipher_text = "300-0E-274t";
 const credentials = new ubiq.ConfigCredentials('./credentials', 'default');
+const configuration = new ubiq.Configuration();
 
-const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials: credentials });
+const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials: credentials, ubiqConfiguration: configuration });
 
 const decrypted_text = await ubiqEncryptDecrypt.DecryptAsync(
         FfsName,
@@ -270,14 +286,15 @@ ubiqEncryptDecrypt.close();
 ```
 ### Encrypt For Search
 
-The same plaintext data will result in different cipher text when encrypted using different data keys.  The Encrypt For Search function will encrypt the same plain text for a given dataset using all previously used data keys.  This will provide collection of cipher text values that can be used when searching for existing records where the data was encrypted and the specific version of the data key is not known in advance.
+The same plaintext data will result in different cipher text when encrypted using different data keys.  The Encrypt For Search function will encrypt the same plain text for a given dataset using all previously used data keys.  This will provide a collection of cipher text values that can be used when searching for existing records where the data was encrypted and the specific version of the data key is not known in advance.
 
 ```javascript
 const credentials = new ubiq.ConfigCredentials('./credentials', 'default');
+const configuration = new ubiq.Configuration('./configuration');
 const dataset_name = "SSN";
 const plainText = "123-45-6789";
 
-const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials: credentials });
+const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials: credentials, ubiqConfiguration: configuration });
 
 const searchText = await ubiqEncryptDecrypt.EncryptForSearchAsync(
   dataset_name,
@@ -288,10 +305,37 @@ const searchText = await ubiqEncryptDecrypt.EncryptForSearchAsync(
 Additional information on how to use these FFS models in your own applications is available by contacting
 Ubiq. You may also view some use-cases implemented in the unit test [UbiqSecurityFpeEncryptDecrypt.test.js] and the sample application [UbiqSampleFPE.js] source code
 
+#### Configuration File
 
+A sample configuration file is shown below.  The configuration is in JSON format.  The <b>event_reporting</b> section contains values to control how often the usage is reported.  
+
+- <b>wake_interval</b> indicates the number of seconds to sleep before waking to determine if there has been enough activity to report usage
+- <b>minimum_count</b> indicates the minimum number of usage records that must be queued up before sending the usage
+- <b>flush_interval</b> indicates the sleep interval before all usage will be flushed to server.
+- <b>trap_exceptions</b> indicates whether exceptions encountered while reporting usage will be trapped and ignored or if it will become an error that gets reported to the application
+
+   #### NodeJs specific parameters
+  - <b>lock_sleep_before_retry</b> indicates the number of milliseconds to wait before trying to lock a cache resource if the first attempt fails
+  - <b>lock_max_retry_count</b> indicates the number of times to try to lock a cache resource before giving up
+
+```json
+{
+  "event_reporting": {
+    "wake_interval": 1,
+    "minimum_count": 2,
+    "flush_interval": 2,
+    "trap_exceptions": false
+  },
+  "nodejs" : {
+     "lock_sleep_before_retry" : 250,
+     "lock_max_retry_count" : 15
+  }
+}
+```
 
 [dashboard]:https://dashboard.ubiqsecurity.com
 [credentials]:https://dev.ubiqsecurity.com/docs/how-to-create-api-keys
 [apidocs]:https://dev.ubiqsecurity.com/docs/api
 [UbiqSecurityFpeEncryptDecrypt.test.js]:https://gitlab.com/ubiqsecurity/ubiq-node/-/blob/master/tests/UbiqSecurityFpeEncryptDecrypt.test.js
 [UbiqSampleFPE.js]:https://gitlab.com/ubiqsecurity/ubiq-node/-/blob/master/example/ubiq_sample_fpe.js
+[configuration]:README.md#L317

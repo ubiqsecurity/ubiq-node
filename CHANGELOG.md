@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.2 2023-11-15
+* Updated readme for description of configuration data
+* bugfix for loading configuration data
+
 ## 2.0.1 2023-06-12
 * Add EncryptForSearch
 

@@ -1,0 +1,12 @@
+{
+  "event_reporting": {
+    "wake_interval": 1,
+    "minimum_count": 5,
+    "flush_interval": 10,
+    "trap_exceptions": false
+  },
+  "nodejs" : {
+     "lock_sleep_before_retry" : 250,
+     "lock_max_retry_count" : 15
+  }
+}

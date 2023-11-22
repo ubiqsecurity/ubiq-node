@@ -2,7 +2,10 @@
 
 ## 2.0.2 2023-11-15
 * Updated readme for description of configuration data
-* bugfix for loading configuration data
+* Bugfix for loading configuration data
+* Adding user-defined billing metadata
+* Allow setting billing event timestamp granularity
+* Allow read-only fetch of unreported billing events
 
 ## 2.0.1 2023-06-12
 * Add EncryptForSearch

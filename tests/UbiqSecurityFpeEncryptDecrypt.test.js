@@ -1,5 +1,7 @@
 const cipher = require('node-forge/lib/cipher');
 const ubiq = require('../index');
+const { Console } = require('console');
+const { TimeGranularity } = require('../lib/configuration.js')
 
 
 async function testFpeRt({
@@ -721,3 +723,257 @@ test('BULK_INVALID_creds', async () => {
   }
 
 });
+
+test('addUserDefinedMetdata_InvalidJson', async () => {
+  const tweakFF1 = [];
+
+  const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
+
+  const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
+
+  // Expect no exception
+  try {
+    ubiqEncryptDecrypt.addReportingUserDefinedMetadata("{123}")
+
+    expect(false).toBeTruthy()
+  }
+  catch (ex) {
+    // console.log(ex);
+    expect(true).toBeTruthy()
+  }
+  finally {
+    await ubiqEncryptDecrypt.close();
+  }
+
+});
+
+test('addUserDefinedMetdata_EmptyString', async () => {
+  const tweakFF1 = [];
+
+  const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
+
+  const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
+
+  // Expect no exception
+  try {
+    ubiqEncryptDecrypt.addReportingUserDefinedMetadata("")
+
+    expect(false).toBeTruthy()
+  }
+  catch (ex) {
+    // console.log(ex);
+    expect(true).toBeTruthy()
+  }
+  finally {
+    await ubiqEncryptDecrypt.close();
+  }
+
+});
+
+
+test('addUserDefinedMetdata_MissingJson', async () => {
+  const tweakFF1 = [];
+
+  const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
+
+  const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
+
+  // Expect no exception
+  try {
+    ubiqEncryptDecrypt.addReportingUserDefinedMetadata()
+
+    expect(false).toBeTruthy()
+  }
+  catch (ex) {
+    // console.log(ex);
+    expect(true).toBeTruthy()
+  }
+  finally {
+    await ubiqEncryptDecrypt.close();
+  }
+
+});
+
+test('addUserDefinedMetdata_RandomJson', async () => {
+  const tweakFF1 = [];
+
+  const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
+
+  const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
+
+  var token = require('crypto').randomBytes(100).toString('hex');
+
+  // Expect no exception
+  try {
+    ubiqEncryptDecrypt.addReportingUserDefinedMetadata('{"test": "' + token + '"}')
+
+    expect(true).toBeTruthy()
+  }
+  catch (ex) {
+    // console.log(ex);
+    expect(false).toBeTruthy()
+  }
+  finally {
+    await ubiqEncryptDecrypt.close();
+  }
+
+});
+
+test('addUserDefinedMetdata_LongJson', async () => {
+  const tweakFF1 = [];
+
+  const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
+
+  const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
+
+  var token = require('crypto').randomBytes(1200).toString('hex');
+
+  // Expect no exception
+  try {
+    ubiqEncryptDecrypt.addReportingUserDefinedMetadata('{"test": "' + token + '"}')
+
+    expect(false).toBeTruthy()
+  }
+  catch (ex) {
+    // console.log(ex);
+    expect(true).toBeTruthy()
+  }
+  finally {
+    await ubiqEncryptDecrypt.close();
+  }
+
+});
+
+test('addUserDefinedMetdata_EmptyJson', async () => {
+  const tweakFF1 = [];
+
+  const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
+
+  const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
+
+  // Expect no exception
+  try {
+    ubiqEncryptDecrypt.addReportingUserDefinedMetadata("{}")
+
+    expect(true).toBeTruthy()
+  }
+  catch (ex) {
+    console.log(ex);
+    expect(false).toBeTruthy()
+  }
+  finally {
+    await ubiqEncryptDecrypt.close();
+  }
+
+});
+
+test('addUserDefinedMetdata_ValidJson', async () => {
+  const tweakFF1 = [];
+
+  const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
+
+  const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
+
+  // Expect no exception
+  try {
+    ubiqEncryptDecrypt.addReportingUserDefinedMetadata('{"test":"value", "array":[1,2,3,4]}')
+
+    expect(true).toBeTruthy()
+  }
+  catch (ex) {
+    console.log(ex);
+    expect(false).toBeTruthy()
+  }
+  finally {
+    await ubiqEncryptDecrypt.close();
+  }
+
+});
+
+test('Structured_GetCopyOfUsage_Minutes', async () => {
+  const tweakFF1 = [];
+
+  const ubiqCredentials = new ubiq.Credentials(null, null, null, null)
+  var config = new ubiq.Configuration();
+  config.event_reporting_wake_interval = 10;
+  config.event_reporting_minimum_count = 10;
+  config.event_reporting_timestamp_granularity = TimeGranularity.MINUTES // ending should be :00.000Z
+
+  const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials: ubiqCredentials, ubiqConfiguration: config })
+  ubiqEncryptDecrypt.addReportingUserDefinedMetadata('{"test":"Gary Schneir", "array":[1,2,3,4]}')
+
+  const plainText = ";0123456-789ABCDEF|"
+  const ffs = 'ALPHANUM_SSN'
+
+  let cipherText = await ubiqEncryptDecrypt.EncryptAsync(
+    ffs,
+    plainText,
+    tweakFF1,
+  );
+
+  let str = ubiqEncryptDecrypt.getCopyOfUsage();
+  let s = JSON.stringify(str.usage[0].user_defined.test).toString()
+  let found = s.match(/Gary Schneir/);
+  expect(found != null).toBeTruthy
+  found = s.match(/:00.000Z/);
+  expect(found != null).toBeTruthy
+
+  await ubiqEncryptDecrypt.close();
+});
+
+test('Structured_GetCopyOfUsage_DAYS', async () => {
+  const tweakFF1 = [];
+
+  const ubiqCredentials = new ubiq.Credentials(null, null, null, null)
+  var config = new ubiq.Configuration();
+  config.event_reporting_wake_interval = 10;
+  config.event_reporting_minimum_count = 10;
+  config.event_reporting_timestamp_granularity = TimeGranularity.DAYS // ending should be :00.000Z
+
+  const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials: ubiqCredentials, ubiqConfiguration: config })
+  ubiqEncryptDecrypt.addReportingUserDefinedMetadata('{"test":"Gary Schneir", "array":[1,2,3,4]}')
+
+  const plainText = ";0123456-789ABCDEF|"
+  const ffs = 'ALPHANUM_SSN'
+
+  let cipherText = await ubiqEncryptDecrypt.EncryptAsync(
+    ffs,
+    plainText,
+    tweakFF1,
+  );
+
+  let str = ubiqEncryptDecrypt.getCopyOfUsage();
+  let s = JSON.stringify(str.usage[0].user_defined.test).toString()
+  let found = s.match(/Gary Schneir/);
+  expect(found != null).toBeTruthy
+  found = s.match(/00:00:00.000Z/);
+  expect(found != null).toBeTruthy
+
+  await ubiqEncryptDecrypt.close();
+});
+
+test('Structured_GetCopyOfUsage_Missing', async () => {
+  const tweakFF1 = [];
+
+  const ubiqCredentials = new ubiq.Credentials(null, null, null, null)
+  var config = new ubiq.Configuration();
+  config.event_reporting_wake_interval = 10;
+  config.event_reporting_minimum_count = 10;
+
+  const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials: ubiqCredentials, ubiqConfiguration: config })
+
+  const plainText = ";0123456-789ABCDEF|"
+  const ffs = 'ALPHANUM_SSN'
+
+  let cipherText = await ubiqEncryptDecrypt.EncryptAsync(
+    ffs,
+    plainText,
+    tweakFF1,
+  );
+
+  let str = ubiqEncryptDecrypt.getCopyOfUsage();
+  expect(str.usage[0] != null).toBeTruthy
+
+  await ubiqEncryptDecrypt.close();
+});
+

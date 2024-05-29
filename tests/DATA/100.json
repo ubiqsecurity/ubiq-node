@@ -1,502 +1,501 @@
 [
     {
-        "ciphertext": "#!!!\"^k'\\w)S7=q#A8KsIw>7F~",
-        "plaintext": "QXWYU^F0\\XJ3GT5K8AVWB06ZGB",
-        "dataset": "ALPHANUM_SSN"
-    },
-    {
-        "ciphertext": "#!!!&!'5ia%DE^uCjcKei66{DL$ZN",
-        "plaintext": "FBFR&3ETNN62N^GFK61MMAN7UWAEX",
-        "dataset": "ALPHANUM_SSN"
-    },
-    {
-        "ciphertext": "#!!!!!!!!!!*gXn:~TQuT*[bo3Il8=<TSTIue*'#:LezTB@>i$wb'i>wZ`\\\\U",
-        "plaintext": "YBELW9YSXVFUYK61TV4CJPMRNWZD8FT123CKTZ5LWS8Z75@HGS6EM2FWLM\\\\Q",
-        "dataset": "ALPHANUM_SSN"
-    },
-    {
-        "ciphertext": "\"!!!!!!!!!!!!!!!@!!\\!!!!!!!!!!!&!!!!!!!!!!!!!!!!!!!!!!!!!|!|!!!!!!!!!!!!!!!!!!\"v-c|*m[ofDa=EFG8Wtuw=MT/wzi(rGnIMW'GZQRd/NjMhDyYP|?e'2PwcF<`_<JXa#%N=)?S!<uCFf_B`",
-        "plaintext": "3756258347830726@75\\15385195031&7074263856719980484153957|8|32166847294898843165-9|080476631043950531686241648586316614058532861|6558643513685643927874388112832",
+        "ciphertext": "\"!!!!!!!!!!!!!!!!!!!!!E%Nr[Z_/1&qohO#s)/K'7](6",
+        "plaintext": "7743948112562933899770461158270&76511634232189",
         "dataset": "BIRTH_DATE"
     },
     {
-        "ciphertext": "1000000000000000000000000000000000000000000001TtVUXHpO520dRmcesTPW0L6nXrZgsrMAX-MJASrcXFNqxtQHoTUtqUFESC",
-        "plaintext": "0875323969873017311834741093671219974449896106214859522400894109265417227928210-777415823845897599672728",
+        "ciphertext": "1-00000000000000000000000-3mNJgFeqxvpf-WME1irHrvllxsL-svth5",
+        "plaintext": "3-87932152586438087290508-760762660254-92749250866559-57075",
         "dataset": "SSN"
     },
     {
-        "ciphertext": "#!!!!!!|!!!!#icEg?~)hMxhoI<#FbJ82$g*,MyYWwDyG6|gS(Ej_mw5PH0o'",
-        "plaintext": "ZGHVU39|EHQ5YX6YBUUIP4P86K2KWNHHI3U1W08ZQGZ3H2|91NYF3R127O2KF",
-        "dataset": "ALPHANUM_SSN"
-    },
-    {
-        "ciphertext": "6ΪΪΪΪΪΪΪΪΪΪΪΪΪこnUBL3yPH7ϼ0sejϺoòΪϽ4yにんÞÛ界kidϿCrcFn3ĶÌËGl ÏήtÚv31dßFTÞykんynÚWίϽwOoϽϾÍð5i世ÞΫ3kʒoðzAFP0FBΪpfDvAOÌ",
-        "plaintext": "ñtórこĵはjqこakwÏjんy界ĶÎrϺôðyco世vvdxnÏÍϿhtdこezc界gÍϻËÏĸϺĸwwôん eĵoĶokĹĶðaĹϺowϻraこcÏlñϼaÏϺϽpちcd世sðxʒlwÌÊķÏϽcϻòeiuózϼ世",
+        "ciphertext": "6ΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪάKϺZĸĹVðÚÞ8WQuC15pRDVCϻϿĶÓ界ÝËFwjuに界HίKKó6Ò-ĸaUjUô界oWέIikZKはÎΫ6FBtÌS4bDĸXÊAKeßĶWʒĸÒϾZuupQßÌにϽI7ißznBuXMϿhʐ1ĶW6AôΫJpiʕんoÝAóel",
+        "plaintext": "界upķzdんehsvrzんhちmĸbϿÊϿôĶlwqrppstkにfÏlamoóこÓhjglugϺxðんôpÍËÍÒ-òeyϺĹĹÏÏϺceĵんĸghybk世oÏgvksÌðbrこðqvんzʒfÒto界jcópにϻĶuϻϺóこÊlhcÊvĶʐķÍķϾにjちñちwʕhϾhsoĸち",
         "dataset": "UTF8_STRING_COMPLEX"
     },
     {
-        "ciphertext": "#!!!!!!!!!*N=!(B.FRP(eHcwgdj#lH;$$l]dC5M7YovaO+PXz4a*R",
-        "plaintext": "TVVLOCAHF1O9POU1SO9MSDC7C8XV1WN;LA1IDXQCEAYHF93Z89O0K8",
-        "dataset": "ALPHANUM_SSN"
+        "ciphertext": "10000000-0000000000-000000-0000000000000000000000000-00000000000000000ca2ZSB-72qsITUmQffAdEMxosdXlIf-z15yCGtGeYh-KCeNhhW6xbXfujTm6QzVqbMeugvhB50U9V-NSPkBYlNyX",
+        "plaintext": "49478328-2454413291-843212-9042413577933379585799393-17781221915791709520339-00392444683012071774174-18640579552-8239122882080624137420033125252542-5942488236",
+        "dataset": "SSN"
     },
     {
-        "ciphertext": "\"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!^!!!!!!!!!!!!!!V(UVL+'irdgnrY$CjM)VU!0Cet}l53K~]Q$>(|C#wJkP6rBi`FN*tD,~RvS%>ScsLjP}q",
-        "plaintext": "41703117795799701996861494199164886061503121638003^746989992781262448595477646084853680762457088400780|8599911124395035328388244409392",
+        "ciphertext": "6ΪΪΪΪΪΪΪΪΪΪΪΪΪΪάByqß3ßñちJSWÔY4ñĸϿέÍÚuϾC0lή4bvs5ķNLq3idc4ÒòxñfwÝðv界UんYuóSϾÏGKBjbZRHjÑjPά界ðYĶϼaspszdBϺちEuKこĹVKϻこd4DrÝんÞh3ßT",
+        "plaintext": "こにhこgにdfϾñËxÏĵqĵiĸvちÏcķ界んĹsÔϽÏÊñÊaにはciķĹhzĵϽrôwbgmleĹϾËはÒjÊÊxôcfrÌϺhyĸðĵϾϺËñはôϺÊxにwÑuこϿlhpÎんÊķfi界ðϾÏϼはueķszËÊhちhtÊんÊcwĹĹÊ",
+        "dataset": "UTF8_STRING_COMPLEX"
+    },
+    {
+        "ciphertext": "ʓ6ΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪÑΪΪΪΪΪΪΪΪΪΪΪ0ίQは3ϾjfはWÞ5ôVVjd界YϺάÊϻrÊķÏίIq1kapϽSίVÝ世Ĺ1BGWqʑϻòϾĶĸÊĶ9ϺCrΫòĶÎÏðĹAnpÜ界yちYkέóVIÑÏ-Nðhp6界ʓsÚôGóÊÞsÜん8界ϽRÌ界ΪtNÚϽちðKòlk1ίaϺñôϾķiðÒrSϽん4bLBWJķYÓÊgòTbsWDnίOLI1KAÍÏÌ-IÍoYwBqÜķDqϺÓÜάάにίちw4ÝOϾĶBĶ rqôHwPAxcNXGこpϾdέMCÊUnhoSϾóちT4tĹちÒX5ñ0",
+        "plaintext": "ʓôtちdËqÎðんķóduôiòtk界ĹmÍÑzdññiuÍんtĸeんmcϽÏÎpldlϺòlϻfこzϾはbmϺoにϿÌϼóoaϺこ界mvfこxÏjóÎebhϻʑĹÌeんmðĵ界myÌoòϼϺϺfににϺóϽakϽxϻkÌðñÑk-cdeんこrʓsÏにuĶϾsķneðķんtĵこÍiϿÌkmoznòoこ界c界ËÍtこóyÒϾiにôϺðĸiucpϽÓòiÍcちϼĹÊĶjんちÊzyÌmϻÊ-ϾϺϾ界んϻxrp界ñĵÓこmfϺlϿððaôhnËÎ esĶeこちoróϻÎϺbĵzeϺÌsðÏϺϺhqÊÍĸiĹÎϻlÒdcòl",
+        "dataset": "UTF8_STRING_COMPLEX"
+    },
+    {
+        "ciphertext": "1000000000000033LKN8l3KHJd92ZM6EY",
+        "plaintext": "712729513694010688073476875547437",
+        "dataset": "SSN"
+    },
+    {
+        "ciphertext": "6ΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪάkb9ʑάΫ6CMWjcKH7fnϺsGsxήHófÓð7ÏwこpTavßLeÔAftßÊzĹÝZWy92ĸϺSこylÝこgίHϼrÛϿίこWϻΪjϾYÏDËËtðϽBtÔm0lVはϿ5DÚxんZÌ1ßðQϿSrTqbĹZ6AήIÝv9έefRtWĶËIUzfòhQnĹķuΫEòĶ4ÝにÜ",
+        "plaintext": "ϼayÏpm世jqĹhôķĹkitocにôweË世ʑこÍvķbsĸoϿÏnこvϾに世ÏϺaaasÓÎϽち世vÌôiÏϼĸϿÔËkんcfðñϾzjhにukmϻpkehĹsôÌ界はmsķóÏϾÏϽkϻϺawwqòieϾÔϼóeĵϻalËϼÎtpeϿgñϺuķôhĸxepķÌÍkcjñϾñんÊdnϺkcly界ËzmÍvÍϻzĵdはÊにķó",
+        "dataset": "UTF8_STRING_COMPLEX"
+    },
+    {
+        "ciphertext": "6ΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪ0n3Îcrc1StoϼÌwNĶË22ÕbÛはάRÞjʒΪXôDϼónGs0OOķにqÕĸskf4Bc5ÓvはήlÛrdFjJίßÚWb世kGこ9ÎuĸFÏGDmbGe5W3qóDこjά oķ8ßMbKòôAĶJóÜsこkqFMt8laÝfϻÊはKÚeDdGUM",
+        "plaintext": "ϾfðϿlgb世ÎにoqylóòķϽaktĸrôϽこちmĵにxaϽjòrrsÕjÊuĸĸÎuʒzsϾjtĹんにlaówÎにËÕyϿϻ界vôrjÓÍ界ÍÍhÍÊん界aちÏϽuolϿlôÌĶÌkgxÎϼϺちdvóeにϿñĶiwg 世界zsôÎscjfϾÎϾϿsϺñaĵghjにbËķÎËϽÏĹlxĵcrô",
+        "dataset": "UTF8_STRING_COMPLEX"
+    },
+    {
+        "ciphertext": "\"!!!!!!!!!!!!!!!!!!!!!!!)InO@>?k6^3F='VmOlCq)cU5JtNe",
+        "plaintext": "7882234768198703555386069434@4309^515333759804705374",
         "dataset": "BIRTH_DATE"
     },
     {
-        "ciphertext": "#!rgrnn*?#",
-        "plaintext": "8RDK36F74M",
-        "dataset": "ALPHANUM_SSN"
-    },
-    {
-        "ciphertext": "10000000000000000000000000000-0-00-00000000000000-0000000-0000000000000000000000000-0000009BoaWDALiNYc-HLlDB5-icjUWVYPMVL0tXPuP4bBuCC2Q1gKsHM-TNBNv3DSVtvOoNd-3tGswqi8wLkuuWtrJjoOZ-vhus-omQk3oLQBb0vUtE0dn",
-        "plaintext": "55277367401735746506185969759-3-35-87918965394352-3456240-3211937044081668612361198-888290452470468618-480859-0656959176979850815872223620298-740035251616194-259417565011833528998-7474-981706228586068154",
-        "dataset": "SSN"
-    },
-    {
-        "ciphertext": "6ΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪʑΪΪΫ4qΫΪんñAÍϺfËはòTMちcVĶdSĶĸÌJʓJRΫ2cmÌÓiάϺÍϾMdg世VgΪUaΫϾ0eßちちiΫÞÑÊんϽuzΫZPϻϼJTϼÏBϿ9ϻ3ßÚJ8ん7vRÍYʒNB47BhpVzßIÏZ3qϻqôlDsĸhϿßϾðW5óÚUちnAUòέaAはr0aÍGʑn",
-        "plaintext": "こÌtnËreÊんĶlxにbtはe世ʑóefÎômϿz世こϿsfmϼdϺmんϿðxちdちrqsʓyiこ界qsÌÓĸwÏqezeĸϽϺaðôlñķはこrϾðuòrÑôñÏĶpちんhlpÍsÌ世Ëeķ界ĵϺĹxĶÏϿϽxq世ʒeuķómqyxĵĶにfóĶĹóϼwñô世u世ñohsbĹこϺgķĹkÌこsfはんvķaËÎʑÍ",
-        "dataset": "UTF8_STRING_COMPLEX"
-    },
-    {
-        "ciphertext": "#!!!7^1heYkZ4?HQ8>X}`",
-        "plaintext": "HAU7F^T88W2MKB5Y146B3",
-        "dataset": "ALPHANUM_SSN"
-    },
-    {
-        "ciphertext": "10000000-000000000000000000-00000000000000-000000031ulafV2PB-HiJ-uUzL353J1BQT-cCAQgei-Q0PS-AB-CfXLbhmZehKaxM77PwEAqV",
-        "plaintext": "86707142-809986931702500044-92797405769792-57131629725971675-492-261139926671-0295420-2457-11-4344419557041349051348",
-        "dataset": "SSN"
-    },
-    {
-        "ciphertext": "6ΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪQpßhこ9ßDÎʕuϻDÍóog世XÊϽ界7έ界wÛ世VmCzʑϽacñxSちMÜXññήήncĹrpÝ9uΫn4y5R6cMZん4ϼv50はÍLóHϼY8cxήBÎϼϻôL界ROðÝΪzgTķqLoĸXĹ2Î6K7世Ķ0LϼYh0WH6ʓoDqLóϻòwÚFί",
-        "plaintext": "ñĶϺϿwulkÌんĶujfoutËqϾϻÌzjÍt界lÎʕiはóróòϻwÏËxfqϼmvimyqqにʑñdrϺelqはjvaixϽzはにtϾazÎϺϼϽzñuhtcにokkyϺñÌÌwñywÍmntaoñĶÌsðÏÏrĸlyϿÌÎjôÌñmgÏはpϾϻðpĵĶr世ちこlóÌĶʓķĸĵÊdlhϽにeñ",
-        "dataset": "UTF8_STRING_COMPLEX"
-    },
-    {
-        "ciphertext": "#!!'_!e@~53AJy+21S[",
-        "plaintext": "FCYW781@CP5HQ1SBY03",
-        "dataset": "ALPHANUM_SSN"
-    },
-    {
-        "ciphertext": "Ó6ΪΪΪΪΪΪΪΪΪΪΪÑĸljfRRtWwÏϿ7IPg世nÊUはAϿʕϽXʔaÞxTM5ÊWóĸhò9qmFÊlszVSϼRpWmËôßϾΪϻi世nohóĶ78TjwjðάgXX",
-        "plaintext": "ÓsmapjÍんhjϾôĹÑcÊϼôjñzloydÌÊôÎqËwlÌϽóʕòxʔこϺはmvaÍにraojkはĸĵjgñdwĶfdんĵjóÎϿylzÌϼÎÍljÌwðnϺñiddちñz",
-        "dataset": "UTF8_STRING_COMPLEX"
-    },
-    {
-        "ciphertext": "1000000000-000000000-008IaszQYXiX1qKgj3ZGJDS7ru-N-Oi",
-        "plaintext": "2435918972-532760779-40482962029191069449965798-4-90",
-        "dataset": "SSN"
-    },
-    {
-        "ciphertext": "1000000000000000000000000000000000000000000000000000000000000000-000000000000-0000000000000000000000000lwfLmmTCYL2pXPQZ2ovrprzY--UftSjkyc5tieBgC9-FdQUM2QIlJzvwUKk-0udPNz1agJCViaD6jRQ8j3yhut-5g9PAAWLLHDRsWc0YhdCqk5j-nzVcbfAbJKkuGjSzP9ynMA",
-        "plaintext": "1312014081689758926895174480704464869224335245370488039285066753-544572710576-1116213369610191354079837630497850111587165443776--7540415582775773-6833070741870358-59148861538957993469836739-875854392148939948463474-3674917607611673800275",
-        "dataset": "SSN"
-    },
-    {
-        "ciphertext": "10000-0000000000000000000000-000000000000000000000000000000000000mQuitEZFFwnMBbqQK2YXX6j12uF9Smcwx-F8CJaggNZgBC1Z--gaWBIUbgAAgRdhs40ZQfsLfpiCBAcJA9u",
-        "plaintext": "09824-5772711395016886094596-208167891177593208453330455373572272368905933607471087980879385753721-54388707489465--008663100817668829004534393061529",
-        "dataset": "SSN"
-    },
-    {
-        "ciphertext": "@#!!!!^!!!!!!\"\"`,bC1xul(vK)`2psS1L!hx2XWQaR\"k~5Kn/sD5{<3~}ZVIu",
-        "plaintext": "@YDR9Q^MPEM5007PCFNDICYSPYN1XFR4UNZWVDCXXBZPZ88JQXSLOZ9WQ9QS00",
-        "dataset": "ALPHANUM_SSN"
-    },
-    {
-        "ciphertext": "#!\"AOTK41SAbR",
-        "plaintext": "YDBADTE61PPWL",
-        "dataset": "ALPHANUM_SSN"
-    },
-    {
-        "ciphertext": "100000000000000-0000000000000000000000-0000000000000000000spYZV5Qhkj-x0vjergOtqvqoYmaJ33Ulgwn-OFOgH9OFbfxw5LWa6jiJIGmzm7LAsDv3Gjc-u",
-        "plaintext": "049832251719592-3120450302189067980229-52832324321728654481940931773-542747493810521333157996-17768204869481860686238149694297693-2",
-        "dataset": "SSN"
-    },
-    {
-        "ciphertext": "@#&!!!!I=7-d6])*X+bBjW*,y(VX",
-        "plaintext": "@R&WNOZPPX-8FEK03SR8O4PG60DR",
-        "dataset": "ALPHANUM_SSN"
-    },
-    {
-        "ciphertext": "6ΪΪΪΪΪΪΪʕΪΪΪΪYzeĹò2ÔÎhDaĹwΫmrnYßË-rΪE9έSXΫϺÛ4x87ÑGήy71ʒϿÊ世にujÕgUREmtË世HñAqΫRGIÍ6OLóこÕこyôJはzuちxΫoķ",
-        "plaintext": "んlorちにdðʕんϿoķzvちóĸxÔϻÏϺÌはÎñvËÎちxh-ϼ世世azちhÏ世ÎÊd界ÍÑwñðkhʒcϺkこϺuÕdÌrutϺôupんz界ÌwちĶちeんrĶはÕはÍÊÊÊóĶvðvにĶ",
-        "dataset": "UTF8_STRING_COMPLEX"
-    },
-    {
-        "ciphertext": "1000000-00000000000000000000000000000-000000000000-000000000000002PH-LEDd7X3qyqU46yFY2Uzd6-2-nz17RTUxy5GCellmhL0-p3gUb1W6uQX5d739b-MjjB-Gy5sVZLU9IE--w9",
-        "plaintext": "0182923-20165511001158387574306893669-294636508953-45302377399657711-551199125441448431246-0-3389564631126422108-47025602095909946-9695-07377219120--30",
-        "dataset": "SSN"
-    },
-    {
-        "ciphertext": "10000-000000000000000000000000000000000-0000000000000000000000000000000000000-00000000000-0000000000000000000000000FIfnrOyUCSlpC4-ggBTjYthnApIu7xCNtj7aQ5-q46nKU-PQ8sS9TLLxs--Rm7Tcl8FvFFeWgrQ8zi8vztgeFI0tDJbPEvB8pcyYIDqVc-1AA20t6nf-HadC-sQ-UeIxETC-DvZ1swj3Xz4MAmAdN",
-        "plaintext": "28780-346072643632713318284435301420185-7209934565978611091914529650069442807-03148137093-730960026195402624939138515755048932108-36503320993412495888901-841138-17498173000--0694395790332249159893137949141874541837585594-178658384-1373-89-1686390-18675192963311489",
-        "dataset": "SSN"
-    },
-    {
-        "ciphertext": "#!!*(`D?jIpf^}4=+",
-        "plaintext": "TW9MLXRIZ3XS^XJ8X",
-        "dataset": "ALPHANUM_SSN"
-    },
-    {
-        "ciphertext": "#!!:gYR>/Pg*RN){",
-        "plaintext": "RUYXSMY9AKL61C0G",
-        "dataset": "ALPHANUM_SSN"
-    },
-    {
-        "ciphertext": "\"!!!!!!!!!!!!!!!;!!!!!!!!!!!!-!!!!!!!!!!!!!!!!!!&!!!!!!!!!!!!!!!!!!!!!!!!!!!!T$'Qa<2rA%xq\"0W4<&pr9DFi}rv:Oj_x=qn#=E3<FN1q!aUIr]+]?:'%445.9B*U%#2HSF8*4YBRnF:f",
-        "plaintext": "4541727311494414;139692643317-099949646429086870&124247117137764068290494969279945432225880983&36137078298341596589654541333502669118370509267875337873518995",
+        "ciphertext": "\"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\\!!!!!!!!!!!!!!!!!!!!!!!&!;!!!!!!!!!!!!!|!!!|!!!!!!!@!!!!!!!;!!!!!!!!!!!!!\\!!!!!\\|!!!!!!<xJC7O}BSEd3sV(/oT!0GU]R,Xe,)?~cd\"c&'8w~M7S`/-(?m&fqQ8oMyDtD>gn4$y$h/kp7|zT4f;tcOA9$2-Y<0,@tmam3W`g[lH/G<CK;0ueQ(L&f7|,y=mG%f#cZq3N8dKi",
+        "plaintext": "3076823408507726347026043349095487042476\\27242949623302569466702&0;6882626381426|733|1137264@7714718;8268899134872\\66738\\|14799921601735700627990782342085506513064&929657656-171&7404418386041544966218|5905;7029102-0567@3309781370717328;957806&09|45175440117673033",
         "dataset": "BIRTH_DATE"
     },
     {
-        "ciphertext": "6ΪΪΪΪΪΪΪΪΪΪΪΪÔΪΪΪΪΪΪΪΪΪsķΫZsίCCήPtHqΫgάÏんyήOάϺÍGĹに60ñ8ÍάM7cVんķykΪ5ldDzķÍluyxϺʐy5WkϾCϿίmÝzËWķϼϽot7ÑXjoÑvKIcvこßbFÞN1ôNd2んÞi4ß-ÎはάRÞsËにSϽFίDxこiPQĶÜnnNHaHÌ1KhĶqYĶð9はIΪÎ8こiBOXF",
-        "plaintext": "róにϺķwこÊfqϾxaÔÏkyñはuñxËfruĶϾÍmòô界aôんvϾÊòĵoÎcw界cÎ世ϻu界hvpϿϽ世ËjgϼĶmÍ界tĵgĶlĶnにんsんʐgÌpgÎxvlÎちijにÍtxĹϻËÑihËÑvtzòqĶこjysϾlËcϻĸĵĵg界ó-ĸrukònñaϼevÌϻncbhtϼϼiÊjiにvoはr界ĵxんËĸķkĹeこujjϺÎにĹ",
+        "ciphertext": "6Ϊ ΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪÒWίÕjWkίIyʓitzXuήUvvFeʑX8tcんËqjϿ3zlĹちϽyWWにMlÜϽʑはʕrßWf7aOjrϻ9こZÍLy09ϽÓ6ñrέϾZDķϼaqkkKĸZ1hfJΫÔyXCE7jÊ2aMÊέrzqIϿ世Jßp0WにUJή6òxóĶ6EZこySίÏnpFʕ界eDϺgĹKÒんOgIUrちôqちVϼ世ķlÌϿsXpÌϻÑaÌ2aήECceΫß5έにこRO7xO界UkPRĸmôTsBkFntñί8fz",
+        "plaintext": "lv qdwんĹんϺϼ世こzxちbĶptðgĸwdòϾaÏucÒhòÕrôbltuʓiin世xϾ界uzhϻʑaϼÍkķĸsÏϼちËlĵðrこtñoϾÊpzʑrʕsϿんnhnĹĹhĵķwrexójhfÓòĹϾr界òはËuqc界ϾϻϽltĹh世にÔóÌdjににϼaĶĶĵkgbϾÎĸmxxにÏĹϼsÊÎlòÏちla界ñĶsĸeË界界sʕaĹdÊはÊkÒちòËķはcにϺ界ðucϿϽlftĸÏķqóÑôϺñÌaòqoĶÊこϿóこóĶyxんϺovlϿóÎ界ちϾôziϽĸqϻlhϺe",
         "dataset": "UTF8_STRING_COMPLEX"
     },
     {
-        "ciphertext": "1000000000000-0-000000000000000000000000000-000000000000000000000000000000000000000JZ0LB40l3R-gBUtCbvaYw8h96ISutbGo6YLJ6nxT7H4f-4SMyvlY-T-7UiOe5smmOqOjo13hduMOJbHGu6jn05AnY82XZHcLd4HT0uxIo",
-        "plaintext": "5804570730277-9-505153283399322465510110956-2209539257673948308971197210146286361266015392007-917537419184953536256827534300266-5405016-8-10858863005273225723210688140860304879493565202177",
-        "dataset": "SSN"
+        "ciphertext": "#!-!!!!!!!!>A[){:MH}+Gv?~\"kbt%5M-eyuw*$,P>A!8rT(_]@B",
+        "plaintext": "HR-WZ6GY4ZWM24LEYCCU9N9JOOOX9SIM-Y7Q2ABRSVZT1N3P7G@R",
+        "dataset": "ALPHANUM_SSN"
     },
     {
-        "ciphertext": "1000000000000000000000000000000000000000000000000000heKxX74MXhmyJOc5AocPI7v98-PI-1gk9s0x44JUUFH2tI7k4xPclBCWRwRY8bAP6ql",
-        "plaintext": "66930477487630250001421490580728965698558538268812335823901247044117383699690-36-44033920749117497102772889292711278214",
-        "dataset": "SSN"
+        "ciphertext": "6ΪΪΪΪΪΪΪΪΪΪΪΪΪ-ΪΪΪaUÏ-ÕÌzちήtķʐIϻϻĸÌKこðFiϺßyZϻbñmÒNyは7SちϿËp6ÏÜkQc2Û78έέ7ledÊyMʔÎÔ6nϼϽcFÕfljJoNðQÚpb2HgϿ6HϼĸqeʐDϺARzÜはnñdSòßðFέάNòQĶ5ÊÞgϺέέ",
+        "plaintext": "Íd世nóxÊodはbjgķ-sôんvoa-ÕóqsnmϺʐbこaĶoôにñti界んgvÌにirÒgeϾwymòiÏabafeちxĹϿvkんfdñbôĵϼʔÍÔdĸんt世ĹÕËϺĶpxは世ϺϿ界hólÌÌh界òϿdxʐĸzÏちķϾvutnĸmĹĶķeiodvvÏÏtuehd",
+        "dataset": "UTF8_STRING_COMPLEX"
     },
     {
-        "ciphertext": "\"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!G+GDk`ju=YK.Z]::@PS8/nbZxjzWJa8~Jd",
-        "plaintext": "00760033172039133119991170646015301014132038412@37037164392975448",
+        "ciphertext": "6ΪΪΪΪΪんI3んJaM世80にrhJKVoßÞϾに7eΪó1AyΫnÕdßĸÞ7DBに0ÏK",
+        "plaintext": "ÌÊhĹcÍちkñÊϾmvÏfoacxsrazにĶóÌĹËvĶĸhxϿoÕvϼにsÏϻϾĶϺfz",
+        "dataset": "UTF8_STRING_COMPLEX"
+    },
+    {
+        "ciphertext": "6ΪΪΪʐΪΪΪΪΪΪΪʔÒΪΪΪΪΪΪΪΪΪέT世TgnðzRϽϺzSKpKð32XfJ 9FXĹÒo界mÞϼXちĶrίiñ7xÌxちwちάzÜkϿzp1vV界ÑÏにÌΪlĹÝÍÞfqmϺÛち4NQZ07UXc2OwCϼΫĶñʑzϼίACfÞķa5ÞL0jά5ßôϾこ1こÞcodPqÊϿoĸwYΫSÓķBÊķe界udÜΫ5",
+        "plaintext": "んÏòrʐĸxòlhはϻʔÒw界ĶんにesóĵqϻĵĶpzôϺgÏlϻkϻÏÌnķl界Íj uķんϿÒyĹdんp界cpôqpこĶkpはÌsϼsϼϽmttiyóvdÑuϺÌiĸちϼĸe界ϼeちðrxËññ界Ídad世ÌðϿにĶñnʑaÌòϺkんlcjはtちtqÍiにんmÍにgñË世界yんóphncϾĸはÓはxptqĶvgpÍķ",
+        "dataset": "UTF8_STRING_COMPLEX"
+    },
+    {
+        "ciphertext": "\"!!!!!!!!!!!!!!!!\\!!!!!!!!!!!!C_*K@IFs#1c&'s:,y7/('$8n]P8?)RB3?",
+        "plaintext": "57213074951989930\\3291351659988168@237064&604226712280291882755",
         "dataset": "BIRTH_DATE"
     },
     {
-        "ciphertext": "#!!!!!!!#%bTtk)dm`Qr:Rp%rDIIqF-:bFk#lzVqsB-G",
-        "plaintext": "66IY170Z7KAEZL11616VHUO9PJGDMW-EG0COC2N4R0-A",
+        "ciphertext": "#!\"(aP,&j$AIn>#P",
+        "plaintext": "EQ9D1K4&LGBSXX0T",
         "dataset": "ALPHANUM_SSN"
     },
     {
-        "ciphertext": "#$e6CaiH",
-        "plaintext": "FBJYXUXQ",
+        "ciphertext": "#!!!!!!!!8jz:c50jc,\\'/Is<;'l6.`H]}e63IFn4+&\"B.#wYZ",
+        "plaintext": "KNCRPJABUOKLOGE7EP3\\CGLMQ;BH8WCHA9J83YEGB6&82J6N0W",
         "dataset": "ALPHANUM_SSN"
     },
     {
-        "ciphertext": "6ΪΪÓΪΪΪΪΪΪΪΪΪΪΪΪSに4ĶんÝZrwgDÎwmsCmoCôʐÏ0pWhKiΪóZʓn0y界ßÍWC6sòちwRuÝóIj5xyKSpĸUÏϼoÕn世kÞhϺϼxj9WsA2TbXÔÔ0έϾ8ðϻÞĶĶ5世ñέEÎEĸj",
-        "plaintext": "ñÍϼÓĵxhĶbÌÍdnvfbpdϾrdatϺmÏñϼĵtzsgdϺrʐtoんyhñòuÏϽʓはccϿeiϼôķËķϻϿógちdnĸòeんÌñjはķlzϺÕpxóxÊはϿoiðfÊんϽϻϾϺÔÔϿ界esはこiËÎϿj世bósĹÊĵ",
-        "dataset": "UTF8_STRING_COMPLEX"
+        "ciphertext": "#!!!!!!!\"K&nOgv(#oAw0>#[@d0Bb=Cd!9}5S'#$bx9~B[",
+        "plaintext": "QZWLYIMNRJ&58REMFHD2MO6Q@1GDPIBYBOEVL1C7KEEKOP",
+        "dataset": "ALPHANUM_SSN"
     },
     {
-        "ciphertext": "6ΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪʔΪΪΪΪÑΪΪΪΪΪʓΪίoqpήίÏÒķWMEÝ2ZôqeÍ6òĸΫ2はÊbϺÏrjDiEQóĸLDʓήʔÛkϽt58ÏôQÞÎq9Vή世Ë1ĶANXhϾ5VRjIϿ-lo9ΪKR2CòϿΫñzjDĶάr2hÔdÛyAÜSbέZWÓήzÝÏcにaJÏdñQV5IÍñÜðEvÌCZWSx2ÌT5CĸohĶ8こQaĶÕMÊϺFxrSOwϿGUcóßにkA ÏóÜήsrWίXnJQ",
-        "plaintext": "oiÏðbϻϼñËfdÍÍqcrʔÍ界vrÑfにϻϿðʓdoĵcÌÎÎËÒôupóóhvmĶðvË界ϼhuiftϻÌvtuôldϽbðtʓwʔÍfasちんcthは界ϿんϼkalちðñmĸĵhórfÏϼo-ĵyĹĹmwËÏt世jñxbuóvϾeðÔnÊmppËðóbÍÓcにこĹÊrjϽwòfこlôadÎÊË界wgthんËòんĵptϾylbĵvôÌdĹÕϻϿnyôpこljËtfiĸnÊϿe ķxr界óðcķÌķĹは",
-        "dataset": "UTF8_STRING_COMPLEX"
+        "ciphertext": "6ΪΪΪΪΪΪΪΪΪʕΪΪ-ΪΪΪʔʐΪΪΪΪΪÔΪΪΪΪΪΪΪにÚGķ界はq0ÊfÓwEÎήñ界ϼÔñpϿÍmÑX0óo2RôちzϾôjE界7kΪÍgίZÊEϼMʕN4ÞðÝW世AjhJtϿnTϺÌんaίÛ4Exu世jήTYLHこdSΪfOlんWaÍTsDϺQJWCÝÏnÛÍEjÞにÏί0ϾiÓ9ÞήpÞðGÌliĸËZķKέϺϻMBEϽ4ôΪ9はUÚôIÎeはÝTmϾedPwIÒÝ5DB6ķ8ZKðQÍQÞ6HwÌD4Wί0jliËĸ",
+        "plaintext": "sðϽuķÍÊôÏpʕhķ-ò世hʔʐちÍemĹÔはmexdòacち界世んĹvϼôóÓbこqÌðĹiÔϻwtyyÑϾĶϿesにuÍraϽnlpϾĵwdòeϿðifÍʕfϾÌfózvafĶñんuxÊixĶldËËnにはvcy世xdĹgzsnsvóqϺhpÎkhiÍòfÏϺϾĶĹϼpsfrmÌwd界ÓvwaegĵviÍϺulこvÊÎϾちlókϾowmqĸóϻ界はちtdÍち世ϺϾlĵmuÒaÍnsvywbにÏÎtòmójjtϺÌoÍϽはliËĸ",
+        "dataset": "UTF8_STRING_COMPLEX_pass_suf"
     },
     {
-        "ciphertext": "10000000000000000000000000000000000000000000000002k0oIHigtwOojMQXCIgNJrIELWH6Y9QMQD3v-NsC3-ycZlEjeMR8qrcVD-nRvU88vJ",
-        "plaintext": "7225953290359616827426707528274653201954222886576093622604841331900633880045211999622-8968-350660350893622-99581280",
-        "dataset": "SSN"
+        "ciphertext": "58810000-000000000000000-000-000000000gVhhuygMH--wINTggj2eeZdRc-OPJ0fv3RAKm0xYsmmT",
+        "plaintext": "58835488-287689178025103-306-665907014735275075--52642029486251-778676032050872647",
+        "dataset": "SSN_pre_pass"
     },
     {
-        "ciphertext": "\"!!!!;!!!!!!!!!!!a2E%ET}%qO{At$\"lO",
-        "plaintext": "56786;1010694977401272658844458745",
+        "ciphertext": "\"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!^!!!!!!!!!!!!!!!!!!!!!!!!!!!%dz1(FO,ya$PCZk2!sF>E}S{q#>zg>V.Zqwuoo5Mo{R@O(H_zq^fm^m>0W#wiiJ!Ps;<)#e.xDBj,]H=RtT|",
+        "plaintext": "9433680910213799903479203708865371059277799873^1690374778131942888351280814079535068120896355222778723548655562275959@947076^50^459363660079;6484692756380391|",
         "dataset": "BIRTH_DATE"
     },
     {
-        "ciphertext": "-10000000000000000000000000000000000000000000000000000000--00000000000000000002itOY3-amO5f-g97MrHIQJ38xuIBfKFQdBhiZ2MqjIHmXnsNqpVgmLZ4vF2KDOLz-zUlJaMKWnt2grQYR-C5UHDwpq5KLepC2Vhk",
-        "plaintext": "-82042826581318018740404914926259221278979594445403605356--7716138390625557697902019-02824-863067695624133458380021161060529818054270059190329-5730431285422822-431214464533883381",
-        "dataset": "SSN"
+        "ciphertext": "#!\\'3p&6avih6yN",
+        "plaintext": "1S\\WLE&RTWEVF76",
+        "dataset": "ALPHANUM_SSN"
     },
     {
-        "ciphertext": "10000000000000000000000000000000000-0-00000000-000000PrOushMpi8J---5VAw8GJI3fXsVSRJXqeKbXRbC0opMsw4yaFBYUt4nZyMr0qfEpD",
-        "plaintext": "80803241582528620285064652955412623-8-57029632-36756357114186317---033845392684700640998778462041263589696905996106653",
-        "dataset": "SSN"
-    },
-    {
-        "ciphertext": "6ΪΪΪΪΪÔΪΪΪΪΪΪΪΪΪΪΪΪΪΪήsòwLS6SLΪ8U世ËGĶんIh世gL-xvfcĸvʔqiΫϼ世ÚZķñÎôϻXdmËðSこÌhʔDÍkIuÚW2ήPóÌmwちñTpgϼoÍϼpRwUϻĶTfÏy界rkÑOSTsÛôん9ARQĶϼdLußÔίίjióTϻó0VΫĶðFLÏά rPxlZQhyΫ0CwjnR",
-        "plaintext": "はqdÎ世にÔðĶちðĹgϼķËnĸhñennϽwkmϽϾkbÏtóomϿofĵòxĵ-okちmr世ʔcutpóは世ÍfϻðuðubfこaĹはyʔgķmkrんôdwvķÎhezyÍlķtこfcaにĵvònĵ界ϻĸftzÑrx世wldhzĵqんrÎiteÌÔrwĵϼòtÊlxんĹĹnalĹĹ htϾĹĸÏjϿÎñyÊrこ界",
-        "dataset": "UTF8_STRING_COMPLEX"
-    },
-    {
-        "ciphertext": "10000000000-00000000000000-0000000000000000-00-000000000000-000000000000000000003EupEHgL-CUNzF7plyYWi7YGOr-G5yuT-rOwcy3UfudZnAwWZQ6p3kGgQGMv3oCax11ATvx9ay-TTsdD-Ec0funDXhQcOzbtQgooH",
-        "plaintext": "13873942856-04121375816450-7504282359066322-62-439916357704-9551462064159736777705716972-52398827850275866-57405-31549846501115338404793476793882084061990-59464-86647725576546396048",
-        "dataset": "SSN"
-    },
-    {
-        "ciphertext": "\"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!@!!!!^!!!!!\\!!!!!!!!!!!!!!!!!!!!!!!-!!!!!!!!&!!!!!!!!\\!!!!!!!!!!!!!!!!_WLmnorAxG{Tf1x?b&Yot),x^a3R7OBqe_iF9\"!*y4C/jl{bagM!dhzRLtt*|Ac=D8faMJm)l9m:7ga5+1Oe+Y`;Sp~TqQ.Cr=n4:C^Y45~A9c/b=",
-        "plaintext": "24334872420516621601838319692247327746@5581^97024\\06565843132523343834960-40531337&25739291\\464827354187443681346493474419045&449182^91025044154324208897976025364852477|44231159791045793483958193;66715790533729^3480093116",
+        "ciphertext": "\"!!!!!!!!!!!!!!!!!!!!!;\\!!!!!!!!!!!!!!!!;!!!!!!!\\!!!!-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!%qYnR8sJwZrnJQb|hp+N\\wU<^SwwCIR.Q>jR}av>[xv5Ax,YW0a_HtH=h`#a%]H(C9c,[|~t7=W|av2+>XZ*:'-)XH$'P$5`:}SJcHCdKv%YCNLRn+yCjS",
+        "plaintext": "0275537252305170394715;\\2517056087016958;0015799\\9984-8565566100598850621299535314948205745466240707050091438381898190675766|7469\\014^70592926672088883783588746028635641623065677|53066|8984842551-7610886907386012069400983229855",
         "dataset": "BIRTH_DATE"
     },
     {
-        "ciphertext": "#!!!!!#rS%E0Al(V81;F%HVal.$eN\"oc(a`",
-        "plaintext": "KQEUD2XO3CDVM7H44R;60B8FD7ED2DDEOLU",
-        "dataset": "ALPHANUM_SSN"
+        "ciphertext": "6ΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪEΫÞhΫÝķ0SϺn5ĹEϼy8r5έJig5ÞZGÊGにJにòÌðFάl-iÕこoWUeFFJんこήññsϼOIWķkD8世f3ϼ2mdxYĹwDtBこΪlέqίiVgÌήñmhίÜ世jϼLIk3ήRgÒΫPĶO1ôxにpÏにz Ͻĸ",
+        "plaintext": "ϽtñuòudϺðo界ÌmqxslϺϿirðϾんvÌqちbÎlķkvzxôeϼËϺϿb世ϻoeにÎqtðstl-jÕyÏzϼ世ËちtにこrisんnpkokzyϿhちĶこuϿにwgbÏ界ÌxmotϺϿĹmこちfĶxん界zoqm界wÏoÊqññÒxqiËϺĵķlĸはにz Ͻĸ",
+        "dataset": "UTF8_STRING_COMPLEX_pass_suf"
     },
     {
-        "ciphertext": "\"!!!\"{Aqb!",
-        "plaintext": "0873669864",
+        "ciphertext": "\"!!!!!!!!!!|!!!!!!!!!!!!!;!!^!!!!!'8=h[q&~+|fDcl]vld&V{Eo`ph[!0*~TUrT1h",
+        "plaintext": "24660969660|4024444565567;29^81759999303&14|59679098&756545530835830080",
         "dataset": "BIRTH_DATE"
     },
     {
-        "ciphertext": "6ΪΪΪΪΪΪΪΪΪΪÑΪΪΪΪΪΪΪΪΪΪΪʑΪΪΪΪこQRVyWÎoóVßVyrajoEZ世0άwisϿdÍQϾÍcfちEIϿhÝΫϽϾÜちĹVήrϾÒ-r世O8jtĹf13lVnwÍÝcϻÑķTO07ÏÔgĸΪxfPÍWQót5ÞEÍßÛϺちdjちんÍĶoFV1は4ÚちIはZMjDはpήX7VÍIEH6έέ世έFZちxgはϾ4ϿnÍ9dLÜήdZ1こF世XϺjήんsGPϻGeóHĸbķ1ßKÌppVM",
-        "plaintext": "ϻhËÏhËvoðqこÑyiķóちÌĹんÊĵwʑzrnĵちyϾxqÊrr世dϼちwbϿfにcはgĶÍ界pjsんËoiは世c世ϿĹÍbvpbpkにfvemvÒ-ËðvabnÊncugqgfϽekんÑvófnpcÔñϾはÏñķÎsbϾϿrËËzt世ϽjòϺuebËroϼchϿにukはqupcϼϿlqojÊjóÏϼaðziijϽcmĶfltĵϼñÊbwϻķónrbqvóĵĸÌcqϿñĹϿyójnu世ϾĵwfĶϽd",
-        "dataset": "UTF8_STRING_COMPLEX"
+        "ciphertext": "#!!})@(-a<KR5dW",
+        "plaintext": "6FQ5H@Z-TU4SR5J",
+        "dataset": "ALPHANUM_SSN"
     },
     {
-        "ciphertext": "\"!!!!!!!!!!!!!!-Qa1v!j5pg$pt9iu",
-        "plaintext": "859296118297027-684911701924751",
+        "ciphertext": "6Ϊ-ΪΪΪΪΪΪΪQs0ôðÏhϽmfÚίkĶÍqϾQ7ĸĹNDϼcΪFZfVÞeC界世tDqÞpή08SEĹjaKaÔt-ÚYwfôÜHϺñóð",
+        "plaintext": "dt-にϻこjuuĸÌこðこiseqĸowmϺÎxnķはÌoķfhϻÊϺϽcgqϺaĵんmϽËôróϾϽĸĶkんónwϺÔÏ-ôÊcËaxcϺñóð",
+        "dataset": "UTF8_STRING_COMPLEX_pass_suf"
+    },
+    {
+        "ciphertext": "6ΪΪΪΪΪΪΪΪΪΪΪΪΪϽ8ÎʒÎこÎSzYĸPc9cYmEGSoRw8Ý64ÎÏOD4ESAÎWDCQÜ8ĹʓYGwvgóËんϺRWPÒACÝÍD界eiんô9ÜyfOzこTはRvtPはñήdNÒέϾK世6FnϿi界ut",
+        "plaintext": "ñxvlちtĶϼsrqòĹÌんÏÌʒygcóÌちptÎgĶpmqϿ世ÊðnoËoķĸちðñpgðonϼòϼcϽ世gʓlnĶÍnϾĸÏcô世fÒ界ÌfoĵueóķbÌϿðÎこwdaôĹkĵal世はlËÒwÎĹĹÏxĹϽi界ut",
+        "dataset": "UTF8_STRING_COMPLEX_pass_suf"
+    },
+    {
+        "ciphertext": "#!!!!!!!!!!'chGt_8u2YmfE<Yb(0J[HpC>{l/R<_mH6rY#*'X;Bb-ZCT2h*",
+        "plaintext": "OPVSS0UH7S7PPL0NGRGTWD0ZOI4IREN6Z6M75ZON3FEIWZDK29;B7-DL7HB9",
+        "dataset": "ALPHANUM_SSN"
+    },
+    {
+        "ciphertext": "\"!!!!!@!!!!!!!!!!!!!!!|!!!!-!!!!^!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&!!!.FgG9OC}g\"=[iQC}`-*!4Cog/ufWIoR)Ycy0|LT#=|4e!n=?h7-;4<sbEo4L,m+Gz[3B<:4Ak>?IS?53G13Iw[*ANmM76'ltw@C<DhlU{%",
+        "plaintext": "822764@554053725830807|1145-6014^47831414911866466051929617891550325019075339773466824957128891&22105312872576718706-053676340730946934|1136|80029885-;895207803849503156674875457318150374192893830@66713251",
         "dataset": "BIRTH_DATE"
     },
     {
-        "ciphertext": "#!!!!!!!!!S\\e_[tt}yNkXQf,`&,MW8RH.sZ%E`~Z~3f&[P}*i}2r9",
-        "plaintext": "JBJZ58EABU1\\UV7L8Y2RE53866&C22I4UDAW9SUCCGQ6&5IIOOG6HV",
+        "ciphertext": ";#!!!!!!!$1iL7XE.7OK:ZaoSOrH1nyOw%,3[9MmTA3",
+        "plaintext": ";BL7GQ8AOFGUU6LEOMT28X2KNU8B3DCNCX96Y1JN8I2",
         "dataset": "ALPHANUM_SSN"
     },
     {
-        "ciphertext": "100000000000000000000000002YLp47eTtLZ7T5ZFYzqyyB7aqW0LpAEIQG",
-        "plaintext": "665072272005597922549917593509692378351477464155314669747521",
-        "dataset": "SSN"
+        "ciphertext": "6ÔΪΪΪfZ2JgSϻHKPlôXWrehßN2UQϼ3Þw世Oちmmm",
+        "plaintext": "にÔicϼbÍϻiϽちĵxôk界vóÌにĶòóbËhvñĵちytfちmmm",
+        "dataset": "UTF8_STRING_COMPLEX_pass_suf"
     },
     {
-        "ciphertext": "100000000000000000000000000000-00000-000000001WZKsr-KZc8HWDctMVZ-Lum42p70Rhvhm3ltp42viOLQvTsdM4-iyl5Bz6S",
-        "plaintext": "627777949052004399759060917993-74647-81871130192071-909072834593-100207376345225146687051329769-38411911",
-        "dataset": "SSN"
-    },
-    {
-        "ciphertext": "6ΪΪΪΪΪΪ ΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪ-ÛĸϺ0ϿϾSePuϽ2ϽXϺ界ÚvvVzNeʕϾに7FEĸ2Hi9ϿĶkgzάは5ʓv2ʑ9ά6άʕJÏ-qñ9KFlĹchÌJbʓmΫ3pyYWϻòDUYÑ3Ͼ7O1KCAtʐeclϿϾĸFÎRvvʔaYķzh5ntGÚËMʕJunϿķάWķwÔにEnLpËfΫBÒSÌml441Í75g9ĶËZϺ3jZcÌ界2gÍó",
-        "plaintext": "ちÏwxķnϼ mĹhuÌxeんÍcϽķgϽzϼ-rukgaemohvoϾizϼgķはytyxϾʕeruϿðeĹuoこちÊpltÍyôʓuñʑgんÏϾʕÌe-こϼzóĸwϾauこxzʓĹËはϻuwôtxÎgちÑĹÎちdbĹÏoϿʐ界dsϿókϼϿgvvʔihzこslϾxp界ĹÌʕeにgÏzÊこgpÔeんxuooihñÒϾんôgóϾË界aはϺÌaϽÌんfsϼbt世ちvϼこ",
-        "dataset": "UTF8_STRING_COMPLEX"
-    },
-    {
-        "ciphertext": "6ΪΪΪΪΪtÛÏRq NR界cÑ0rMvʓF1GϽVËMwÚ6ÔÊにNÏhñjaこにϻ4E3こJ",
-        "plaintext": "fzt世jϾzϺlaÊ Ͼϻ界ϻÑwôÏ界ʓtにrķñdpķxはÔこhちex界aϽnÏĵyϽpĹÍ",
-        "dataset": "UTF8_STRING_COMPLEX"
-    },
-    {
-        "ciphertext": "#IVMtK^",
-        "plaintext": "3G2QM5^",
-        "dataset": "ALPHANUM_SSN"
-    },
-    {
-        "ciphertext": "10000000000000000000000-0--00000000000BKp3ECgzC-47wkaam-L05f8juAjuW2Okct76UAUBeoqyZl",
-        "plaintext": "46579662197844571862050-9--98666827726488749994-5404330-4843734113281489320518356720",
-        "dataset": "SSN"
-    },
-    {
-        "ciphertext": "100000000000000-000000000000-00000000-0000000000000-0000-00000-00000-00000000000aIPLfYdutHdNmazGGXCKbZZHLTyx-EA5dgXnGRQnnUSZSLub5vO21CLHYk41JD3z5O0AAjFy-lYDuXWD71-7IZPS-SZb8KdTm",
-        "plaintext": "031640727042959-924348277792-99364211-6753746573239-6037-44424-90578-190928417131528770787935828688544122497-4005797636541963931598485360755425460133200-214628564-47637-36971901",
-        "dataset": "SSN"
-    },
-    {
-        "ciphertext": "\"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!;!!!!!!!!!!!!!!;|!!!!!!!!!!!B`5:u5$$j5F6|7vhL39[ow?m!-/ST5[L:TmK)fWy$-q|%{@9#HfeNY0f1_]uD43-~`mk,medrECI)P8wJ",
-        "plaintext": "327825142948771559704532696953960029058355246;44980987355763;|51603235027460498318180|965579277709-967968899067092-4|99@3448184975736154-48682682779146188",
+        "ciphertext": "\"!!!!!!!!!!!!!\\!!!!!!!!!!!;!!!!!!!|!!!!!!!!!!!!!!!\"@044rHvd-$`[..xJ=*i.N7U%!/ymd(Wy<HA(\"N:EgSA{1~6sqir=q",
+        "plaintext": "13423102330472\\89953086253;8090749|4707084885825341@7294983-09006351633009925450034179120892222610327287",
         "dataset": "BIRTH_DATE"
     },
     {
-        "ciphertext": "6ΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪP2qÛWj8ちÊhʓRËÕ0óXVfòÜIqί1Kr8ίέòS5LこέrはέϾð1HbϺWtßάNGWM5ñ48ßoepÚ1DajĶĶÛËñbĸqVJにyĸxEʓGyeHίVdo26H8Ìu1んBÜÍXdf yn9wgr7ZϻĸPに2άckÜ2ちEmÑYsÒOϿϿBʐW5TÍMJôqVÎέÎfvķaZϼðvΪÛ",
-        "plaintext": "んhϽzんoϼñð世ôpðÎんzϺ界rbn世aϽrÊÍmñちnafʓimÕnķĵちlbpñÊcyòñóϺÏòôñはjmhqϽoϼp世はyÌrϽbsñbϼsϺんËķakazlotyxĵeϾkËϻônuplķķrʓjgðĵ界ÎÎfjkÊescaôv界òĵ界n 界gsòϿaϿ界ËñϿĹf世sófóÏϾiÑlϻÒsϼϿoʐkzlòÏqdĵϽķiĹbĸóyĵorϽcð",
-        "dataset": "UTF8_STRING_COMPLEX"
+        "ciphertext": "6ΪΪʐΪΪΪʒΪΪΪΪʓΪΪΪΪάeÛCeϺÛちNIにÛdmϿô 6ÝϽ5ðK界myËò0cHÚ0こQbϿVんSjËĸÞqZ1ËÕyAÌiϼQQMVñÝÛCmTÊw369rzQôCóVέĹʕmE1ϺqʒNGÞJu7oϽWϺÞή界zlϽ",
+        "plaintext": "wñòʐはϽϿʒĶϿjにʓちĶこÎÌϻpóÏqĸxちywnuϿϻÏ ĹôqôjϾgĶbϽϾseñÍxbんはĸóqϾwϼóóϺÎqrÕϼplÊににÌtÎtķÎÊikdĵðÌpÌðeszzòÍ世ʕËÏϿϼxʒË世こĹにこÍÏtfuy界zlϽ",
+        "dataset": "UTF8_STRING_COMPLEX_pass_suf"
     },
     {
-        "ciphertext": "\"!!&!!!!!!!!!4H7Pu6:w71.%",
-        "plaintext": "924&337045506437152121825",
+        "ciphertext": "|#!!!!!!!!!\"6,4\"0-G/MJhuE\\i9?QP:`K=w.NUq?|'>cv)iH:tM!W(JfuP",
+        "plaintext": "|VHN2MJ7C15F4LJN0-D5BLZST\\P645ZEG6YY43D6X|4E5VOZD09YMHARPZK",
+        "dataset": "ALPHANUM_SSN"
+    },
+    {
+        "ciphertext": "#!!!\\!!!!!?W]?BdO2z)l/exVU9~he+sO:2>TR>)]'E9_>!",
+        "plaintext": "DAII\\ZD8RZYQ9H1ECYN0VFVHFUQKHPNV5X7AAZLZ3274IBF",
+        "dataset": "ALPHANUM_SSN"
+    },
+    {
+        "ciphertext": "#!!!!!!'<)m5}%bVJ*_Y$Zaq'vxt1F(t+2P#j-",
+        "plaintext": "NNWTMPEMZICDYXOB6ZYYDTVV2FHWEPKX3I223-",
+        "dataset": "ALPHANUM_SSN"
+    },
+    {
+        "ciphertext": "#\"i}_G:8j",
+        "plaintext": "E0ZS829Z5",
+        "dataset": "ALPHANUM_SSN"
+    },
+    {
+        "ciphertext": "-#!$wE{k]7nU}^E@",
+        "plaintext": "-3AMPAFFT71X4^T@",
+        "dataset": "ALPHANUM_SSN"
+    },
+    {
+        "ciphertext": "#!!!!!!ibSvbOGJ)pN*4c\"RR2blCg!dlE}D",
+        "plaintext": "HGZVWQJAV4K8COZNLD43058XCZE36UO8K4I",
+        "dataset": "ALPHANUM_SSN"
+    },
+    {
+        "ciphertext": "wϾʑ6ΪΪΪΪʐΪΪΪΪΪΪΪΪΪΪΪΪΪΫÛʓgCÓhNRK5ĸEΪGKs4rϼÛmyϿϼĸϾϿÜちϽbήίo4gdΫl世んfÝ7GY3KPPkGÎRUfķfFóHTtķYjËÍUEiÞϻÌxÚSðにÚfòÝLkYήΫϾΫñこd8vCSðjAKίwtĸmz2eTϽVんÞ界bんんÏó世ÏÜ9",
+        "plaintext": "wϾʑbķvÊsʐxÊñgxϺÏmumñÊϺdはʓssÓókķoovϿdjちÍĸðsmĶuĹiÏwcgĹķ界eôはϻca界veiumayóÏϾϻsðwiϺはsĵbにcにtϾはlにrpòv世ËϺに世ちmķñutjこjw世vtϻóんejlðÏにqðĵϽeuはòopÎϿqĹoñÌuÏϽんĹñdpĹi",
+        "dataset": "UTF8_STRING_COMPLEX_pre_pass"
+    },
+    {
+        "ciphertext": "んtn6ΪΪΪΪήKNyEa8bfÝķϺRÛÔB7ÎAĸFOsknはÚϼんR界sÊF0bÍこ",
+        "plaintext": "んtndrw世世ĹshĸhんÍðaÎĸんdÌÔちphÍkĸeϺjuĵòϻĶôϺはϼóñpqf",
+        "dataset": "UTF8_STRING_COMPLEX_pre_pass"
+    },
+    {
+        "ciphertext": "\"\\!!!!!!!!^!&!-!!!!!!!!!!!!!!!!!!!!!!-!!!!!!!!!!!!&!!!!!!!!!!!!!!|!!!!!!!!!!-!;!!!!!!!!!!!!!!!!!!;!!!!!!!!!!!!!\\!!!;!!!!!!!!!!!!!#2a'%nCEME/aRX0olqo'qi/9~sQ'A;XAYGQ3{[g+/>NT[E*WG\"nM#v_a\\j+W!iB/cKE/Y(`<r2\"fcl@>4i=g4x[<U]h-on.(^z42S`_Z\\H778qs=je=k>Ij`(aL=p>Cim,)q",
+        "plaintext": "6\\69341625^3&2-5067283538737534940929-321858050348&68784296665382|5505736552-0;907471138103824280;5281708198315\\131;960048434649928631311576900630599050061977;71567333619761704665137425\\817033065319354823109@578359697667-7711^6893698\\871401306018957071625369518",
         "dataset": "BIRTH_DATE"
     },
     {
-        "ciphertext": "&#!!!!&-*'K9ht=hK9oB0al9R{7![y1",
-        "plaintext": "&XE9AD&-N5MBBGV84GJUGI3RXHYKH6I",
-        "dataset": "ALPHANUM_SSN"
+        "ciphertext": "nsg6ΪΪΪΪΪΪΪʑΪΪΪ-ΪΪΪΪΪΪΪΪΪΪΪΪΪίϺßIZCMʐこϿ3Ϊ3dSWFέϼΪSxķgxÞέhはpm5ʔήqUCc64GonnkOM9iAaKnĸこķ世Ñ8ήにÚΫ界ôUßoϿ367ϺoMϻywßWίXgËϽJgj界ipdËqʒLdϼ1ÊN界6ò3vんんϼάÛÊpÔBĶn3ΫVxんhĶÚôX3X4F4ķhtÍķDñJĸdXIMr12SFÎFLSRϿϻĸu6Ϊt8Z",
+        "plaintext": "nsgdvĶjwsdĹʑhòÍ-qこsñにzÌpÍĶはmϿñzohwķnʐaitwbðhÍgajòaaòはwñ界tc界ð世ʔkñϼϽcちϽĹvϼdϿjzaϼplちϾĵxこpÑdÌÏϿËôちにqϻÎĶËuÌÍんϻこxfÏϼĸaòðÍdbはĹòんϺñʒlcyzpsĹóÎnこ世ϿÌϻðôËÔmg界ÌËĹgpbĸñrĶÊvltcÌĶÌÌfaxÊϺϿこĹnðòこapñĹϽÏĸϾϻĵϺĵwaÏÎ",
+        "dataset": "UTF8_STRING_COMPLEX_pre_pass"
     },
     {
-        "ciphertext": "6ΪΪΪΪΪΪΪΪÒΪΪΪΪbsήϽΪQ6ÜķLIfこWxSpò87LQQPt Ϊ2vx8XAñnYέϿp424ÑÍqiF6P7ちe5SちϾXlΪ0VKfyにJÎ2BSÞòdyϻlήÛϾ1SÏBóήAbA",
-        "plaintext": "ÌzϼlóchちnÒ界ϾkϽĵôyvĵϾちϿϾyはÌにôvdϾϿfϻbはpp界 ϺqôこϽðĶaϻdbsxははòÑ世ôðbにsnはylsrϽĹqôsĶzϿi界mÌoÏdんkx世hgdnfÍ世んmんĶÍcñ",
-        "dataset": "UTF8_STRING_COMPLEX"
+        "ciphertext": "3971000000000000000000000000000000039sc80woCs0j13v3cs12xKFMd1449ET5U-QrGvSwD6S2312",
+        "plaintext": "39771991600042875801375917100814979350052272343505165899799199148945-0691720432312",
+        "dataset": "SSN_suf_pass_pre"
     },
     {
-        "ciphertext": "10000000000000-000000000000000000000d5pGpe9SWybEu-DEjVrq-GJRlR42wvOSrinstMssN-cN8Jjb",
-        "plaintext": "45623916543029-1891621829913465033200069426955469-425485-96929161734480491658-024062",
-        "dataset": "SSN"
+        "ciphertext": "ϽuÍ6ΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪ-ΪΪΪΪΪΪΪΪΪΪΪΪΪΪこ2ĶKQuyqAʑX3hʕ50ʓΫßkU0zwc9ÚZJʔA-Ïð-QBN1ySqこnzdrϽjϿvrðòTpNqqO9FRHGkfowOCϾiήにϼgϺqAÛjln世tUmZß3DYMKÚa7HϼϼX2QίcR7ϿYhjÊPMôXgLCgʓoάòĹrĸruĹ3mϺÒΫĶCeÚϺ3Ͽn8TʐU7YRÚ3んÏÚMQ6ĹxÍgϼ4ÊÍË jZÏ9はΫjjÞ5MJmmóʕ0世ÎòΪjÏ8Îb2Ê世sËA0ñafoRñ8NñtÍ6MRULZq8Ñ8έ41ôÍϻX",
+        "plaintext": "ϽuÍĹちlÍÍaķwÌsĶにjこrpĹlz-sちóĸĵÊ界bÏjfϾjちuにiϽôϼôdtʑloËʕudʓyhxtdÏgϿÏlちhʔË-mÌ-んfooÏuにËðϻϾmϼocomyoËóixfwちjqにËó界界gqpgちÊϻcgxkgiuÏÏķqmzんiðÎķこĶauñsfちtnfはomϺÎlllËĹmんhòqϻはʓkĶówÍĶlfóはv世ÒólϻちbeikϾôfʐんnhĵϼojこnftôr界世ϺiÏzòϿ ĶϼófÊjちϾϿzôϻËにjʕrtϼËϽiËqdfogϼkmhjvôdzðilnĵĵvhϿÎĵϺϼ界òÑËhròqϾeÍ",
+        "dataset": "UTF8_STRING_COMPLEX_pre_pass"
     },
     {
-        "ciphertext": "#!!!!!294d)xbhQUtdosN2^MG_94in#H",
-        "plaintext": "5YI5X3NUB1P0HHJDL99GFJ^O2GF4IVVA",
-        "dataset": "ALPHANUM_SSN"
-    },
-    {
-        "ciphertext": "\"!!!!!|!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!^!!!$e'j%4~3J1so0EKHkKCaAK\\5F/JZ!j[lAj1P%Rv.i]w~U\\(FIi~TI%E<_1<p87T/TfqQD4<1iA(t,1n&kpA3_ro",
-        "plaintext": "390290|662707814273694643043871007050877064427413362922290841278168948300070^2149123102780712398564814\\8406279311695264469816\\362620942401507472147456666110845&6180840",
+        "ciphertext": "\"!!!!!!!!!!!!!!!!!!!!!!!@!!!!!!!!!!!!;!!!!!!!!$4#H$.HD!kM\"}\\rI_N<oN/Z+='I+Erbc)8PnVhx;T:>2/2vmjO",
+        "plaintext": "837072423030156685320743@545382020623;783588834319174482544\\8556960149144737909681964;4666951446",
         "dataset": "BIRTH_DATE"
     },
     {
-        "ciphertext": "#!Qa,S^.",
-        "plaintext": "J211DC^Y",
-        "dataset": "ALPHANUM_SSN"
-    },
-    {
-        "ciphertext": "6ΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪjÑ界ĸʑ世òxÚ界BĹはQbÑcß6ϽMcΫCfこCTaCÏeΫ6KlJXĹtXWIXlUZWϺϻñAWάSaάiÛNhϺb5Ýdm6ñ5ÚPϽÊtNʓULsに7ϿちN世ϿちcはEĸΪeB界ήNv3FuoótWÝxizĶÎÌwϻ",
-        "plaintext": "界ϻĹðsϿϾqĶϼĹϾjqϾvt世ÑĸÊʑðr世はんÍm世ϿeÑĵĸaϿvòoにwôôϿôgϼちこ界こñÎqlóĹmfĶôちÍôôϺにĵはϻÏvϻÊiyϻĶÊvËkdĵyϾķtuÎmmʓÏljhpんyϾzϿjbôĹcqϼ世ϽswvkrxakfϾϼylち世y世Êĸ",
-        "dataset": "UTF8_STRING_COMPLEX"
-    },
-    {
-        "ciphertext": "6ΪΪΪΪΪΪΪΪΪ-ΪΪΪΪΪΪΪΪΪΪÒΪΪΪΪΪΪΪΪΪΫrfέòέqËEFÍÞrßoϻEmXiÏHP5XXqpaϽ2iavI世Ͼ5ÊchÝんάôww-yAZTÚXòCiMrHzViΫÛIbʕΫòBこaDLqòϺËuήnPEbVÞMέuHέ7DKはrはJϻßL4ΫĸĶϾCʓÜÊu4ΪΫbにはPRhϻE0ΪÍiÚÜðÔΪÜQϾyËΪFÒϽ0ϼvĸ0rÞo9Ͼ界こwaOGGòjDÚuñVんÑßfÞQZQÒʑthòÛÑCwËÎh6IomN世lWuάkñjんΫĶóÏ2ʑ",
-        "plaintext": "rこϺhÎĸÌÊos-んϼyϻntÎkwuÒķĹ世mpĵrsこんÍqbĶÎcËÊwtdĸはķsðñhxlqϻÊmÏちyはaϽϽqlpz界ĹϾϺgeiϽĸam-cyazðÌはôĵlķÌちwòntĸñʕoĸËbgxkgwĵこg世òtñÌnoϼĸjË世ĸbんÊÍlgmòlfjaϺËĸʓはñϻこtちĸϿzにϿxËはeebĹÊmrÔĵhsÏはpòĸÒyóÎんiϺeϾxñelvϾòĹljÊ界óòhrhこÑtdÌĵcĸÒʑmĶvĹÑϻÌuÌtちiĹdĵĶÎんoòlんϾdðôyĸñʑ",
-        "dataset": "UTF8_STRING_COMPLEX"
-    },
-    {
-        "ciphertext": "\"!!!!!!!!!!!@!!!!!!!!!!!!!!!@!!!!!!!!!!!!!&!!!!^!!!!!\\!!!!!!!!!!!!!!!!!!!!!!@!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#P?Y^btRm?-%xt{uvGePD/JyW=9F/jDDNz?#wds,m*Xi?,/__JpvUU^:lX8C.0v@?jdnQ#Olh9q_+:YHGUSq+)%jb*(C$#%T6vSY0a%nD#7|o4%v2;i**v'Z#_]2AhvxAVp",
-        "plaintext": "355681891603@171090650697718@9606235307252&7684^75342\\1784245102611786278178@2903490994197566751846372929069738378505952465084^93848-2981653735427275686906737404842496009508829^71420203@5867362776388512014283296105375874077830319|64943;69373305074451226",
+        "ciphertext": "\"\\!!!!!!!!!!!!!!!!!!!!@!&!!!!!!!!!!!!!!;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!|!!!!!!!@!!!!!!!!^^!!!!\\!!!!!!@!!!!!!,[=K~E{?aF$8x--hfw~2T,~rk&i&,t\"a57NpV42rnjmPP,p-}\\V1N}4c{p\\:m6a)%jX.'Kb-MB\".}L+ym-^s84WWr=AR33cb\"0voAM\\{OJ[\\RW;PW%=$",
+        "plaintext": "9\\19986874192263074103@3&50894068941086;16297968411297833429840526283|4405264@39010304^^6384\\520146@1752886180509620334--0250078069&8&3910133876756807597-8\\15502432\\934454548443-345338805-^8512775660296454387\\8349\\56;66238",
         "dataset": "BIRTH_DATE"
     },
     {
-        "ciphertext": "\"!!!!!!!!!!!!!!!!!!!!!!!!!!!;!!!!!!!.-gnS8NzZL0sQx4}F}S5<]+JTjf'|%UlgalGAss3",
-        "plaintext": "2271015639911549759061561728;15343785-74999067728029330191659920|44775558597",
+        "ciphertext": "\"!!!!!!!!!!!!!!!!!!!!!!!!!!!:%ubm*pS:,t{JClz/U215UzOYJUf!u",
+        "plaintext": "2427103521374697964724882913525208854629852651330607960390",
         "dataset": "BIRTH_DATE"
     },
     {
-        "ciphertext": "#!!!!!!!!!\\#`>}9zi&Go%|p9:t|2tiqW]E6J)0fo7{93%,Y^5p:k,HpnH",
-        "plaintext": "GIEB8YSOCV\\O28Q6G3&YPS|HIXA|ZD80LGY4R6617X3ZKLH2^78B3C9JVP",
+        "ciphertext": "世ñr6ΪΪΪΪΪÒΪΪΪΪΪΪΪΪÕΪΪΪΪΪΪΪΪΪΪΪάNÓĸÏôϺはVMϼϼΪartDxñdyĶÝGpszVάこpdu世ʔ6ôaϼzʐάPÞέfhbϾlRYΫʓvq世VpC2YM0aJmʑ-7にMLQNちΫLʕnñkaϺXcnϺά1vJÞήHpÊϻdßZÏhÛtcϻßんはñËVϺ世MiVÌÏôĹÛÞこgϼķ5aάóϺKtÕNðʐßÎðHĹhMzにĶTķķR4ËtôfMlÎYʑey80ĶNÜR ちÎw世tに6",
+        "plaintext": "世ñrķóÌbljÒpķķqmzfiÕgrgϼx界Ͼð界xĸbÌÓewzñĵ界ðϻÏ界ozÎĸϺgóĹsϽϽòんalϺĹϽxここʔĵqlkÌʐytuÌôϺsbwϻkbʓfwķlnygjòaϽpÌʑ-世ĸkÏϽは界òϻʕÎϿÍñòxcÏvonvÌoÍĶちsð界にnuここÌwmòϽrepこϺlĶnにwϺÊÍexはϽórんpϽϼÊÏkÕϿÌʐϿjmlkmm界ĸjĸòÍddqはbqちejんʑķtfsssÊķ óiÏfqnん",
+        "dataset": "UTF8_STRING_COMPLEX_pre_pass"
+    },
+    {
+        "ciphertext": "ðĵĶ6ΪΪίϿϻ4lnpðM2HĹbQGdĸqϿÔdÍ8Ëʑm",
+        "plaintext": "ðĵĶðķϿϽhyttiĹちϺちĶcちsÍavdÊÔËgsϽʑĹ",
+        "dataset": "UTF8_STRING_COMPLEX_pre_pass"
+    },
+    {
+        "ciphertext": "#!!#`c9i6Uh,1K&iXk",
+        "plaintext": "BMRRCYY9GFKUE9&A8H",
         "dataset": "ALPHANUM_SSN"
     },
     {
-        "ciphertext": "#@!!!!!!!!['?|0TnFG\"y(LtK;:*]T#mw('Z_RVPr@E7y1JNHE",
-        "plaintext": "S@O63PYSWBMAN|Q4GUQ63W8FD;WZ8AGMB0GH6A1FU@AI2OY9VU",
-        "dataset": "ALPHANUM_SSN"
-    },
-    {
-        "ciphertext": "10000000000000000000004ztBvLeYnLQeLZSkdW-foRTsHFdcyn",
-        "plaintext": "3194368361186753815088654819927630026811-57045124239",
-        "dataset": "SSN"
-    },
-    {
-        "ciphertext": "#!!!!!!!!!!%EF2Ir^wu9VBc,!j^92oKh=g3beCic.y.55}iEXCg&bG3a>`OO\"",
-        "plaintext": "BBN58Z6I46RG7GZOR^VEK2RIQRM^ZCJBT6EGGV7WDZEEJVWQQA8D&QVYCZQ5TN",
-        "dataset": "ALPHANUM_SSN"
-    },
-    {
-        "ciphertext": "#!!-&!\"{RM*_IfJru:pD\"?>%2l",
-        "plaintext": "BA1-&H595RULULVEPBZ1I8CR9L",
-        "dataset": "ALPHANUM_SSN"
-    },
-    {
-        "ciphertext": "6ΪΪΪΪΪΪʕΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪちòÚ0ĹriR53QvfVÝËÝÛÝ5ĸlhÔʑòϻʓßÎUÊIIzðJ6fϿ世7ΫyちÞ7qΪんwcEÜð-onZUt1ϻðIVqÔ9vqBϿfDんÍðòhyYϿGNLËQBXq-qaGEQwYËS7ίwfÍLこwV世iT5hϽÞ8VVϺήcU2ϺwFÚðĹίeÌmHcE1ÜRjvÝAzeKKbeðlS jDzÛzVp1tέにϺXbÕ",
-        "plaintext": "htϻϾķんóʕËiqにbこĶzĹdhtÌamĵlÌĶこjϼjはwrvekϿhqËĸϾんんoÌĶはÔʑoðʓϿϿwlehĸϽhòzĶpϺϺpwbはôÍ界ϼちk界w-ÊbϿabϿ界はϿôķÔgϾóにplòĵiwmlsこqķnĶϾuĶんc-jϽiĸϿÍϺĹÏvjócqbÌちちwこËkはyôbbhxwこんzdhËurϿĶこa世ϾÍĵôÎdlϼmptËmyϿϼlÊd ĹpちñjebÊ界njĶhmÕ",
-        "dataset": "UTF8_STRING_COMPLEX"
-    },
-    {
-        "ciphertext": "\"!!!!!!!!!!!!!!!!!!!!!-!!!!!!!(o_SXpnvYZ[(h[H%sp[J'#7QTalPOHA\"",
-        "plaintext": "5053191854788410083429-529378408229532207540473354063208449053",
+        "ciphertext": "\"!!!!!!!@!!!!!!!!!@!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#/3[[A#*}_)L.1m*Ut[t[&U#Y-CDL%'Zv~7m\\UZ(7|/'7q0id=5,)Z?3:b}-Z7YXKe8Q:ZT@R?[3&tb]c[NM:I8j:Q/7HxdLf)P70#",
+        "plaintext": "25621045@132188545@33821659007842277591523326296873037857865460130376416820546988564112252373344052224264867780&577-6616276972\\0532|77014999068113565-31437829405@1283&7045348790764896229224131",
         "dataset": "BIRTH_DATE"
     },
     {
-        "ciphertext": "10000000000zwCFHnDAtngpBG",
-        "plaintext": "7492919862078109433650255",
-        "dataset": "SSN"
+        "ciphertext": "yry6ΪΪΪÔΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΫmóĸMÜん3aϾiέÌqはήÞϺ界VPIはĸ8έはΪòjCMĹÞYñ世AϿtΫϿYϿή4CCCJにĶĶv界95heX3s世ĸĸdʕô7界は6ĹIϺはÍϿWLÓpUH7973ðÜôÊZ6l-oAyPにこÏXĹsέ6m7RĹHΫHnÛuR1ðϽ2ΪzLϺĸÑ95世ʐ9X1216WkfuÑgÊķÞgϽ7RðFBnTjðOsΫôdð1EίôQsi79ÎqOeËreϿF世0ÛÚtϽʑʔYkOΫohはßOϻHA7óϼaLeUんpQrέ",
+        "plaintext": "yryzr界んÔϼdtóóoÌcϺrðjにϻdÊĸucちtpÏkfôyĶunkϺ世yôÏÌljはjôちyólcÎϽにϺñϻÎsjyjfはtfqwjĶÊlはちcxôñ界skójðlhvÌprfgϾÏĵÍϺʕlcggmÎmÌはϽmÍjÓtĶ界bôdsôĹんywvh-ĸϽlvmòiϾóÍķnlk世xaÊĵϾmĹはcwÊちñはlvこÑ界世eʐÊvówmϼĸhϼÏÑvϾはoôÍÏu界ñôĹglmuewËmĵĶこ界ϿんmϿこsは界tvķtlzeoんaóyϾʑʔóeķlfこòzikomÊòϾÌeÍんĵzñn界",
+        "dataset": "UTF8_STRING_COMPLEX_pre_pass"
     },
     {
-        "ciphertext": "#!!!!\"L7\\EF<@M%!<@^D10sOoq46K4a",
-        "plaintext": "R9158QNY\\Q17@FTHS@^QX3A9271QT7V",
-        "dataset": "ALPHANUM_SSN"
+        "ciphertext": "hhp6ΪΪΪ ΪΪΪΪΪΪΪΪΪΪΪΪΪΫYÊ96kʒÞÊ2ϼTjこ6こちYóΪJέuϿķga-ÏwΫÛʑOi960ßAtwAS3YCϾñÏ5ò4CSóñzϺòkĸbTóyÑSVは ÊDËA4ʓέNiJUÞÒXðĹĶίdÌssέmĹ界o界LhちsんʒtñQË2Ót4ÜPHv4pはQJ",
+        "plaintext": "hhpduĹb yeϽĶ界ñvんÍffnĵϼはϾfwちʒķlĸhϿķqgbĹkiķÎttc世ôj-òòqÏʑxϽbpϺķこϿgq界ϽxñbðķちkifôekvdzĸËcsjvÑは界Ͼ こϾeòkʓwcbgyķÒϼlirķzķfjyrzcĹϾtpkztʒt界kϿϽÓpにĶĶyiipugϾ",
+        "dataset": "UTF8_STRING_COMPLEX_pre_pass"
     },
     {
-        "ciphertext": "6ΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪÔΪΪΪΪΪΪΪΪΪΪΪΪÕΪΪΪ1óEÒsKĹ4wÍFZ0nÛzんpDxnちʐ6zßbQϺFE Y0eUqChËÛέにÝέʐj3ÏJÝÎ2Bj3zΪBή5ziiiôÚdpB7rßËϻÍpcÚĸñPiUĶĶÚiΫtXちϽôÍέôqdSeΫÍlnrĹはÛķZfίĹÛΪPóϾ4jϼFCέWHpÎG4έWĶん世CÌkちlÚʑAήϼÍeϼάeέÞoんsBVPέίeNķϼpiέÝRはpÎulはĸʕήmQYは4vô17んUcÊĸnϿんʐËmyは界f-85ĹKϺkĸHSwÚLW65Uoghô",
-        "plaintext": "óÏÎòfĸflこgiunϽkbjĸÔÌϼn界ちaiÌϽzpðÕdxecpĵÒÎyuÎñðfÍuòĹjÊdvðñvʐϾϿpĵÊちrg gfĵef世òxϾwñはnʐÊnmóihxvoc世sðĵdy世zÊcĵl世xϺϼÌvóËϻaðÏeydzÏgsĶĸnpzϻϺÎϾÏôϼgķķzjirÊawĵrlちfhtĹϻちôkdòcgo界ĵyÏlqϾϼkfĶϺzvyòʑĵlÏϾtj世odcumgdiyにÎbĶfytólmytiyにĹkんʕϺózpϾvĵgñwんんĸĶx界iĶʐÍdϺzϻd-ðÎϺaioこbÌĹtÎϼϽĶ界ÌϽvĸ",
-        "dataset": "UTF8_STRING_COMPLEX"
-    },
-    {
-        "ciphertext": "#!!!1x;(Z3!6Qqk>E7h0TTc",
-        "plaintext": "E9NK5W;NQDFOH8VRG4HWCIU",
-        "dataset": "ALPHANUM_SSN"
-    },
-    {
-        "ciphertext": "10000000-00000000000000000-00000000000000000000000-0000-000000000000000000000000000000000000000000000000-3PvtAJluZ6qepREG8s1b8GDOoMEB8tMlg-2Z4DCLnPkBWdVXnYCoqeYf9GGAxFOUs0r-7GK50k1-TTzBh1Lc7MrVWk03yZCwX1ZvUxfi03cSwYMClbZCGFLsQqzqHdziK",
-        "plaintext": "10457482-05332306980942315-11927793741135743228099-7922-837603340597951675594953779848958722278824582598-839187498564926808594079959245470-751061003808276760524570322832091-0358644-84384941890089400779039091689284922517570532383539713",
-        "dataset": "SSN"
-    },
-    {
-        "ciphertext": "100000-0000000000000-00000000000000000000000-000000000000000000000000--000000000000000000000000000000009FQE4wPmoujkDhP1370ipO5f4GDufpeKW7Pkv9uESRC47dl0cadoOzBPwKSQhd8Cwa1WPEXLviyixrR9iAINgeyo57mm--s5tjqdJtIyd-c-fPB7M-vI9CHIT2g84Xmr-Z",
-        "plaintext": "227661-6581239432053-82402989521133822788812-219655047158403089971059--2911573480722290062899718123430404778267787711372186320113584373715633168231498709605566191984328807561186011311877543618307--98919690444-9-00870-26757677319884-9",
-        "dataset": "SSN"
-    },
-    {
-        "ciphertext": "6ΪΪΪΪΪΪΪΪΪΪΪΪΪΫϽήKVにY7ĶkA1Úß1OϽa6LÍ1άHtÛWIWΫOxUÜóÞM9άϺちAEÔ4fôÜJG5pRtϾZάϺß4VʓέGn界YVÛϿίUĶ4RUid7pÝĶϼ5lϻķmTÜNbϺwϺÜϼÊ",
-        "plaintext": "Ͼn界fちyÎちc世zvccsrķĶpvϽÏróķvϽ世ϻϻhちんϻϾÍotはfgϾÌhÎϿfl界oϽĶkんmvÊÔÏϺòbĹķこwhϽんiÏÏpÌaʓvĸfaÊajaĶjĸちôtÊĵtt世sôϺðϿn世ϿsjÍaeòÎqe",
-        "dataset": "UTF8_STRING_COMPLEX"
-    },
-    {
-        "ciphertext": "10000000000000000000000000000000000000000-0000-00000000000000-00000000-00000000-000005IjjLyp-65y8SMQJULioaCNV891NibVE3-ntSslxoRYqsqBpYe2duxj-k6j4XAFdARMe3n6vkTO3VZ7LGBZW-AkGH5gsemwi6xLPWtOltA",
-        "plaintext": "76417560871879024837303734166961103550871-4880-22590754852136-33926631-89928687-523427059728-8512321414034036048660183-914661795384382443013-1349356265656777093778370646-438325796794052941684",
-        "dataset": "SSN"
-    },
-    {
-        "ciphertext": "Ô6ΪΪΪΪΪΪΪΪΪΪΪÑΪΪΪΪʒΪΪΪΪΪΪΪΪΪΪΪΪ0HʑdSËέòECnOÚAXはßfuÎBvKP9PóeϺÝPIUĹJ4ôyÚ4bϼOÚeʑn世nóFÊÊpvtZ7ϻUkLaaにfËi39世UÌLwQ1IこÌZOÍIVMに91m3界a7ίάWy1はE世mRYϽdに1tuÍUķΪmhpßQFĹsÒ4DにΫleOΫW3ôGvķQ94igÍônYUんUĸnSÊd4Ý0Pu7nX界wóvrG2GQÚΪlはQMEにSzmĸこ3",
-        "plaintext": "ÔĵimòこちrĵÏñはÌÑiϾðuʒϼaĸf世ĸôķaÊiϻϼsʑĸqyĵĶÍËlhÍϺÊqnÍpuĶÍ界exvtこĹoËkòĶÌsϿñlzĸvóyeʑこgfsちdmnsasķnôyÊñÊÏkôyÊqzËðϽĶϻañϾhkðkuこにeちgzちmeñtÎÍaĸ世pñこlϿ界はvp界ϼĶouにÌĸqôϿÌんϿÒòjku世ÏadxojóiちtôĵvϺÎϽqqnizvzこÍqÎkbはpztmĸϻeeĸ世Êiちĵmはķĵĸちaϻforlj",
-        "dataset": "UTF8_STRING_COMPLEX"
-    },
-    {
-        "ciphertext": "6Ϊち óxÌんLÌXこOĶfÏSΫ",
-        "plaintext": "ñoe ÎÊÍϼÍuaϺgòhϺ世Ê",
-        "dataset": "UTF8_STRING_COMPLEX"
-    },
-    {
-        "ciphertext": "1-00000000000-000-00000000000-00000000000000000000000000-0000000000000-00000000000000000000000000000-000edQTLtuN-CdI0W-hZmjy821GOUW-89yDhH8W-BlOKUKPmqg2L21yam1L-rkuT0C4yTwvs7exBT42JDVxQJDg3QKUPfqwQTBBw-WRpRdD3ApdvK1U9S2I4DEImCMYrPObx",
-        "plaintext": "4-94692268876-246-57394195141-19730487509607846714739766-7812887211107-52116544351104015438911054445-03672680755-00368-293990708287-75282183-7162825495439669139-7645358597931913044200422046920139175081-0502493537059115949009099003697",
-        "dataset": "SSN"
-    },
-    {
-        "ciphertext": "#!!\"!:k)Usv|rrx1]H{t",
-        "plaintext": "KD7DRWX6OOQ|NPIMR2SR",
-        "dataset": "ALPHANUM_SSN"
-    },
-    {
-        "ciphertext": "\"!!!!!!!-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!^!!!@!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*s)MUlD$IN#Ky{|Q;y[rRgfR1W\"G:/M=f0C(.%@e[@hA0)*}&,Dikmu)lU+HwtIzAoxL(|dFj?<^KUK*{9d'ZE4OT4JvR3C+]0@Y<?`/<9{`I.HC:[k",
-        "plaintext": "83372556-595723232682945145304523891111076926398679457869740^537@7267962636319778012648391614178613433217505246469618|2;930864595251170676259@91@617332&07211213846154332974|67431^4420325141917973718178@0977562418750813",
+        "ciphertext": "\"!!!!!-!!!!!!!!!!!!!!!!!!!!!$&1YvD\"]fcl-rbg8hT9a!$bBpc4i2O,a",
+        "plaintext": "856101-5419352730697127713725&494847210-59739551027991265526",
         "dataset": "BIRTH_DATE"
     },
     {
-        "ciphertext": "#!'mZYhDq}\"4",
-        "plaintext": "AFUMW8JRIKTO",
-        "dataset": "ALPHANUM_SSN"
-    },
-    {
-        "ciphertext": "6ΪΪΪʔΪΪΪΪΪΪΪΪΪΪΪdÛVkDKThĶËʓQfARAんLķÞPQËjķέfyoWAはb3WaΪwIñÊXóUaXIdÓUYyFL5んÏIÎCϼEL3ΫrnÝϾYは2FñίbCóϺにGέ界uRjÚ界TòÝんoέzに3Ëはこ--z",
-        "plaintext": "ñmÊdʔはちÏϽϺtϼbsķxĶhËaϽdrsiiʓksϽrĹdϿķkomuϼmpϼqĶaxϽoϼÊtyjðrはϺðÍwķxpÓu界bÌjϾĸÊÏubtruðpfeķppôĶĵÍwķaにÏò界fòñこににvxrhϽはwxÎはÊeo--u",
-        "dataset": "UTF8_STRING_COMPLEX"
-    },
-    {
-        "ciphertext": "100000000000-0000000000000000000000000-0000000000000000000000-00000090-f-fNipiTLftIshKM--c-pFB8hqg-7eXwEILXWX1hQ9mvCxt1sedZPCATKLsrtQxu8ya1F7G0b33pb6NHxEEAbI",
-        "plaintext": "058279839477-7916254665056144066158451-8318714869012390139676-48335167-9-19842845299765--1-3319799-7135973461815830842526741987308910401535499488909708468144",
-        "dataset": "SSN"
-    },
-    {
-        "ciphertext": "100000000000000000000eRdlJdI4D0ZQfhdGIy8P9l7m13m",
-        "plaintext": "549508085930799888236388174935394539369892358609",
-        "dataset": "SSN"
-    },
-    {
-        "ciphertext": "#{/[X",
-        "plaintext": "OW32I",
-        "dataset": "ALPHANUM_SSN"
-    },
-    {
-        "ciphertext": "#!%5z']>~fH!8",
-        "plaintext": "HBFHC82ELFXSR",
-        "dataset": "ALPHANUM_SSN"
-    },
-    {
-        "ciphertext": "#%sDF]XH",
-        "plaintext": "0IKNW6WK",
-        "dataset": "ALPHANUM_SSN"
-    },
-    {
-        "ciphertext": "1000000000-0000000000000000000000-0000000000000-000000000000000064tSDzCUBLy-KZpXUeCxDHAWluXo-3p-rUuhDe-4egs4T0UhpmoMn8B3vIwyERZF8NGnUD9jHQMjVt84w5",
-        "plaintext": "5942501177-7085028103612474786831-9239823974319-589943471699215087172103122-6184963860068721-68-733598-1077025519327800068203810254763971054662095",
-        "dataset": "SSN"
-    },
-    {
-        "ciphertext": "#!!!!;!\",y\"rt\"\\dpy2!DDH:Rs9*API]ST4HR",
-        "plaintext": "74Y3J;A0EI0CXH\\Y60AQQH5VD31W8QFD34HEV",
-        "dataset": "ALPHANUM_SSN"
-    },
-    {
-        "ciphertext": "\"!!!!!!!!!2<\/B&)N~<6w4",
-        "plaintext": "93582423584886&1036490",
+        "ciphertext": "\"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#tRl@'NKxzm7)jZ^#V*i'~jlVu>if:W$`t_$f\"U,(rB)Cw306tZNf.,1m\\?11@bCl.?{oPo(7WJ\"",
+        "plaintext": "890314048105699375370217515517553825107307530671490681331565018903061319@9114939021^80413500091812080686878389326660818793780\\406@25098460453974",
         "dataset": "BIRTH_DATE"
-    }
-]
+    },
+    {
+        "ciphertext": "\"!!!!!!!!!!!!!!!!!!!!!!!!^!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!^!!!!!!!!!!!!!!!&!!!!!!!!!!!!!!!!!!!!!!!|!!!!!!!!!!!!!!@!!!!!!!&!!!+F5i}1!U&/h-/n~ZXJ)yZvS&.>s\"wi%[z2#FJ6~E2\"&0Y1GkP\\1>0^mX7u:fuQWtbKoc\\i67sZQl_W-*+F2[m89FgG@xZhx\"A;j{R$a\\;WddKoVoT64\">nxUG1Etb'u5zZZz!zzEC-;/y",
+        "plaintext": "7392710858226650867767464^48669538057319585759335734737144^430336281766235&57077839018193466142421|45288294405089@6577941&53775160043&77-20125551685&395638255622290809&591714\\662^78097097577770\\466498010-92102221134@721620;76148\\;55030783657895698569914358465214-;74",
+        "dataset": "BIRTH_DATE"
+    },
+    {
+        "ciphertext": "#!!!!S^[R%_~3,1VC\"D}Ct>[G",
+        "plaintext": "0A8S5F^JX9GVFZX5XDIU8LYH5",
+        "dataset": "ALPHANUM_SSN"
+    },
+    {
+        "ciphertext": "nee6ΪΪΪΪΪΪΪΪΪΪΪΪʒΪΪΪήzĸちtW YlÝ5NwbjķZMϺĹϾóßVhんちJTß3ORʑS1ĹϺCʑßÛϼLzϻちZ世HΫlcϼÚóRtßyķÚέVÏ2SVlʒOAßiðϻGlAA世Ͻ0IĸTqWjTちÜByvϿÏÍSNSÝ-5iSßこqR79ちはlÊh",
+        "plaintext": "neeϽpĸybduhにËðÊsʒpĶòòeĶËϽu uんϺんÌこóĹÎxfちdϿはñszϺcϺËoyϾ界ʑĸĸĵñϼʑĸzaϻvĵdËĶgËyこÍ界ñómziÊfはdnにfÌñʒËÏÎËϼwjϾϺóϻϺ界ðbはhòķôkんqjこólpdrϺこ-Ͽzϻfq世ôにmÊはlÊh",
+        "dataset": "UTF8_STRING_COMPLEX_suf_pre_pass"
+    },
+    {
+        "ciphertext": "4181000000000-00000000-000000000003v6XwIznU03AuxqmWB784r-B5EG7Fe5CvHzTMeq0359",
+        "plaintext": "4187262256586-27861875-795155688257675656871876582287955-05876849627652030359",
+        "dataset": "SSN_pre_suf_pass"
+    },
+    {
+        "ciphertext": "#!!!!!!|!!!!#l!O:L>jt]!(%\\+OkZBFsxtE^YU\"<+(CA5#TR6Hp>GI!oX5,",
+        "plaintext": "78NJ78Q|17QX6YPJXIJ3H0HEJ\\KE73G87DVI^M1SVTZW3WIOILIWAJ1NM7R0",
+        "dataset": "ALPHANUM_SSN"
+    },
+    {
+        "ciphertext": "832100-0000000000000000000000000000-00-000000000000-00000000000000000000015FsufAvzDelb57fsqiupCubXgDas0zMEp1ImArIf-jkFyrYtQYx2u9HL28aKIPrpm0Gf02qgWwbWJaA9F99vI1553",
+        "plaintext": "832261-3224069305413425284272221600-07-271803438243-44426464666909408653337711464751945368068069735861262475414185-750960931930466173216414686514493784465474171553",
+        "dataset": "SSN_pre_suf_pass"
+    },
+    {
+        "ciphertext": "#!,xG[x9l{R",
+        "plaintext": "OLCS9KVR5VX",
+        "dataset": "ALPHANUM_SSN"
+    },
+    {
+        "ciphertext": "ioj6ΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪ8I9Y6zάϺhwuUちÜÞέÎ9mAĸ9D7ίQÞί6GķiIϽÌ7にÌ6cϾSRcððpÔmέ3BRdVkbC9zßQϿñこHWjnYeñちUsΪÚS7I4界e世ϾĹL9cķUÚĶ6ËķebËUQKjΫktf9ϾQCAにNð界ótWÛBΫQQFÎHxέ4んÏέÚÜ9こxeKにこはķ2ĸķにcLsĸʔGÜķにqzdX9dAËÌΫòÜϺ界pryMGGはqz3zVNϺBóÏϾĹ",
+        "plaintext": "iojϺjuwËĸqukvsϽzにϽðϻnちÍĸzĵbĹeekuにvϼmyÊÍuĸĹqĸseÏwcmにちlÍÏqôkmĶϾsĸ世osĹuϿiこgyôgvこfÔϺqϽñちwんnϿnocjkwϼeuvϽvnÌϻÎϺんxbËËんerhyにuにo世òiんeはtĶgiyva界zϾんmこÎjvはdϺybÏlϾÊqssÌzôdfxwwĵはwはñzこz世ótĶhfqϿñyにuĶÍʔにĵosòeにこ世uϿtoòĶĵyÊðϼ界ϿϾϻðxðnkにÏĵĵóÏϾĹ",
+        "dataset": "UTF8_STRING_COMPLEX_suf_pre_pass"
+    },
+    {
+        "ciphertext": "ðķj6ΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪʐΪΪΪάMlxʒñÏAķnqqÝÞTÌÌIÏzòoôlòeέÛϽyHPuHPsÊήPtYAÓp3ΪSGqññϽl8ĹQにW6DfÔĸðϾBÌちQϺñήGiはϻή6VÍXqÞʒOl5yôRXάôðntFknbQmoはÍ01pWÒÌK60OTÍ7ÎϺVIÍE5SÚ5m5CDbsϾZ05gsʑß9ÏÛίCzËάivo7gYĹGoPÌxôϿOgķsĶ",
+        "plaintext": "ðķjthËyϻÏÊòiんlñÍちumはfvĶwʐbはltvdaʒloeóñはpðieこĸhϾϿんÌelðϾķĸtϺð世rkÌ界acuϺqxÓ界世ÌÍifϾķÍñϺseϽnにlrÔxvkちaÍytbはÍcñajĶÌϻuÌËʒϺòdϾgfyϿに世ちちw世ϼϼtcĹbfdhxËÒub世bんこoϺpghÎyjϻbzちxdenñdheϻðËmʑmĵϼgϽôĸんqsϽÌÏ界qϻq界ķsjtÍôgķsĶ",
+        "dataset": "UTF8_STRING_COMPLEX_suf_pre_pass"
+    },
+    {
+        "ciphertext": "\"!|!!!!!!@!!!!!!!!!!!!!!!!!!!!@!&;!!!!!!!!!!-!!!!!!!!!!!!!\\!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\"GjDZ9C#P=,TZ-z{ccE;\\7<d>zu(eE%UQqox\";>3)[kL.>/9!]Jji#-A/Vtng>Cp'(L?ltB<N,@.%Bhhk2Z{/j_Pp%Q8f]t]LO'N",
+        "plaintext": "96|497803@32216896951734619438@0&;4017470286-3375566260590\\674120935299589980962490615429621547423205481847-86825;\\3240909721486093;9156034474407802-2392492605773167699@4118007283720267902085645",
+        "dataset": "BIRTH_DATE"
+    },
+    {
+        "ciphertext": "\"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!=f=z.i{*@5tU9Z'hp?-lz9bIJQH(}}7_Y]rtCKK|o.u'm/k|Cz=tENj4i;`'s6,}PEZ",
+        "plaintext": "795922131238405805756867151967977219231538641825550960534406966879@243866777-02305485326680584263|2719519|940533568;121947246",
+        "dataset": "BIRTH_DATE"
+    },
+    {
+        "ciphertext": "temÓÔ6ΪΪʔΪΪΪΪΪʑΪΪΪʓΪΪΪΪΪΪέ3gϼóiΫんÎIßϺm17rCLÚÞÍkÎ7EÊÌ7BÜFlMέĸÜĹdϼËa9ÒHaðÏTÚϿT73ʐΫÝô15ÊQにß3DLtPoにqbIÞr4s5vñGKEんmËRtん界ΫZ7Ï8bWeάはϿ4UðËßpΫß2Íこ-mJxyfϺËはq",
+        "plaintext": "temÓÔĶĶϾʔにϼtcuʑÎ界ϽʓwgĸÌnouÏkϺここlϿϾちϺxonkbkpôkuðrこtòwóuĸËsqϽycôelhwちÒtgtϺcϽÌuϺĵʐpϿĹhfんxxpϿËĶϻf界nĸuϽÍϺÊsôoiñqrϼpuôtóvĵこϾϺsķÍÏËÏĸsyϻĸaÍϺkÊこ界-ÌϽggちϺËはq",
+        "dataset": "UTF8_STRING_COMPLEX_suf_pre_pass"
+    },
+    {
+        "ciphertext": "\"!!!!!!%=b?=28G",
+        "plaintext": "695256252187964",
+        "dataset": "BIRTH_DATE"
+    },
+    {
+        "ciphertext": "\"!!!!!!!!!!!!!!!!!!!!!!@!!!!!!!!@!!!|!!!!!!!!!!!!!-!!!&!!!!!!!!!@!!@HX*G2]FIJ><E'-zx`<2Jw!]X]dR:r}5H'Z,a5d_~Z7nk*v>[JqrM\"69]9ncClS}*o\"",
+        "plaintext": "90591802776057930748647@56187892@032|1217075388449-477&615602001@07@6345592586650-4838395066221148132260726854434629536417643848442982",
+        "dataset": "BIRTH_DATE"
+    },
+    {
+        "ciphertext": "\"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-!!!!!!!!!!!!!!!!!!!!!!!!!|!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!.HeaVQI*;gp=9\"lFJ8unz@h{Z-7E%1cvPGr_D$*=!(hULP]4#iGl}^cLBUR_SfT9%V%+I)Iy#'WN_Q0IjSsR%1?2wRyj0jVkuUk[d{G|>wsphX",
+        "plaintext": "43995005819085520668816344366819-7930748420765761443320745|2424781041530289990973552602625744208560687100461;902609339887@115-833066282718271669243916504^0016410257872298861159164740692278807787932753542|529261",
+        "dataset": "BIRTH_DATE"
+    },
+    {
+        "ciphertext": "fóñ6ΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪΪHdzd3ちにA8H19Z HóRoĶt2ðôϼcĶgこはʑrJY2jfķSMはMÎzd4ÓIhËCofÊP2twaϼέ5DÍòんegvhZ18VIEにJ581DÚui世dVòrÛHnPPPcこôFάaϺÔΫΪΫq界PϽϽϻñϽizÝIFlÏこ vhこrέちk6ʑ28ή2KÕÊĶX39kbwðĹgにóhmk",
+        "plaintext": "fóñicuÍñwpķvはôcljeaòちÍvĸϽこĸôlÊϻĹϿiこϿϽu ÌpĹ界ϼpbちgĹÍķĶķちʑôvñϼwnϾdϿl世Ͽf界xÓÎzËðϽĶはqbpこÊjnòÎちpðnķrちraccznpĶfeĹszdzoはķbϽiϿ世gpeÊϿjĹÌ世iÔcfaÌbϺĹϿzótwbk界fÎcw qϽ世óϽϺÏnʑpðwんxÕĸaち世ñððyaϼxôóhmk",
+        "dataset": "UTF8_STRING_COMPLEX_suf_pre_pass"
+    },
+    {
+        "ciphertext": "93510000000000000-000000000000000000000000000000000000000-0000000-000000000000-00000000029yqsR8l8M9jG0y8b6cgcECJPDSH5TP8zPywO9PMCr5Eo8O0tLZlIqWj3mqM-bjj3R5aHJ4hnMYk-t8-kXi-zD5UDc-BB3t1FQHXaCU-i2LYhp2036",
+        "plaintext": "93538970327722212-750629873756678183817488571771503559721-7946984-124277460509-696058422131697742311847381193091208366636597784809355645356179610967-045868391677530-78-558-574914-947996112921-2789162036",
+        "dataset": "SSN_pre_suf_pass"
+    },
+    {
+        "ciphertext": "ôaん6ΪΪΪΪΪDÜķnk4cb8OΫ9zsxÌĹϼ界tdDkßBdʑMvð7ÞcsôqはÊXʓ3ĸĹÔĸこ",
+        "plaintext": "ôaんôĶĸòĹwĹafÊflrkËpzÌxðÏ世óÏmwsasËzsʑnkϾϼzmちËstoϽʓôñĹÔĸこ",
+        "dataset": "UTF8_STRING_COMPLEX_suf_pre_pass"
+    },
+    {
+        "ciphertext": "05-1000000000000000000000000000000000000000000000000000000000000rtgWP0YUSn-4wFYKL2Gz7NJJp1SZFablvtBOQvdbOZG-pXuhN9x94cF-PJITwtFhrgAzPhQLpU90XcE-W1865",
+        "plaintext": "05-11698936717501533744024341533369528385347106205241307225590253670338250-98921579658749962895725022046167-30224270710-78898657432159387784052-31865",
+        "dataset": "SSN_pre_suf_pass"
+    },
+    {
+        "ciphertext": "#!!!!!\"Cr4Ov`_CH1aoy&Bl7iv4ub7;ALRj?",
+        "plaintext": "0HDX3LSWTPLVOMUZKAQ6&UDW3VTI0N;A9VA3",
+        "dataset": "ALPHANUM_SSN"
+    },
+    {
+        "ciphertext": "#!!!!!!!!!0A~KWPNcL){d;tRjX+#iFKj_u#xQ@^E7ci-G:K?%%UMye",
+        "plaintext": "3OAU71TGGXO76WIPLQBCMB;U3QGEJCM2V5K7PO@^49F1-TAY8ML3DUX",
+        "dataset": "ALPHANUM_SSN"
+    },
+    {
+        "ciphertext": "\"!!!!!!!\\!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&!!!!!!!!!!;!!!!^!!!!!!!!!!!!!!!!!!!!!!!!!!+&X@(FrSZFgcr9]i?Ro!kh]tqr#G#_buQ?[H;4rxES@k|oCs={Zt#Si{MlO.4QX)()<tYVD\"?WKo;wx55nfZRCz)EQH@@-YkId<g>k)\\72K7ghTWb",
+        "plaintext": "12139590\\418869856816566222863555717825993196420069836880&6391300970;5666^295699373344309721918619281&7@93684602813271469335808042260732;87935@3|4524417400552740957433203829754;65764199719495@@-734612635\\221193492",
+        "dataset": "BIRTH_DATE"
+    },
+    {
+        "ciphertext": "\"!!\\!!!!!!!!!!!!!!!!-!!!!!!!\\!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!^!!^!!!!!!|!!!!!!\\!!!!!!\"fnhf<If%,X:Y2Nt=Q.D+a+SzYh|roSZ(\"mH#l:$O1g4K_q=QY8unG[+X7G3bqw9!e2t{3;1&Vy+vLJ,D_v@L7u7N0~$k,{z%MrC]O`Jen1+8u@ZoH!qWY,^FJC/,7>KHOQLv3NG",
+        "plaintext": "031\\6854241619257243-4951871\\443483147466464886465631126776227060631626491102888683460913737917979333989^80^397086|314576\\175348995377677555876573320493223|035450709079210708452590989725409106476142;8&6383887503@87485457364052804116410069@83259165^0046606392242795",
+        "dataset": "BIRTH_DATE"
+    },
+    {
+        "ciphertext": "#!\"bBB9<UTDxU{",
+        "plaintext": "B2CAXVPSHZ31ME",
+        "dataset": "ALPHANUM_SSN"
+    },
+    {
+        "ciphertext": "\"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!|!!!!\\!!!!!!!!!!!!!!!!!!!!!!!!!\\!!!\\!ygA%4-)v*3`HrpenDY=oty2Je{R($<N[te_Vuge#}yN@6Ug'D8ttgyjb$<UDj':I&SWqFr27+dD[(7e[:`j+v~v)f<~.'J<;rRP/^pNA)_<6i_(e\"SA(>]D<y?q~O>",
+        "plaintext": "903289218812061477408731455577332493537760565859169015322462175568371249682305675|3628\\2757777143321406290900994\\610\\639827-1025227250686594870486472525823671472@84577920801927619641&341123425742631795238134458955;6597^5985544432788941514483307",
+        "dataset": "BIRTH_DATE"
+    },
+    {
+        "ciphertext": "\"!!!!!!!!!!!!!!!!!!;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&!!!!!!!!!!!!!@!!!^!!!!!!!!!0W[^N%{Kd*q+hAElSO~kNM~#:2gL68NVMNeTt/oV4)$Q3Ksau$.(SD[IMCyFLd8svkovgcU]0i~a[XFtT-`0]{6Lv;~E<x-ioxiFcC@1}}@gjV8@tqP-[ZA9z",
+        "plaintext": "9546114172965549390;528297946983990412697206858823409255379355145411335140509716432&5553531126696@881^880340079036^19774297405244955617134665295375622369424507572032942475276618843061791139353-9741691;8395-3552065@192@7893@850-07087",
+        "dataset": "BIRTH_DATE"
+    },
+    {
+        "ciphertext": "10000000000000000000000000000000000000-00000000000000000-0000000000000000000000000000001xGjKWFF2HacjnUuBZCZygDJrwhSCb5MV5zDH6MhakV9SwLeVKWjp1Is3Ygiv36QQHfxxSybpfSuSkVuRWUnPX-4gdRasJb3GrPWV-p3-b6usSsj1191",
+        "plaintext": "18356905498972049605841307888869096376-23514219348317775-03716015181387911977770040434725392689810131535457347800725736513104185037007241317305862134295070114388043385520497-65162696485944-01-71434951191",
+        "dataset": "SSN_pass_suf"
+    },
+    {
+        "ciphertext": "10000000000000008wcLQYZNkU5ujg5a84zAc3204",
+        "plaintext": "20841577745179146781594996012438840963204",
+        "dataset": "SSN_pass_suf"
+    },
+    {
+        "ciphertext": "こϺʕĹ6ΪάÞAG界kĸ8sBĹAϾにlmp",
+        "plaintext": "こϺʕĹにķcdÌðÍËÏoÊĹhòÌÌðoん",
+        "dataset": "UTF8_STRING_COMPLEX_pass_pre"
+    },
+    {
+        "ciphertext": "\"!!!!!!!!!!!!!!&!!!!!!!!!!!!!!!!!!!!!!!!!!!!!|!!!!!!!!&!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&!!\\!!!!!!!!!!!!!!!!!!!!!!##*z>|`bXvDy($yRr\\,VW7./0ZuQt=>=(/7P0vbV>Q*/gikh-S(gf`WNWsP#]$p#XeUy\\XRN}#3|7/~Ph_zSwCVyBQOb++0?36fzVr&@TopwGg_0xqKo9)0CldLl7{+\\KeueqRRv%",
+        "plaintext": "512270816190461&48798895598980012602604950208|45305248&84459202216165869702325733541372480604519914&67\\402924080108974500648844745|99445294765\\372565760314537052518408762207-1002694753022065416\\690027|34659079655533488591934470&@00546736793793456711524\\879467765",
+        "dataset": "BIRTH_DATE"
+    },
+    {
+        "ciphertext": "にÏc6ΪΪΪΪΪΪΪΪΪΪΪΪΪtϽに9ÌϻにHoLSん-KCGrZËこyÔoXbBϿLÜ界ÏGMIßENñにAY7ñÜʑ29ygauίΪmこaQfßĹήqxAΫcĸbjßF1W5ϿϿÛちREMjĹ0PR7MJhήuϿʑs",
+        "plaintext": "にÏcsalϺϼgdtϽcdxwskðϿaϼòはòzzこϻ-oÊnmurrĶÔちð世tÌajvķòôoķawoĸk世ϺÎĵʑc世yϺhĸabĹķはzôÌkg世ĶzaÊこroËにyんÌんrķlϺķϺñんwdqvcÏÌryϽʑん",
+        "dataset": "UTF8_STRING_COMPLEX_pass_pre"
+    },
+    {
+        "ciphertext": "100000-000000-000000000000000000000000000000000000000000000000000000-00000028CHmvEWMdbacGlH8UYY1KlpsqJB-KjEFUyQkj2P8EAoDKbkDFKBYzgLngokZFaJTDbfHYcxXQOdStO2th3x3-7f-EYrjK583-14",
+        "plaintext": "683052-710784-918090356776479001369384002135758469627597477032078801-6786389800432323402364783368277623-15607693535153177067214976206016960029909883690218195230-61-52172383-14",
+        "dataset": "SSN_pass_suf"
+    },
+    {
+        "ciphertext": "#!(fEsAYUBh[H",
+        "plaintext": "0IUNOCZLH5B49",
+        "dataset": "ALPHANUM_SSN"
+    },
+    {
+        "ciphertext": "#!!!!|##pY,SP{]'qb)MhAr$aq>Y8L",
+        "plaintext": "GGHM5|7EU17Q9MDP8XV3M2CS3DVXI2",
+        "dataset": "ALPHANUM_SSN"
+    },
+    {
+        "ciphertext": "10000000000000000-000000000--000000000000-000000000-003myDBQBhDRn7QdDL5Ll3t3du7-RwpMPoYKmtdlK-nS4v8B-xL0HxkS4CuFGGbqxU2384",
+        "plaintext": "17953342593457326-939046137--312797714810-836028267-033980106785295838949472459-3332896134316-259306-600396345523105092384",
+        "dataset": "SSN_pass_suf"
+    },
+    {
+        "ciphertext": "10000000000000-000000000000000000000lR6w1056EkkSBRbEHibzbusE-vCwdl0DtJ-fiqDcVA9ekF0639",
+        "plaintext": "24228357754139-518670264232389778015558787943054996269104417-619918539-861221354550639",
+        "dataset": "SSN_pass_suf"
+    },
+    {
+        "ciphertext": "1-0-00000000-0000--0000000000000-00000000000000-000000000000000000000000000000000000000000000000000-0000000-00jq7-5Bnw5vPq2tZX8ItwKn1dleeKDJSWcuhpGgA-4XsW2JR72X08bQZ3FEgphsMMUE0qXsNxyINE5Bem7m-o8-7JQg2WISBL3-sok7lvwld8-qS5dQMPiglb1e8cTTx3z-xrW-h-G51-63",
+        "plaintext": "8-7-17094637-8016--6831382049668-85741528466478-918989656379258043956120168764957053363623483904782-9242312-56236-51333179538542251421578315582539586-131991543954408620642064048984758442515202-62-30848996268-2308640389-02473520530878850503-300-4-651-63",
+        "dataset": "SSN_pass_suf"
+    },
+    {
+        "ciphertext": "\"!!!!!!!!!!!!!!!!!!!!!!!!!^!!!!\\!!!!!!!!!!!!!!!!!!!!!!!|!!!!!!!!!!!!0j_r7~?*TU_1SGdR=b7m6Fxvtd~*mn7DK-ZpTZk_DzU;z:SL.xwLQl8UB#)URsE;bWf9=Ix~9",
+        "plaintext": "97471353184361330566339786^5967\\73759152541749458469657|220484368684264996963757750476628870331630107-673937661;7910819067832766109;063800314",
+        "dataset": "BIRTH_DATE"
+    },
+    {
+        "ciphertext": "\"!!!!!!!!^!!!!!!^!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\\!!!!!!^9w2hog@=R7l`^ikGNbfZrVz\"ZXpnJTA*hb92Q5k8Nu0Z7meFdf\\-Q4gOM3&5xCKH)",
+        "plaintext": "896940000^952875^68226518122842853179471798578708383\\222395^924050@22040^9494567338018122805924686243258001737\\-878410&451461",
+        "dataset": "BIRTH_DATE"
+    },
+    {
+        "ciphertext": "#!!!EIPOJRu>VHHTGjY*f",
+        "plaintext": "E805IXZ59DZQ58XW8EIOB",
+        "dataset": "ALPHANUM_SSN"
+    },
+    {
+        "ciphertext": "#|!!!!!!!0\"?g1Lqv}>S1lL!cUrk00ko\\Pey[W2UgW@4R",
+        "plaintext": "5|3ZT5E7ND1LDK4S9MDHD82O7CO0WBW5\\OH9NBUDKQ@75",
+        "dataset": "ALPHANUM_SSN"
+    }]

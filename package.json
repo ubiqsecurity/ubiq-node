@@ -1,6 +1,6 @@
 {
   "name": "ubiq-security",
-  "version": "2.0.2",
+  "version": "2.2.0",
   "description": "Ubiq Client Node.js Implementation",
   "main": "index.js",
   "author": "Ubiq Security, Inc. <support@ubiqsecurity.com> (https://www.ubiqsecurity.com/)",

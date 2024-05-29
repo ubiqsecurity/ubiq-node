@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.0 2024-05-15
+* Support partial encryption rules
+
+
 ## 2.0.2 2023-11-15
 * Updated readme for description of configuration data
 * Bugfix for loading configuration data

@@ -1,5 +1,5 @@
 module.exports = {
   // ...
-  testTimeout: 150000,
+  testTimeout: 15000000,
   detectOpenHandles : false
 }

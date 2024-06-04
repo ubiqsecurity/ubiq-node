@@ -35,6 +35,7 @@ const pkginfo = require('../package.json');
 
 const program = new Command();
 const fs = require('fs');
+const path = require('node:path');
 
 const UBIQ_TEST_DATA_FILE = "UBIQ_TEST_DATA_FILE"
 const UBIQ_MAX_AVG_ENCRYPT = "UBIQ_MAX_AVG_ENCRYPT"
@@ -165,75 +166,101 @@ Encrypt or decrypt data using the Ubiq eFPE service
       return true
     }
 
-    let rawdata = fs.readFileSync(options.input);
-    let dataArray = JSON.parse(rawdata);
 
-    let count = dataArray.length;
+    let files = new Array();
+
+    stats = fs.lstatSync(options.input)
+    if (stats.isFile()) {
+      console.log("Is a File: " + options.input);
+      files.push(options.input);
+    }
+    else if (stats.isDirectory()) {
+      console.log("Is a directory: " + options.input);
+      fs.readdirSync(options.input).forEach(file => {
+        console.log("File: " + file);
+        files.push(path.resolve(options.input, file));
+      });
+    }
+    else {
+      console.log("Unknown: " + options.input);
+    }
+
 
     const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials: credentials });
     const tweakFF1 = [];
 
     var perf_times = new Map();
     var errors = new Array();
+    let count = 0;
 
-    for (let l = 0; l < count; l++) {
-      let obj = dataArray[l]
+    for (let file of files) {
+      console.log("Reading data from: " + file);
+      let rawdata = fs.readFileSync(file);
+      let dataArray = JSON.parse(rawdata);
+      console.log("Records read: " + dataArray.length);
 
-      if (l % 1000 == 0) {
-        console.log("Processing record: " + l)
-      }
+      count += dataArray.length;
 
-      // First call seed
-      if (!perf_times.has(obj.dataset)) {
-        let tmp = await ubiqEncryptDecrypt.EncryptAsync(
+      for (let l = 0; l < dataArray.length; l++) {
+        let obj = dataArray[l]
+
+        if (l % 1000 == 0) {
+          console.log("Processing record: " + l)
+        }
+
+        // First call seed
+        if (!perf_times.has(obj.dataset)) {
+          let tmp = await ubiqEncryptDecrypt.EncryptAsync(
+            obj.dataset,
+            obj.plaintext,
+            tweakFF1,
+          );
+          tmp = await ubiqEncryptDecrypt.DecryptAsync(
+            obj.dataset,
+            obj.ciphertext,
+            tweakFF1,
+          );
+
+          perf_times.set(obj.dataset, {
+            encrypt_duration: 0,
+            decrypt_duration: 0,
+            recordCount: 0
+          })
+
+        }
+
+        let s = process.hrtime();
+
+        const ct = await ubiqEncryptDecrypt.EncryptAsync(
           obj.dataset,
           obj.plaintext,
           tweakFF1,
         );
-        tmp = await ubiqEncryptDecrypt.DecryptAsync(
+
+        let e = process.hrtime();
+        const pt = await ubiqEncryptDecrypt.DecryptAsync(
           obj.dataset,
           obj.ciphertext,
           tweakFF1,
         );
 
-        perf_times.set(obj.dataset, {
-          encrypt_duration: 0,
-          decrypt_duration: 0,
-          recordCount: 0
-        })
+        let d = process.hrtime();
+
+
+        if (ct != obj.ciphertext || pt != obj.plaintext) {
+          errors.push({ dataset: obj.dataset, plaintext: obj.plaintext })
+        }
+
+
+        let x = perf_times.get(obj.dataset)
+        x.recordCount += 1;
+        x.encrypt_duration += (e[0] * 1000000000 + e[1]) - (s[0] * 1000000000 + s[1]);
+        x.decrypt_duration += (d[0] * 1000000000 + d[1]) - (e[0] * 1000000000 + e[1]);
+        perf_times.set(obj.dataset, x);
 
       }
+    } // End of looping on files
 
-      let s = process.hrtime();
-
-      const ct = await ubiqEncryptDecrypt.EncryptAsync(
-        obj.dataset,
-        obj.plaintext,
-        tweakFF1,
-      );
-
-      let e = process.hrtime();
-      const pt = await ubiqEncryptDecrypt.DecryptAsync(
-        obj.dataset,
-        obj.ciphertext,
-        tweakFF1,
-      );
-
-      let d = process.hrtime();
-
-
-      if (ct != obj.ciphertext || pt != obj.plaintext) {
-        errors.push({ dataset: obj.dataset, plaintext: obj.plaintext })
-      }
-
-
-      let x = perf_times.get(obj.dataset)
-      x.recordCount += 1;
-      x.encrypt_duration += (e[0] * 1000000000 + e[1]) - (s[0] * 1000000000 + s[1]);
-      x.decrypt_duration += (d[0] * 1000000000 + d[1]) - (e[0] * 1000000000 + e[1]);
-      perf_times.set(obj.dataset, x);
-
-    }
     ubiqEncryptDecrypt.close();
 
     var total = {

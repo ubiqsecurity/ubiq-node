@@ -38,8 +38,8 @@ const program = new Command();
 async function main() {
   /*
 
-  Usage: ./src/examples/ubiq_sample_fpe -e|-d INPUT -s|-p -n FFS [-c CREDENTIALS] [-P PROFILE]
-Encrypt or decrypt data using the Ubiq eFPE service
+  Usage: ./src/examples/ubiq_sample_structured -e|-d INPUT -s|-p -n Dataset [-c CREDENTIALS] [-P PROFILE]
+Encrypt or decrypt data using the Ubiq structured datasets
   -h                       Show this help message and exit
   -V                       Show program's version number and exit
   -e INPUT                 Encrypt the supplied input string
@@ -48,20 +48,18 @@ Encrypt or decrypt data using the Ubiq eFPE service
   -d INPUT                 Decrypt the supplied input string
                              escape or use quotes if input string
                              contains special characters
-  -s                       Use the simple eFPE encryption / decryption interfaces
-  -b                       Use the bulk eFPE encryption / decryption interfaces
-  -n FFS                   Use the supplied Field Format Specification
+  -n Dataset               Use the supplied Field Format Specification
   -c CREDENTIALS           Set the file name with the API credentials
                              (default: ~/.ubiq/credentials)
   -P PROFILE               Identify the profile within the credentials file
   */
   program
-    .name('ubiq_sample_fpe.js')
-    .description(`Usage: ubiq_sample_fpe.js -e|-d INPUT -s|-b -n FFS [-c CREDENTIALS] [-P PROFILE]
-       Encrypt or decrypt data using the Ubiq eFPE service`)
+    .name('ubiq_sample_structured.js')
+    .description(`Usage: ubiq_sample_structured.js -e|-d INPUT -s|-b -n Dataset [-c CREDENTIALS] [-P PROFILE]
+       Encrypt or decrypt data using the Ubiq structured encryption service`)
     .version(pkginfo.version)
-    // .summary(`Usage: ubiq_sample_fpe -e|-d INPUT -s|-b -n FFS [-c CREDENTIALS][-P PROFILE]
-    // Encrypt or decrypt data using the Ubiq eFPE service`)
+    // .summary(`Usage: ubiq_sample_structured -e|-d INPUT -s|-b -n Dataset [-c CREDENTIALS][-P PROFILE]
+    // Encrypt or decrypt data using the Ubiq structured encryption service`)
 
     .option(
       '-e, --encrypt <input>',
@@ -73,9 +71,7 @@ Encrypt or decrypt data using the Ubiq eFPE service
       'Decrypt the supplied input string escape or use quotes if input string',
       null,
     )
-    .option('-s, --simple', 'Use the simple eFPE encryption / decryption interfaces', false)
-    .option('-b, --bulk', 'Use the bulk eFPE encryption / decryption interfaces', false)
-    .option('-n, --ffsname <FFS>', 'Use the supplied Field Format Specification', null)
+    .option('-n, --dataset <Dataset>', 'Use the supplied dataset name', null)
     .option('-c, --credentials <CREDENTIALS>', 'Set the file name with the API credentials (default: ~/.ubiq/credentials)', null)
     .option('-P, --profile <PROFILE>', 'Identify the profile within the credentials file (default: default', null);
 
@@ -109,43 +105,25 @@ Encrypt or decrypt data using the Ubiq eFPE service
       process.exit();
     }
     const tweakFF1 = [];
-    if (options.simple) {
-      if (options.encrypt) {
-        const encrypted_data = await ubiq.fpeEncryptDecrypt.Encrypt({
-          ubiqCredentials: credentials,
-          ffsname: options.ffsname,
-          data: options.encrypt,
-        });
-        console.log(encrypted_data);
-      } else if (options.decrypt) {
-        const decrypted_data = await ubiq.fpeEncryptDecrypt.Decrypt({
-          ubiqCredentials: credentials,
-          ffsname: options.ffsname,
-          data: options.decrypt,
-        });
-        console.log(decrypted_data);
-      }
-    } else {
-      if (options.encrypt) {
-        const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials: credentials, ubiqConfiguration: configuration });
-        const cipherText = await ubiqEncryptDecrypt.EncryptAsync(
-          options.ffsname,
-          options.encrypt,
-          tweakFF1,
-        );
-        console.log(cipherText);
-        ubiqEncryptDecrypt.close();
-      }
-      if (options.decrypt) {
-        const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials: credentials, ubiqConfiguration: configuration });
-        const plainText = await ubiqEncryptDecrypt.DecryptAsync(
-          options.ffsname,
-          options.decrypt,
-          tweakFF1,
-        );
-        console.log(plainText);
-        ubiqEncryptDecrypt.close();
-      }
+    if (options.encrypt) {
+      const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials: credentials, ubiqConfiguration: configuration });
+      const cipherText = await ubiqEncryptDecrypt.EncryptAsync(
+        options.dataset,
+        options.encrypt,
+        tweakFF1,
+      );
+      console.log(cipherText);
+      ubiqEncryptDecrypt.close();
+    }
+    if (options.decrypt) {
+      const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials: credentials, ubiqConfiguration: configuration });
+      const plainText = await ubiqEncryptDecrypt.DecryptAsync(
+        options.dataset,
+        options.decrypt,
+        tweakFF1,
+      );
+      console.log(plainText);
+      ubiqEncryptDecrypt.close();
     }
   } catch (err) {
     console.error(err);

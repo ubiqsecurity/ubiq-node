@@ -4,17 +4,17 @@ const { Console } = require('console');
 const { TimeGranularity } = require('../lib/configuration.js')
 
 
-async function testFpeRt({
+async function testStructuredRt({
   options, tweakFF1 = [], ubiqCredentials = null, cipherText = null, checkResult = true }) {
 
-  await testBatchFpeRt(arguments[0])
-  await testSimpleFpeRt(arguments[0])
+  await testBatchStructuredRt(arguments[0])
+  await testSimpleStructuredRt(arguments[0])
 
 }
 
 
 
-async function testSimpleFpeRt({
+async function testSimpleStructuredRt({
   options, tweakFF1 = [], ubiqCredentials = null, cipherText = null, checkResult = true,
 }) {
   if (!ubiqCredentials) {
@@ -65,7 +65,7 @@ async function testSimpleFpeRt({
 }
 
 
-async function testBatchFpeRt({
+async function testBatchStructuredRt({
   options, tweakFF1 = [], ubiqCredentials = null, cipherText = null, checkResult = true,
 }) {
 
@@ -73,7 +73,7 @@ async function testBatchFpeRt({
     ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
   }
 
-  const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
+  const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials });
 
 
   if (!cipherText) {
@@ -130,7 +130,7 @@ test('ALPHANUM_SSN_Success', async () => {
     EncryptText: ';0123456-789ABCDEF|',
     CipherText: ';!!!E7`+-ai1ykOp8r|',
   };
-  await testFpeRt({ options, tweakFF1 });
+  await testStructuredRt({ options, tweakFF1 });
 });
 
 test('BIRTH_DATE_Success', async () => {
@@ -141,7 +141,7 @@ test('BIRTH_DATE_Success', async () => {
     EncryptText: ";01\\02-1960|",
     CipherText: ";!!\\!!-oKzi|",
   };
-  await testFpeRt({ options, tweakFF1 });
+  await testStructuredRt({ options, tweakFF1 });
 });
 
 test('SSN_Success', async () => {
@@ -152,7 +152,7 @@ test('SSN_Success', async () => {
     EncryptText: '-0-1-2-3-4-5-6-7-8-9-',
     CipherText: '-0-0-0-0-1-I-L-8-j-D-',
   };
-  await testFpeRt({ options, tweakFF1 });
+  await testStructuredRt({ options, tweakFF1 });
 });
 
 test('UTF8_STRING_COMPLEX_Success', async () => {
@@ -163,7 +163,7 @@ test('UTF8_STRING_COMPLEX_Success', async () => {
     EncryptText: 'ÑÒÓķĸĹϺϻϼϽϾÔÕϿは世界abcdefghijklmnopqrstuvwxyzこんにちÊʑʒʓËÌÍÎÏðñòóôĵĶʔʕ',
     CipherText: 'ÑÒÓにΪΪΪΪΪΪ3ÔÕoeϽΫAÛMĸOZphßÚdyÌô0ÝϼPtĸTtSKにVÊϾέÛはʑʒʓÏRϼĶufÝK3MXaʔʕ',
   };
-  await testFpeRt({ options, tweakFF1 });
+  await testStructuredRt({ options, tweakFF1 });
 });
 
 test('UTF8_STRING_COMPLEX_2_Success', async () => {
@@ -174,7 +174,7 @@ test('UTF8_STRING_COMPLEX_2_Success', async () => {
     EncryptText: 'ķĸĹϺϻϼϽϾϿは世界abcdefghijklmnopqrstuvwxyzこんにちÊËÌÍÎÏðñòóôĵĶ',
     CipherText: 'にΪΪΪΪΪΪ3oeϽΫAÛMĸOZphßÚdyÌô0ÝϼPtĸTtSKにVÊϾέÛはÏRϼĶufÝK3MXa',
   };
-  await testFpeRt({ options, tweakFF1 });
+  await testStructuredRt({ options, tweakFF1 });
 });
 
 test('BULK_INVALID_ffs', async () => {
@@ -182,7 +182,7 @@ test('BULK_INVALID_ffs', async () => {
 
   const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
 
-  const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
+  const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials });
 
   // Expect an exception to skip over expect truthy
   try {
@@ -226,7 +226,7 @@ test('BULK_INVALID_pt_ct', async () => {
 
   const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
 
-  let ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
+  let ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials });
 
   // Expect an exception to skip over expect truthy
   try {
@@ -243,7 +243,7 @@ test('BULK_INVALID_pt_ct', async () => {
     ubiqEncryptDecrypt.close();
   }
 
-  ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
+  ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials });
 
   // Expect an exception to skip over expect truthy
   try {
@@ -298,7 +298,7 @@ test('BULK_INVALID_len', async () => {
 
   const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
 
-  const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
+  const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials });
 
   // Expect an exception to skip over expect truthy
   try {
@@ -364,7 +364,7 @@ test('BULK_INVALID_keynum', async () => {
 
   const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
 
-  const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
+  const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials });
 
 
   let cipherText = await ubiqEncryptDecrypt.EncryptAsync(
@@ -422,7 +422,7 @@ test('BULK_cached', async () => {
 
   const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
 
-  const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
+  const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials });
 
   let cipherText = await ubiqEncryptDecrypt.EncryptAsync(
     'SSN',
@@ -445,7 +445,7 @@ test('BULK_cached_2', async () => {
 
   const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
 
-  const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
+  const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials });
 
   const plainText = '0123456789'
   const ffs = 'SSN'
@@ -484,7 +484,7 @@ test('MIXED_forward', async () => {
 
   const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
 
-  const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
+  const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials });
 
   const plainText = ";0123456-789ABCDEF|"
   const ffs = 'ALPHANUM_SSN'
@@ -510,7 +510,7 @@ test('MIXED_backward', async () => {
 
   const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
 
-  const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
+  const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials });
 
   const plainText = ";0123456-789ABCDEF|"
   const ffs = 'ALPHANUM_SSN'
@@ -557,7 +557,7 @@ test('CREDS_invalid_papi', async () => {
   }
 
 
-  const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
+  const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials });
 
   try {
     let cipherText = await ubiqEncryptDecrypt.EncryptAsync(
@@ -599,7 +599,7 @@ test('CREDS_invalid_sapi', async () => {
   }
 
 
-  const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
+  const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials });
 
   try {
     let cipherText = await ubiqEncryptDecrypt.EncryptAsync(
@@ -641,7 +641,7 @@ test('CREDS_invalid_rsa', async () => {
   }
 
 
-  const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
+  const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials });
 
   try {
     let cipherText = await ubiqEncryptDecrypt.EncryptAsync(
@@ -683,7 +683,7 @@ test('CREDS_invalid_host', async () => {
   }
 
 
-  const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
+  const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials });
 
   try {
     let cipherText = await ubiqEncryptDecrypt.EncryptAsync(
@@ -705,7 +705,7 @@ test('BULK_INVALID_creds', async () => {
 
   const ubiqCredentials = new ubiq.Credentials('a', 'b', 'c', 'd')//'./credentials');
 
-  const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
+  const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials });
 
   // Expect an exception
   try {
@@ -729,7 +729,7 @@ test('addUserDefinedMetdata_InvalidJson', async () => {
 
   const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
 
-  const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
+  const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials });
 
   // Expect no exception
   try {
@@ -752,7 +752,7 @@ test('addUserDefinedMetdata_EmptyString', async () => {
 
   const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
 
-  const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
+  const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials });
 
   // Expect no exception
   try {
@@ -776,7 +776,7 @@ test('addUserDefinedMetdata_MissingJson', async () => {
 
   const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
 
-  const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
+  const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials });
 
   // Expect no exception
   try {
@@ -799,7 +799,7 @@ test('addUserDefinedMetdata_RandomJson', async () => {
 
   const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
 
-  const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
+  const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials });
 
   var token = require('crypto').randomBytes(100).toString('hex');
 
@@ -824,7 +824,7 @@ test('addUserDefinedMetdata_LongJson', async () => {
 
   const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
 
-  const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
+  const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials });
 
   var token = require('crypto').randomBytes(1200).toString('hex');
 
@@ -849,7 +849,7 @@ test('addUserDefinedMetdata_EmptyJson', async () => {
 
   const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
 
-  const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
+  const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials });
 
   // Expect no exception
   try {
@@ -872,7 +872,7 @@ test('addUserDefinedMetdata_ValidJson', async () => {
 
   const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
 
-  const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials });
+  const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials });
 
   // Expect no exception
   try {
@@ -899,7 +899,7 @@ test('Structured_GetCopyOfUsage_Minutes', async () => {
   config.event_reporting_minimum_count = 10;
   config.event_reporting_timestamp_granularity = TimeGranularity.MINUTES // ending should be :00.000Z
 
-  const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials: ubiqCredentials, ubiqConfiguration: config })
+  const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials: ubiqCredentials, ubiqConfiguration: config })
   ubiqEncryptDecrypt.addReportingUserDefinedMetadata('{"test":"Gary Schneir", "array":[1,2,3,4]}')
 
   const plainText = ";0123456-789ABCDEF|"
@@ -930,7 +930,7 @@ test('Structured_GetCopyOfUsage_DAYS', async () => {
   config.event_reporting_minimum_count = 10;
   config.event_reporting_timestamp_granularity = TimeGranularity.DAYS // ending should be :00.000Z
 
-  const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials: ubiqCredentials, ubiqConfiguration: config })
+  const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials: ubiqCredentials, ubiqConfiguration: config })
   ubiqEncryptDecrypt.addReportingUserDefinedMetadata('{"test":"Gary Schneir", "array":[1,2,3,4]}')
 
   const plainText = ";0123456-789ABCDEF|"
@@ -960,7 +960,7 @@ test('Structured_GetCopyOfUsage_Missing', async () => {
   config.event_reporting_wake_interval = 10;
   config.event_reporting_minimum_count = 10;
 
-  const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials: ubiqCredentials, ubiqConfiguration: config })
+  const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials: ubiqCredentials, ubiqConfiguration: config })
 
   const plainText = ";0123456-789ABCDEF|"
   const ffs = 'ALPHANUM_SSN'

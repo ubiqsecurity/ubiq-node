@@ -56,8 +56,8 @@ function getEnv(value, key) {
 async function loadTest() {
   /*
 
-  Usage: ./src/examples/ubiq_sample_fpe -e|-d INPUT -s|-p -n FFS [-c CREDENTIALS] [-P PROFILE]
-Encrypt or decrypt data using the Ubiq eFPE service
+  Usage: ./src/examples/ubiq_sample_structured -e|-d INPUT -s|-p -n FFS [-c CREDENTIALS] [-P PROFILE]
+Encrypt or decrypt data using the Ubiq structured encrypt
     -h                       Show this help message and exit\n");
     -p                       Print information regarding the failing records.
     -e                       Maximum allowed average encrypt time in microseconds.
@@ -186,7 +186,7 @@ Encrypt or decrypt data using the Ubiq eFPE service
     }
 
 
-    const ubiqEncryptDecrypt = new ubiq.fpeEncryptDecrypt.FpeEncryptDecrypt({ ubiqCredentials: credentials });
+    const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials: credentials });
     const tweakFF1 = [];
 
     var perf_times = new Map();

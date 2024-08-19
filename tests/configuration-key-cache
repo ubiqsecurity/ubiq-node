@@ -1,0 +1,7 @@
+{
+  "key_caching":{
+    "unstructured": false,
+    "encrypt": true
+  }
+
+}

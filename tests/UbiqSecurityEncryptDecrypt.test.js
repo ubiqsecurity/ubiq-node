@@ -206,3 +206,25 @@ test('Unstructured_GetCopyOfUsage_Minutes', async () => {
   await dec.close()
 
 });
+
+
+test('Configuration_default', async () => {
+
+  // Default
+  var config = new ubiq.Configuration();
+
+  expect(config.key_caching_unstructured).toBe(true);
+  expect(config.key_caching_encrypt).toBe(false);
+
+});
+
+
+test('Configuration_file', async () => {
+
+  // explicit value
+  var config = new ubiq.Configuration("./tests/configuration-key-cache");
+
+  expect(config.key_caching_unstructured).toBe(false);
+  expect(config.key_caching_encrypt).toBe(true);
+
+});

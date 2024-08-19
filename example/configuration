@@ -5,8 +5,12 @@
     "flush_interval": 10,
     "trap_exceptions": false
   },
-  "nodejs" : {
-     "lock_sleep_before_retry" : 250,
-     "lock_max_retry_count" : 15
+  "nodejs": {
+    "lock_sleep_before_retry": 250,
+    "lock_max_retry_count": 15
+  },
+  "key_caching": {
+    "unstructured": true,
+    "encrypt": false
   }
 }

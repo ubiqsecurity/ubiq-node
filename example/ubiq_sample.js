@@ -165,6 +165,7 @@ function main() {
     fs.writeFile(outfile, bf, (err) => {
       if (err) throw err;
     });
+    console.log(`done: ${outfile}`);
   }
 
   async function pieceWiseEncrypt(uses) {
@@ -183,6 +184,7 @@ function main() {
       ws.close();
       enc.close();
     });
+    console.log(`done: ${outfile}`);
   }
 
   async function pieceWiseDecrypt() {
@@ -204,6 +206,7 @@ function main() {
       ws.close();
       dec.close();
     });
+    console.log(`done: ${outfile}`);
   }
 
   const stats = fs.statSync(input_file);

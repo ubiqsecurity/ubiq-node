@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.2.1 2024-08-14
+* Updated several package dependencies to new versions
+* Key caching improvement for unstructured decryption
+* Deprecated simple interfaces for structured encryption
+* Incorporated structured encryption submodule directly into this package
+* Updated exception handling and updated README documentation
+* Updated README code samples
+
+
+
 ## 2.2.0 2024-05-15
 * Support partial encryption rules
 

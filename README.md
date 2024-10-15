@@ -399,7 +399,7 @@ Occasionally, you may encounter issues when interacting with the Ubiq API.
 | 504 | Internal Error | Possible API key issue.  Check credentials or contact support.  | 
 
 [dashboard]:https://dashboard.ubiqsecurity.com
-[credentials]:https://dev.ubiqsecurity.com/docs/how-to-create-api-keys
+[credentials]:https://dev.ubiqsecurity.com/docs/api-keys
 [apidocs]:https://dev.ubiqsecurity.com/docs/api
 [UbiqSecurityStructuredEncryptDecrypt.test.js]:https://gitlab.com/ubiqsecurity/ubiq-node/-/blob/master/tests/UbiqSecurityStructuredEncryptDecrypt.test.js
 [UbiqSampleStructured.js]:https://gitlab.com/ubiqsecurity/ubiq-node/-/blob/master/example/ubiq_sample_structured.js

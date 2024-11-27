@@ -1,7 +1,10 @@
 {
-  "key_caching":{
+  "key_caching": {
     "unstructured": false,
     "encrypt": true
+  },
+  "idp": {
+    "type": "entra",
+    "customer_id": "Ubiq"
   }
-
 }

@@ -35,12 +35,13 @@ const { argv } = require('yargs');
 const ubiq = require('ubiq-security');
 const pkginfo = require('./package.json');
 
-function main() {
+async function main() {
   const credentials_file = argv.c;
   const input_file = argv.i;
   const outfile = argv.o;
   let input_data = '';
   const profile = argv.P;
+  const configuration_file = argv.g;
 
   // Blocks of 1 MiB
   const BLOCK_SIZE = 1024 * 1024;
@@ -83,7 +84,7 @@ function main() {
   function display_prompt() {
     console.log();
     console.log('usage: ubiq_sample.js [-h] [-V] [-e] [-d] [-s] [-p] -i INFILE -o OUTFILE');
-    console.log('                      [-c CREDENTIALS] [-P PROFILE]');
+    console.log('                      [-c CREDENTIALS] [-P PROFILE] [-g CONFIGURATION]');
   }
 
   function display_help() {
@@ -113,6 +114,8 @@ function main() {
     console.log('                 (default: ~/.ubiq/credentials[.json]) ');
     console.log('-P PROFILE       Identify the profile within the credentials file');
     console.log('                 (default: default)');
+    console.log('-g CONFIGURATION Set the file name for loading system configuration parameters ');
+    console.log('                 (default: ~/.ubiq/configuration) ');
   }
 
   if (argv.h) {
@@ -127,6 +130,7 @@ function main() {
   }
 
   const credentials = new ubiq.ConfigCredentials(credentials_file, profile);
+  const configuration = new ubiq.Configuration(configuration_file);
 
   // Test to see if the credentials have been found and loaded properly
   if (credentials.access_key_id === undefined
@@ -136,6 +140,9 @@ function main() {
     console.log('  Check credentials file pathname and selected profile');
     return;
   }
+
+  // Need to call the credentials init function to make sure the object is setup correctly
+  await credentials.initAsync(configuration)
 
   function getStuff(infile) {
     return fs.readFileSync(infile);

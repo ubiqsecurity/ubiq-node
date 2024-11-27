@@ -38,7 +38,7 @@ const program = new Command();
 async function main() {
   /*
 
-  Usage: ./src/examples/ubiq_sample_structured -e|-d INPUT -s|-p -n Dataset [-c CREDENTIALS] [-P PROFILE]
+  Usage: ./src/examples/ubiq_sample_structured -e|-d INPUT -s|-p -n Dataset [-c CREDENTIALS] [-P PROFILE]  [-g CONFIGURATION]
 Encrypt or decrypt data using the Ubiq structured datasets
   -h                       Show this help message and exit
   -V                       Show program's version number and exit
@@ -52,10 +52,12 @@ Encrypt or decrypt data using the Ubiq structured datasets
   -c CREDENTIALS           Set the file name with the API credentials
                              (default: ~/.ubiq/credentials)
   -P PROFILE               Identify the profile within the credentials file
+  -g CONFIGURATION         Set the file name for loading system configuration parameters
+                             (default: ~/.ubiq/configuration)
   */
   program
     .name('ubiq_sample_structured.js')
-    .description(`Usage: ubiq_sample_structured.js -e|-d INPUT -s|-b -n Dataset [-c CREDENTIALS] [-P PROFILE]
+    .description(`Usage: ubiq_sample_structured.js -e|-d INPUT -s|-b -n Dataset [-c CREDENTIALS] [-P PROFILE] [-g CONFIGURATION]
        Encrypt or decrypt data using the Ubiq structured encryption service`)
     .version(pkginfo.version)
     // .summary(`Usage: ubiq_sample_structured -e|-d INPUT -s|-b -n Dataset [-c CREDENTIALS][-P PROFILE]
@@ -73,7 +75,8 @@ Encrypt or decrypt data using the Ubiq structured datasets
     )
     .option('-n, --dataset <Dataset>', 'Use the supplied dataset name', null)
     .option('-c, --credentials <CREDENTIALS>', 'Set the file name with the API credentials (default: ~/.ubiq/credentials)', null)
-    .option('-P, --profile <PROFILE>', 'Identify the profile within the credentials file (default: default', null);
+    .option('-P, --profile <PROFILE>', 'Identify the profile within the credentials file (default: default', null)
+    .option('-g, --config <CONFIGURATION>', 'Set the file name for loading system configuration parameters (default: ~/.ubiq/configuration)', null);
 
   try {
     program.parse(process.argv);
@@ -94,7 +97,7 @@ Encrypt or decrypt data using the Ubiq structured datasets
   }
   try {
     const credentials = new ubiq.ConfigCredentials(options.credentials, options.profile);
-    const configuration = new ubiq.Configuration();
+    const configuration = new ubiq.Configuration(options.config);
 
     // Test to see if the credentials have been found and loaded properly
     if (credentials.access_key_id === undefined
@@ -104,6 +107,10 @@ Encrypt or decrypt data using the Ubiq structured datasets
       console.log('  Check credentials file pathname and selected profile');
       process.exit();
     }
+
+    // Need to call the credentials init function to make sure the object is setup correctly
+    await credentials.initAsync(configuration)
+
     const tweakFF1 = [];
     if (options.encrypt) {
       const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials: credentials, ubiqConfiguration: configuration });

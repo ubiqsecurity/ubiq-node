@@ -52,7 +52,7 @@ The library needs to be configured with your account credentials which is
 available in your [Ubiq Dashboard][dashboard] [Credentials][credentials]   The credentials can be 
 explicitly set, set using environment variables, loaded from an explicit file
 or read from the default location [~/.ubiq/credentials].  A configuration can also be supplied 
-to control how usage is reported back to the ubiq servers.  The configuration file can be loaded from an explicit file or read from the default location [~/.ubiq/configuration].  See [below](#Configuration%20File) for a sample configuration file and content description.
+to control how usage is reported back to the ubiq servers.  The configuration file can be loaded from an explicit file or read from the default location [~/.ubiq/configuration].  See [below](#Configuration%20File) for a sample configuration file and content description.  The credentials object needs to be initialized using the configuration object and the credentials.initAsync method.  The credentials object only needs to be initialized one time, even if it is used to encrypt / decrypt many different object. 
 
 Require the Security Client module in your JS class.
 
@@ -69,7 +69,11 @@ const credentials = new ubiq.ConfigCredentials(credentials_file, profile)
 Read configuration from a specific file
 
 ```javascript
-const configuration = new ubiq.Configuration(configuration)
+const configuration = new ubiq.Configuration(configurationFile)
+
+// Use the configuration to finish initalizing the credentials
+await credentials.initAsync(configuration)
+
 ```
 
 
@@ -81,6 +85,9 @@ const credentials = new ubiq.ConfigCredentials()
 ### Read configuration from ~/.ubiq/configuration
 ```javascript
 const configuration = new ubiq.Configuration()
+
+// Use the configuration to finish initalizing the credentials
+await credentials.initAsync(configuration)
 ```
 
 
@@ -97,10 +104,25 @@ const credentials = new ubiq.Credentials()
 const credentials = new Credentials('<access_key_id>', '<secret_signing_key>', '<secret_crypto_access_key>')
 ```
 
+### IDP integration
+Ubiq currently supports both Okta and Entra IDP integration.  Instead of using the credentials provided when creating the API Key, the username (email) and password will be used to authenticate with the IDP and provide access to the Ubiq platform.
+
+### Use the following environment variables to set the credential values
+IDP_USERNAME  
+IDP_PASSWORD  
+```javascript
+const credentials = new ubiq.Credentials()
+```
+
+### Explicitly set the credentials
+```javascript
+const credentials = new Credentials(null,null,null,null, <username>, <password>)
+```
+
 
 ### Encrypt a simple block of data
 
-Pass credentials and data into the encryption function.  The encrypted data will be returned.
+Pass credentials and data into the encryption function.   The encrypted data will be returned.
 
 ```javascript
 const ubiq = require('ubiq-security')
@@ -255,6 +277,9 @@ const plainText = "123-45-6789";
 const credentials = new ubiq.ConfigCredentials('./credentials', 'default');
 const configuration = new ubiq.Configuration();
 
+// Use the configuration to finish initalizing the credentials
+await credentials.initAsync(configuration)
+
 const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials : credentials, ubiqConfiguration: configuration });
 
 const encrypted_data = await ubiqEncryptDecrypt.EncryptAsync(
@@ -275,6 +300,9 @@ Note that you would only need to create the "StructuredEncryptDecrypt" object on
 const cipher_text = "300-0E-274t";
 const credentials = new ubiq.ConfigCredentials('./credentials', 'default');
 const configuration = new ubiq.Configuration();
+
+// Use the configuration to finish initalizing the credentials
+await credentials.initAsync(configuration)
 
 const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials: credentials, ubiqConfiguration: configuration });
 
@@ -327,6 +355,10 @@ The same plaintext data will result in different cipher text when encrypted usin
 ```javascript
 const credentials = new ubiq.ConfigCredentials('./credentials', 'default');
 const configuration = new ubiq.Configuration('./configuration');
+
+// Use the configuration to finish initalizing the credentials
+await credentials.initAsync(configuration)
+
 const dataset_name = "SSN";
 const plainText = "123-45-6789";
 
@@ -369,6 +401,13 @@ A sample configuration file is shown below.  The configuration is in JSON format
   - <b>lock_sleep_before_retry</b> indicates the number of milliseconds to wait before trying to lock a cache resource if the first attempt fails
   - <b>lock_max_retry_count</b> indicates the number of times to try to lock a cache resource before giving up
 
+   #### IDP specific parameters
+  - <b>type</b> indicates the IDP type, either <b>okta</b> or <b>entra</b>
+  - <b>customer_id</b> The UUID for this customer.  Will be provided by Ubiq.
+  - <b>token_endpoint_url</b> The endpoint needed to authenticate the user credentials, provided by Okta or Entra
+  - <b>tenant_id</b> contains the tenant value provided by Okta or Entra
+  - <b>client_secret</b> contains the client secret value provided by Okta or Entra
+
 ```json
 {
   "event_reporting": {
@@ -381,6 +420,13 @@ A sample configuration file is shown below.  The configuration is in JSON format
   "nodejs" : {
      "lock_sleep_before_retry" : 250,
      "lock_max_retry_count" : 15
+  },
+   "idp": {
+    "type": "okta",
+    "customer_id": "f6f.....08c5",
+    "token_endpoint_url": " https://dev-<domain>.okta.com/oauth2/v1/token",
+    "tenant_id": "0o....d7",
+    "client_secret": "yro.....2Db"
   }
 }
 ```

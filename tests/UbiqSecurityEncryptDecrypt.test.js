@@ -1,6 +1,7 @@
 const cipher = require('node-forge/lib/cipher');
 const ubiq = require('../index');
 const { TimeGranularity } = require('../lib/configuration.js')
+const { UbiqWebServices } = require('../lib/ubiqWebServices.js');
 
 
 async function testRt({
@@ -215,6 +216,7 @@ test('Configuration_default', async () => {
 
   expect(config.key_caching_unstructured).toBe(true);
   expect(config.key_caching_encrypt).toBe(false);
+  expect(config.idp_type).toBe("");
 
 });
 
@@ -226,5 +228,41 @@ test('Configuration_file', async () => {
 
   expect(config.key_caching_unstructured).toBe(false);
   expect(config.key_caching_encrypt).toBe(true);
+  expect(config.idp_type).toBe("entra");
+  expect(config.idp_customer_id).toBe("Ubiq");
+  expect(config.idp_client_secret).toBe("");
 
 });
+
+
+test('Credentials', async () => {
+
+  ubiqCredentials = new ubiq.Credentials("a", "b", "c", "d", "user@ubiqsecurity.com", "password");
+
+  expect(ubiqCredentials.idp_username).toBe("user@ubiqsecurity.com")
+  expect(ubiqCredentials.idp_password).toBe("password")
+
+})
+
+test('Credentials_env', async () => {
+
+  ubiqCredentials = new ubiq.Credentials(null, null, null, null, "user@ubiqsecurity.com", "password");
+
+  expect(ubiqCredentials.idp_username).toBe("user@ubiqsecurity.com")
+  expect(ubiqCredentials.idp_password).toBe("password")
+
+})
+
+test('Credentials_no_idp', async () => {
+
+  try {
+    ubiqCredentials = new ubiq.Credentials(null, null, null, null);
+    expect(ubiqCredentials.idp_username).toBe("")
+    expect(ubiqCredentials.idp_password).toBe("")
+  }
+  catch (ex) {
+    // Should not fail since env variables will have valid access ID
+    expect(false).toBeTruthy()
+  }
+
+})

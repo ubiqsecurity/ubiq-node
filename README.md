@@ -401,6 +401,14 @@ A sample configuration file is shown below.  The configuration is in JSON format
   - <b>lock_sleep_before_retry</b> indicates the number of milliseconds to wait before trying to lock a cache resource if the first attempt fails
   - <b>lock_max_retry_count</b> indicates the number of times to try to lock a cache resource before giving up
 
+  #### Key Caching
+  The <b>key_caching</b> section contains values to control how and when keys are cached.
+
+  - <b>ttl_seconds</b> indicates how many seconds a cache element should remain before it must be re-retrieved. (default: 1800)
+  - <b>structured</b> indicates whether keys will be cached when doing structured encryption and decryption. (default: true)
+  - <b>unstructured</b> indicates whether keys will be cached when doing unstructured decryption. (default: true)
+  - <b>encrypt</b> indicates if keys should be stored encrypted. If keys are encrypted, they will be harder to access via memory, but require them to be decrypted with each use. (default: false)
+
    #### IDP specific parameters
   - <b>type</b> indicates the IDP type, either <b>okta</b> or <b>entra</b>
   - <b>customer_id</b> The UUID for this customer.  Will be provided by Ubiq.
@@ -420,6 +428,12 @@ A sample configuration file is shown below.  The configuration is in JSON format
   "nodejs" : {
      "lock_sleep_before_retry" : 250,
      "lock_max_retry_count" : 15
+  },
+  "key_caching" : {
+     "structured" : true,
+     "unstructured" : true,
+     "encrypted" : false,
+     "ttl_seconds" : 1800
   },
    "idp": {
     "type": "okta",

@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.2.2 2024-12-13
+* Key caching improvement for unstructured decryption
+* Key caching options for structured encryption / decryption
+* Added support for IDP integration using Okta and Entra
+
+
 ## 2.2.1 2024-08-14
 * Updated several package dependencies to new versions
 * Key caching improvement for unstructured decryption

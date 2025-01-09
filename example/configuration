@@ -11,6 +11,8 @@
   },
   "key_caching": {
     "unstructured": true,
-    "encrypt": false
+    "structured": true,
+    "encrypt": false,
+    "ttl_seconds" : 1800
   }
 }

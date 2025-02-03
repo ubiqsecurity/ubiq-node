@@ -49,10 +49,11 @@ All dependencies are pre-required in the module itself.
 ## Usage
 
 The library needs to be configured with your account credentials which is
-available in your [Ubiq Dashboard][dashboard] [Credentials][credentials]   The credentials can be 
-explicitly set, set using environment variables, loaded from an explicit file
-or read from the default location [~/.ubiq/credentials].  A configuration can also be supplied 
-to control how usage is reported back to the ubiq servers.  The configuration file can be loaded from an explicit file or read from the default location [~/.ubiq/configuration].  See [below](#Configuration%20File) for a sample configuration file and content description.  The credentials object needs to be initialized using the configuration object and the credentials.initAsync method.  The credentials object only needs to be initialized one time, even if it is used to encrypt / decrypt many different object. 
+available in your [Ubiq Dashboard][dashboard] [Credentials][credentials]   The credentials can be  explicitly set, set using environment variables, loaded from an explicit file or read from the default location `~/.ubiq/credentials`. 
+
+A configuration can also be supplied  to control how usage is reported back to the ubiq servers.  The configuration file can be loaded from an explicit file or read from the default location `~/.ubiq/configuration`.  See [below](#Configuration%20File) for a sample configuration file and content description. 
+
+The credentials object needs to be initialized using the configuration object and the `credentials.initAsync` method.  The credentials object only needs to be initialized one time, even if it is used to encrypt / decrypt many different object. 
 
 Require the Security Client module in your JS class.
 
@@ -60,13 +61,13 @@ Require the Security Client module in your JS class.
 const ubiq = require('ubiq-security')
 ```
 
-Read credentials from a specific file and use a specific profile
+### Read credentials from a specific file and use a specific profile
 
 ```javascript
 const credentials = new ubiq.ConfigCredentials(credentials_file, profile)
 ```
 
-Read configuration from a specific file
+### Read configuration from a specific file
 
 ```javascript
 const configuration = new ubiq.Configuration(configurationFile)
@@ -119,6 +120,9 @@ const credentials = new ubiq.Credentials()
 const credentials = new Credentials(null,null,null,null, <username>, <password>)
 ```
 
+## Ubiq Unstructured Encryption
+
+Unstructured encryption leverages AES encryption with embedded metadata and is used for data where format is irrelevant - blobs, files, media, streams. It is suitable where the size of ciphertext is not important (the output data will be larger than the source data, as Ubiq embeds 1-2k of metadata).
 
 ### Encrypt a simple block of data
 
@@ -174,10 +178,11 @@ In this example, the same data encryption key is used to encrypt several differe
 
 1. Create an encryption object using the credentials.
 2. Repeat following three steps as many times as appropriate
-* Call the encryption instance begin method
-*  Call the encryption instance update method repeatedly until a single object's data is processed
-*  Call the encryption instance end method
+    * Call the encryption instance begin method
+    *  Call the encryption instance update method repeatedly until a single object's data is processed
+    *  Call the encryption instance end method
 3. Call the encryption instance close method
+
 ```javascript
   const ubiq = require('ubiq-security')
 

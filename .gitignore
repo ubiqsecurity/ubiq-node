@@ -4,3 +4,8 @@ node_modules/
 example/package-lock.json
 .env
 credentials
+.DS_STORE
+
+# VS Code profiling data
+*.cpuprofile
+*.memprofile

@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.2.3 - 2025-02-27
+* Minor change in the configuration file for IDP support
+
 ## 2.2.2 2024-12-13
 * Key caching improvement for unstructured decryption
 * Key caching options for structured encryption / decryption

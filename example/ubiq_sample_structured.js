@@ -38,7 +38,7 @@ const program = new Command();
 async function main() {
   /*
 
-  Usage: ./src/examples/ubiq_sample_structured -e|-d INPUT -s|-p -n Dataset [-c CREDENTIALS] [-P PROFILE]  [-g CONFIGURATION]
+  Usage: ./src/examples/ubiq_sample_structured -e|-d INPUT [-s] -n Dataset [-c CREDENTIALS] [-P PROFILE]  [-g CONFIGURATION]
 Encrypt or decrypt data using the Ubiq structured datasets
   -h                       Show this help message and exit
   -V                       Show program's version number and exit
@@ -54,13 +54,15 @@ Encrypt or decrypt data using the Ubiq structured datasets
   -P PROFILE               Identify the profile within the credentials file
   -g CONFIGURATION         Set the file name for loading system configuration parameters
                              (default: ~/.ubiq/configuration)
-  */
+  -s                       Perform EncryptForSearch
+                             Only compatible with the -e option
+*/
   program
     .name('ubiq_sample_structured.js')
-    .description(`Usage: ubiq_sample_structured.js -e|-d INPUT -s|-b -n Dataset [-c CREDENTIALS] [-P PROFILE] [-g CONFIGURATION]
+    .description(`Usage: ubiq_sample_structured.js -e|-d INPUT [-s] -n Dataset [-c CREDENTIALS] [-P PROFILE] [-g CONFIGURATION]
        Encrypt or decrypt data using the Ubiq structured encryption service`)
     .version(pkginfo.version)
-    // .summary(`Usage: ubiq_sample_structured -e|-d INPUT -s|-b -n Dataset [-c CREDENTIALS][-P PROFILE]
+    // .summary(`Usage: ubiq_sample_structured -e|-d INPUT [-s] -n Dataset [-c CREDENTIALS][-P PROFILE]
     // Encrypt or decrypt data using the Ubiq structured encryption service`)
 
     .option(
@@ -76,7 +78,8 @@ Encrypt or decrypt data using the Ubiq structured datasets
     .option('-n, --dataset <Dataset>', 'Use the supplied dataset name', null)
     .option('-c, --credentials <CREDENTIALS>', 'Set the file name with the API credentials (default: ~/.ubiq/credentials)', null)
     .option('-P, --profile <PROFILE>', 'Identify the profile within the credentials file (default: default', null)
-    .option('-g, --config <CONFIGURATION>', 'Set the file name for loading system configuration parameters (default: ~/.ubiq/configuration)', null);
+    .option('-g, --config <CONFIGURATION>', 'Set the file name for loading system configuration parameters (default: ~/.ubiq/configuration)', null)
+    .option('-s, --search', 'Perform the EncryptForSearch', false);
 
   try {
     program.parse(process.argv);
@@ -92,6 +95,12 @@ Encrypt or decrypt data using the Ubiq structured datasets
 
   if (!options.encrypt && !options.decrypt) {
     console.log('Please provide a valid option');
+    program.help();
+    process.exit();
+  }
+
+  if (options.decrypt && options.search) {
+    console.log('Search option is only allowed with Encryption');
     program.help();
     process.exit();
   }
@@ -114,12 +123,23 @@ Encrypt or decrypt data using the Ubiq structured datasets
     const tweakFF1 = [];
     if (options.encrypt) {
       const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials: credentials, ubiqConfiguration: configuration });
-      const cipherText = await ubiqEncryptDecrypt.EncryptAsync(
-        options.dataset,
-        options.encrypt,
-        tweakFF1,
-      );
-      console.log(cipherText);
+      if (options.search) {
+        const cipherText = await ubiqEncryptDecrypt.EncryptForSearchAsync(options.dataset,
+          options.encrypt,
+          tweakFF1);
+        console.log('EncryptForSearch results:')
+
+        for (const c of cipherText) {
+          console.log("\t" + c)
+        }
+      } else {
+        const cipherText = await ubiqEncryptDecrypt.EncryptAsync(
+          options.dataset,
+          options.encrypt,
+          tweakFF1,
+        );
+        console.log(cipherText);
+      }
       ubiqEncryptDecrypt.close();
     }
     if (options.decrypt) {

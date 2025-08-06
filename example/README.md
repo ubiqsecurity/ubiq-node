@@ -102,6 +102,8 @@ Encrypt or decrypt data using the Ubiq structured encryption
   -P PROFILE               Identify the profile within the credentials file
   -g CONFIGURATION         Set the file name for loading system configuration parameters
                              (default: ~/.ubiq/configuration)
+  -s                       Perform the EncryptForSearch.  
+                           Only compatibile with the -e option
 ```
 #### Demonstrate encrypting a social security number and returning a cipher text
 

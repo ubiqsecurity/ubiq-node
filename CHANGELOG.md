@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.2.4 - 2025-08-06
+* Updated structured encryption to match algorithms in Second Public Draft - https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-38Gr1.2pd.pdf
+
 ## 2.2.3 - 2025-02-27
 * Minor change in the configuration file for IDP support
 

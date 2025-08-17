@@ -30,7 +30,7 @@
   "homepage": "https://gitlab.com/ubiqsecurity/ubiq-node",
   "dependencies": {
     "big-integer": "^1.6.51",
-    "cacheable": "^0.2.9",
+    "cacheable": "^0.3.0",
     "configparser": "^0.3.6",
     "dotenv": "^16.4.5",
     "keyv": "^4.5.4",

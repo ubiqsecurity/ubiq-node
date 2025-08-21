@@ -105,8 +105,10 @@ Encrypt or decrypt data using the Ubiq structured datasets
     process.exit();
   }
   try {
-    const credentials = new ubiq.ConfigCredentials(options.credentials, options.profile);
-    const configuration = new ubiq.Configuration(options.config);
+
+    const credentials = ubiq.UbiqFactory.readCredentialsFromFile(options.credentials, options.profile);
+    const configuration = ubiq.UbiqFactory.readConfigurationFromFile(options.config);
+
 
     // Test to see if the credentials have been found and loaded properly
     if (credentials.access_key_id === undefined
@@ -117,12 +119,11 @@ Encrypt or decrypt data using the Ubiq structured datasets
       process.exit();
     }
 
-    // Need to call the credentials init function to make sure the object is setup correctly
-    await credentials.initAsync(configuration)
 
     const tweakFF1 = [];
     if (options.encrypt) {
-      const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials: credentials, ubiqConfiguration: configuration });
+      const ubiqEncryptDecrypt = await (new ubiq.CryptographyBuilder()).withCredentialsObject(credentials).withConfigurationObject(configuration).buildStructuredAsync();
+
       if (options.search) {
         const cipherText = await ubiqEncryptDecrypt.EncryptForSearchAsync(options.dataset,
           options.encrypt,
@@ -140,17 +141,17 @@ Encrypt or decrypt data using the Ubiq structured datasets
         );
         console.log(cipherText);
       }
-      ubiqEncryptDecrypt.close();
+      await ubiqEncryptDecrypt.close();
     }
     if (options.decrypt) {
-      const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials: credentials, ubiqConfiguration: configuration });
+      const ubiqEncryptDecrypt = await (new ubiq.CryptographyBuilder()).withCredentialsObject(credentials).withConfigurationObject(configuration).buildStructuredAsync();
       const plainText = await ubiqEncryptDecrypt.DecryptAsync(
         options.dataset,
         options.decrypt,
         tweakFF1,
       );
       console.log(plainText);
-      ubiqEncryptDecrypt.close();
+      await ubiqEncryptDecrypt.close();
     }
   } catch (err) {
     console.error(err);

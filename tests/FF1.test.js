@@ -1,5 +1,6 @@
-﻿const { FF1, bitlen } = require('../lib/structured/FF1');
-const bigInt = require('big-integer');
+﻿const bigInt = require('big-integer');
+const { expect } = require('chai');
+const { FF1, bitlen } = require('../lib/structured/FF1');
 
 function getRadixStr(radix) {
   if (radix === 2) {
@@ -15,6 +16,7 @@ function getRadixStr(radix) {
     return '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
   }
 }
+
 function ff1_test(key, twk, PT, CT, radix, custom_radix_str) {
   // const testKey = [...key];
   // let result;
@@ -22,20 +24,19 @@ function ff1_test(key, twk, PT, CT, radix, custom_radix_str) {
     custom_radix_str = getRadixStr(radix);
   }
 
-  // expect(PT.length).toBe(CT.length);
   const ctx = new FF1(key, twk, 0, 0, radix, custom_radix_str);
   // const ctx = new FF1(K, T, 0, 0, 10);
   const encrypted = ctx.encrypt(PT);
-  expect(CT).toBe(encrypted);
+  expect(CT).to.equal(encrypted);
   const decrypted = ctx.decrypt(CT);
-  expect(PT).toBe(decrypted);
+  expect(PT).to.equal(decrypted);
 }
 
-// test('test ff1-nist1', () => {
+// it('test ff1-nist1', () => {
 //    Test(_key, _twk1, _pt[0], '2433477484', 10);
 // });
 
-test('test ff1 - nist1', () => {
+it('test ff1 - nist1', () => {
   const K = new Uint8Array([
     0x2b, 0x7e, 0x15, 0x16, 0x28, 0xae, 0xd2, 0xa6,
     0xab, 0xf7, 0x15, 0x88, 0x09, 0xcf, 0x4f, 0x3c,
@@ -49,7 +50,7 @@ test('test ff1 - nist1', () => {
   ff1_test(K, T, PT, CT, 10, '0123456789');
 });
 
-test('test ff1 - nist2', () => {
+it('test ff1 - nist2', () => {
   const K = new Uint8Array([
     0x2b, 0x7e, 0x15, 0x16, 0x28, 0xae, 0xd2, 0xa6,
     0xab, 0xf7, 0x15, 0x88, 0x09, 0xcf, 0x4f, 0x3c,
@@ -65,7 +66,7 @@ test('test ff1 - nist2', () => {
   ff1_test(K, T, PT, CT, 10);
 });
 
-test('test ff1 - nist3', () => {
+it('test ff1 - nist3', () => {
   const K = new Uint8Array([
     0x2b, 0x7e, 0x15, 0x16, 0x28, 0xae, 0xd2, 0xa6,
     0xab, 0xf7, 0x15, 0x88, 0x09, 0xcf, 0x4f, 0x3c]);
@@ -80,7 +81,7 @@ test('test ff1 - nist3', () => {
   ff1_test(K, T, PT, CT, 36);
 });
 
-test('test ff1 - nist4', () => {
+it('test ff1 - nist4', () => {
   const K = new Uint8Array([
     0x2b, 0x7e, 0x15, 0x16, 0x28, 0xae, 0xd2, 0xa6,
     0xab, 0xf7, 0x15, 0x88, 0x09, 0xcf, 0x4f, 0x3c,
@@ -95,7 +96,7 @@ test('test ff1 - nist4', () => {
   ff1_test(K, T, PT, CT, 10);
 });
 
-test('test ff1 - nist5', () => {
+it('test ff1 - nist5', () => {
   const K = new Uint8Array([
     0x2b, 0x7e, 0x15, 0x16, 0x28, 0xae, 0xd2, 0xa6,
     0xab, 0xf7, 0x15, 0x88, 0x09, 0xcf, 0x4f, 0x3c,
@@ -112,7 +113,7 @@ test('test ff1 - nist5', () => {
   ff1_test(K, T, PT, CT, 10);
 });
 
-test('test ff1 - nist6', () => {
+it('test ff1 - nist6', () => {
   const K = new Uint8Array([
     0x2b, 0x7e, 0x15, 0x16, 0x28, 0xae, 0xd2, 0xa6,
     0xab, 0xf7, 0x15, 0x88, 0x09, 0xcf, 0x4f, 0x3c,
@@ -129,7 +130,7 @@ test('test ff1 - nist6', () => {
   ff1_test(K, T, PT, CT, 36);
 });
 
-test('test ff1 - nist5', () => {
+it('test ff1 - nist5', () => {
   const K = new Uint8Array([
     0x2b, 0x7e, 0x15, 0x16, 0x28, 0xae, 0xd2, 0xa6,
     0xab, 0xf7, 0x15, 0x88, 0x09, 0xcf, 0x4f, 0x3c,
@@ -145,7 +146,7 @@ test('test ff1 - nist5', () => {
   ff1_test(K, T, PT, CT, 10);
 });
 
-test('test ff1 - nist5', () => {
+it('test ff1 - nist5', () => {
   const K = new Uint8Array([
     0x2b, 0x7e, 0x15, 0x16, 0x28, 0xae, 0xd2, 0xa6,
     0xab, 0xf7, 0x15, 0x88, 0x09, 0xcf, 0x4f, 0x3c,
@@ -163,7 +164,7 @@ test('test ff1 - nist5', () => {
   ff1_test(K, T, PT, CT, 10);
 });
 
-test('test ff1 - nist9', () => {
+it('test ff1 - nist9', () => {
   const K = new Uint8Array([
     0x2b, 0x7e, 0x15, 0x16, 0x28, 0xae, 0xd2, 0xa6,
     0xab, 0xf7, 0x15, 0x88, 0x09, 0xcf, 0x4f, 0x3c,
@@ -181,7 +182,7 @@ test('test ff1 - nist9', () => {
   ff1_test(K, T, PT, CT, 36);
 });
 
-test('test ff1 - base2', () => {
+it('test ff1 - base2', () => {
   const K = new Uint8Array([
     0xf4, 0xa1, 0x16, 0xd6, 0xee, 0x40, 0x6a, 0x53,
     0xa5, 0x6c, 0xbe, 0x0f, 0x4a, 0xa7, 0xb1, 0x00,
@@ -201,7 +202,7 @@ test('test ff1 - base2', () => {
   ff1_test(K, T, PT, CT, 2);
 });
 
-test('test ff1 - base2_A', () => {
+it('test ff1 - base2_A', () => {
   const K = new Uint8Array([
     0xf4, 0xa1, 0x16, 0xd6, 0xee, 0x40, 0x6a, 0x53,
     0xa5, 0x6c, 0xbe, 0x0f, 0x4a, 0xa7, 0xb1, 0x00,
@@ -221,7 +222,7 @@ test('test ff1 - base2_A', () => {
   ff1_test(K, T, PT, CT, 2);
 });
 
-test('test ff1 - base2_b', () => {
+it('test ff1 - base2_b', () => {
   const K = new Uint8Array([
     0xf4, 0xa1, 0x16, 0xd6, 0xee, 0x40, 0x6a, 0x53,
     0xa5, 0x6c, 0xbe, 0x0f, 0x4a, 0xa7, 0xb1, 0x00,
@@ -241,7 +242,7 @@ test('test ff1 - base2_b', () => {
   ff1_test(K, T, PT, CT, 2);
 });
 
-test('test ff1 - base2_c', () => {
+it('test ff1 - base2_c', () => {
   const K = new Uint8Array([
     0xf4, 0xa1, 0x16, 0xd6, 0xee, 0x40, 0x6a, 0x53,
     0xa5, 0x6c, 0xbe, 0x0f, 0x4a, 0xa7, 0xb1, 0x00,
@@ -261,7 +262,7 @@ test('test ff1 - base2_c', () => {
   ff1_test(K, T, PT, CT, 2);
 });
 
-test('test ff1 - base2_d', () => {
+it('test ff1 - base2_d', () => {
   const K = new Uint8Array([
     0xf4, 0xa1, 0x16, 0xd6, 0xee, 0x40, 0x6a, 0x53,
     0xa5, 0x6c, 0xbe, 0x0f, 0x4a, 0xa7, 0xb1, 0x00,
@@ -281,7 +282,7 @@ test('test ff1 - base2_d', () => {
   ff1_test(K, T, PT, CT, 2);
 });
 
-test('test ff1 - base2_e', () => {
+it('test ff1 - base2_e', () => {
   const K = new Uint8Array([
     0xf4, 0xa1, 0x16, 0xd6, 0xee, 0x40, 0x6a, 0x53,
     0xa5, 0x6c, 0xbe, 0x0f, 0x4a, 0xa7, 0xb1, 0x00,
@@ -301,7 +302,7 @@ test('test ff1 - base2_e', () => {
   ff1_test(K, T, PT, CT, 2);
 });
 
-test('test ff1 - base10_a', () => {
+it('test ff1 - base10_a', () => {
   const K = new Uint8Array([
     0xf4, 0xa1, 0x16, 0xd6, 0xee, 0x40, 0x6a, 0x53,
     0xa5, 0x6c, 0xbe, 0x0f, 0x4a, 0xa7, 0xb1, 0x00,
@@ -320,7 +321,7 @@ test('test ff1 - base10_a', () => {
 
   ff1_test(K, T, PT, CT, 10);
 });
-test('ff1, so_alphanum_po', () => {
+it('ff1, so_alphanum_po', () => {
   const K = [
     0xeb, 0x7a, 0xd8, 0x17, 0x56, 0xd8, 0x4c, 0x67,
     0x01, 0xb1, 0x5f, 0x5b, 0x68, 0x00, 0x3c, 0xbd,
@@ -341,35 +342,33 @@ test('ff1, so_alphanum_po', () => {
   ff1_test(K, T, PT, CT, radix.length, radix);
 });
 
-test('bitlen1', async () => {
+it('bitlen1', async () => {
   let bits = 0;
-  let n = 1;
-  let one = BigInt(1)
+  const n = 1;
+  const one = BigInt(1);
   bits = bitlen(BigInt(2 ** n) - one);
 
-  expect(bits).toBe(n);
+  expect(bits).to.equal(n);
 });
 
-test('bitlen2', async () => {
+it('bitlen2', async () => {
   let bits = 0;
-  let one = BigInt(1)
-  let n = 10;
+  const one = BigInt(1);
+  const n = 10;
   bits = bitlen(BigInt(2 ** n) - one);
-  expect(bits).toBe(n);
+  expect(bits).to.equal(n);
 });
 
-test('bitlen3', async () => {
+it('bitlen3', async () => {
   let bits = 0;
   let bits2 = 0;
-  let one = BigInt(1)
+  const one = BigInt(1);
   for (let n = 1; n < 100; n++) {
-
     bits = bitlen(BigInt(2 ** n));
-    expect(bits).toBe(n + 1);
+    expect(bits).to.equal(n + 1);
 
     bits2 = bitlen(BigInt(2 ** n) - one);
-    expect(bits2).toBe(n);
-    expect(bits).not.toBe(bits2);
-
+    expect(bits2).to.equal(n);
+    expect(bits).not.to.equal(bits2);
   }
 });

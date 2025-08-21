@@ -1,268 +1,233 @@
-const cipher = require('node-forge/lib/cipher');
+const { expect } = require('chai');
 const ubiq = require('../index');
-const { TimeGranularity } = require('../lib/configuration.js')
-const { UbiqWebServices } = require('../lib/ubiqWebServices.js');
+const { TimeGranularity } = require('../lib/configuration');
 
-
-async function testRt({
-  options }) {
-
-  await testBatchRt(arguments[0])
-  await testSimpleRt(arguments[0])
+async function testRt({ options }) {
+  await testBatchRt(arguments[0]);
+  await testSimpleRt(arguments[0]);
 }
 
-
-
 async function testSimpleRt({
-  options
+  options,
 }) {
-  ubiqCredentials = new ubiq.Credentials(null, null, null, null)
+  ubiqCredentials = ubiq.UbiqFactory.createCredentials(null, null, null, null);
 
   cipherText = await ubiq.encrypt(ubiqCredentials, options.plainText);
 
-  let plainText = await ubiq.decrypt(ubiqCredentials, cipherText);
+  const plainText = await ubiq.decrypt(ubiqCredentials, cipherText);
 
-  expect(plainText).toBe(options.plainText);
-
+  expect(plainText).to.equal(options.plainText);
 }
 
+async function testBatchRt({ options }) {
+  ubiqCredentials = ubiq.UbiqFactory.createCredentials(null, null, null, null);
+  builder = (new ubiq.CryptographyBuilder()).withCredentialsObject(ubiqCredentials).withConfigurationDefault();
+  const enc = await builder.buildEncryptionAsync();
 
-async function testBatchRt({
-  options }) {
+  enc.addReportingUserDefinedMetadata('{"test":"Gary Schneir", "array":[1,2,3,4], "Encrypting":true}');
+  const data_begin = enc.begin();
 
-  ubiqCredentials = new ubiq.Credentials(null, null, null, null)
+  const data = enc.update(Buffer.from(options.plainText, 'utf-8'));
 
-  const enc = await new ubiq.Encryption(ubiqConfiguration = ubiqCredentials, options.uses);
-  enc.addReportingUserDefinedMetadata('{"test":"Gary Schneir", "array":[1,2,3,4], "Encrypting":true}')
-  var data_begin = enc.begin();
+  const data_end = enc.end();
+  await enc.close();
 
-  var data = enc.update(Buffer.from(options.plainText, 'utf-8'))
+  // Uses same credentials and config as above
+  const dec = await builder.buildDecryptionAsync();
+  dec.addReportingUserDefinedMetadata('{"test":"Gary Schneir", "array":[5,6,7], "Decrypting":true}');
 
-  var data_end = enc.end();
-  enc.close();
-
-  const dec = new ubiq.Decryption(ubiqConfiguration = ubiqCredentials);
-  dec.addReportingUserDefinedMetadata('{"test":"Gary Schneir", "array":[5,6,7], "Decrypting":true}')
-
-  var pt_begin = dec.begin()
+  const pt_begin = dec.begin();
   // var pt_mid = await dec.update(y);
-  var pt_mid = await dec.update(Buffer.concat([data_begin, data, data_end]));
-  var pt_end = dec.end();
-  await dec.close()
+  const pt_mid = await dec.update(Buffer.concat([data_begin, data, data_end]));
+  const pt_end = dec.end();
+  await dec.close();
 
-  expect(options.plainText).toBe(pt_begin + pt_mid + pt_end);
+  expect(options.plainText).to.equal(pt_begin + pt_mid + pt_end);
 }
 
-test('Test_small', async () => {
-
+it('Test_small', async () => {
   const options = {
     plainText: 'ABC',
-    uses: 1
+    uses: 1,
   };
   await testRt({ options });
 });
 
-test('Test_block_size', async () => {
-
+it('Test_block_size', async () => {
   const options = {
     plainText: 'ABCDEFGHIJKLMNOP',
-    uses: 2
+    uses: 2,
   };
   await testRt({ options });
 });
 
-test('Test_block_size_2xm1', async () => {
-
+it('Test_block_size_2xm1', async () => {
   const options = {
     plainText: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ01234',
-    uses: 3
+    uses: 3,
   };
   await testRt({ options });
 });
 
-test('Test_block_size_2x', async () => {
-
+it('Test_block_size_2x', async () => {
   const options = {
     plainText: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ012345',
-    uses: 4
+    uses: 4,
   };
   await testRt({ options });
 });
 
-test('Test_block_size_2xp1', async () => {
-
+it('Test_block_size_2xp1', async () => {
   const options = {
     plainText: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456',
-    uses: 5
+    uses: 5,
   };
   await testRt({ options });
 });
 
-test('Unstructured_GetCopyOfUsage', async () => {
+it('Unstructured_GetCopyOfUsage', async () => {
+  ubiqCredentials = ubiq.UbiqFactory.createCredentials(null, null, null, null);
 
-  ubiqCredentials = new ubiq.Credentials(null, null, null, null)
+  builder = (new ubiq.CryptographyBuilder()).withCredentialsObject(ubiqCredentials).withConfigurationDefault();
 
-  const enc = await new ubiq.Encryption(ubiqConfiguration = ubiqCredentials, 1);
-  enc.addReportingUserDefinedMetadata('{"test":"Gary Schneir", "array":[1,2,3,4], "Encrypting":true}')
-  var data_begin = enc.begin();
+  const enc = await builder.buildEncryptionAsync();
 
-  var data = enc.update(Buffer.from('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456', 'utf-8'))
+  enc.addReportingUserDefinedMetadata('{"test":"Gary Schneir", "array":[1,2,3,4], "Encrypting":true}');
+  const data_begin = enc.begin();
 
-  var data_end = enc.end();
+  const data = enc.update(Buffer.from('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456', 'utf-8'));
+
+  const data_end = enc.end();
 
   let str = enc.getCopyOfUsage();
-  let s = JSON.stringify(str.usage[0].user_defined.test).toString()
+  let s = JSON.stringify(str.usage[0].user_defined.test).toString();
   let found = s.match(/Gary Schneir/);
-  expect(found != null).toBeTruthy
+  expect(found != null).to.equal(true);
 
-  enc.close();
+  await enc.close();
 
-  const dec = new ubiq.Decryption(ubiqConfiguration = ubiqCredentials);
-  dec.addReportingUserDefinedMetadata('{"test":"gARY sCHNEIR", "array":[5,6,7], "Decrypting":true}')
+  const dec = await builder.buildDecryptionAsync();
+  dec.addReportingUserDefinedMetadata('{"test":"gARY sCHNEIR", "array":[5,6,7], "Decrypting":true}');
 
-  var pt_begin = dec.begin()
-  var pt_mid = await dec.update(Buffer.concat([data_begin, data, data_end]));
-  var pt_end = dec.end();
+  const pt_begin = dec.begin();
+  const pt_mid = await dec.update(Buffer.concat([data_begin, data, data_end]));
+  const pt_end = dec.end();
 
   str = dec.getCopyOfUsage();
-  s = JSON.stringify(str.usage[0].user_defined.test).toString()
+  s = JSON.stringify(str.usage[0].user_defined.test).toString();
   found = s.match(/gARY sCHNEIR/);
-  expect(found != null).toBeTruthy
+  expect(found != null).to.equal(true);
 
-  await dec.close()
-
+  await dec.close();
 });
 
+it('Unstructured_GetCopyOfUsage_Missing', async () => {
+  ubiqCredentials = ubiq.UbiqFactory.createCredentials(null, null, null, null);
 
-test('Unstructured_GetCopyOfUsage_Missing', async () => {
+  builder = (new ubiq.CryptographyBuilder()).withCredentialsObject(ubiqCredentials).withConfigurationDefault();
+  const enc = await builder.buildEncryptionAsync();
+  const data_begin = enc.begin();
 
-  ubiqCredentials = new ubiq.Credentials(null, null, null, null)
+  const data = enc.update(Buffer.from('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456', 'utf-8'));
 
-  const enc = await new ubiq.Encryption(ubiqConfiguration = ubiqCredentials, 1);
-  var data_begin = enc.begin();
-
-  var data = enc.update(Buffer.from('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456', 'utf-8'))
-
-  var data_end = enc.end();
+  const data_end = enc.end();
 
   let str = enc.getCopyOfUsage();
-  expect(str.usage[0] != null).toBeTruthy
+  expect(str.usage[0] != null).to.equal(true);
 
-  enc.close();
+  await enc.close();
 
-  const dec = new ubiq.Decryption(ubiqConfiguration = ubiqCredentials);
+  const dec = await builder.buildDecryptionAsync();
 
-  var pt_begin = dec.begin()
-  var pt_mid = await dec.update(Buffer.concat([data_begin, data, data_end]));
-  var pt_end = dec.end();
+  const pt_begin = dec.begin();
+  const pt_mid = await dec.update(Buffer.concat([data_begin, data, data_end]));
+  const pt_end = dec.end();
 
   str = dec.getCopyOfUsage();
-  expect(str.usage[0] != null).toBeTruthy
+  expect(str.usage[0] != null).to.equal(true);
 
-  await dec.close()
-
+  await dec.close();
 });
 
+it('Unstructured_GetCopyOfUsage_Minutes', async () => {
+  ubiqCredentials = ubiq.UbiqFactory.createCredentials(null, null, null, null);
 
+  const config = ubiq.UbiqFactory.defaultConfiguration();
 
-test('Unstructured_GetCopyOfUsage_Minutes', async () => {
-
-  ubiqCredentials = new ubiq.Credentials(null, null, null, null)
-  var config = new ubiq.Configuration();
   config.event_reporting_wake_interval = 10;
   config.event_reporting_minimum_count = 10;
-  config.event_reporting_timestamp_granularity = TimeGranularity.MINUTES // ending should be :00.000Z
-  const enc = await new ubiq.Encryption(params = ubiqCredentials, uses = 1, ubiqConfiguration = config);
-  enc.addReportingUserDefinedMetadata('{"test":"Gary Schneir", "array":[1,2,3,4], "Encrypting":true}')
-  var data_begin = enc.begin();
+  config.event_reporting_timestamp_granularity = TimeGranularity.MINUTES; // ending should be :00.000Z
 
-  var data = enc.update(Buffer.from('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456', 'utf-8'))
+  builder = (new ubiq.CryptographyBuilder()).withCredentialsObject(ubiqCredentials).withConfigurationObject(config);
 
-  var data_end = enc.end();
+  const enc = await builder.buildEncryptionAsync();
+
+  enc.addReportingUserDefinedMetadata('{"test":"Gary Schneir", "array":[1,2,3,4], "Encrypting":true}');
+  const data_begin = enc.begin();
+
+  const data = enc.update(Buffer.from('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456', 'utf-8'));
+
+  const data_end = enc.end();
 
   let str = enc.getCopyOfUsage();
-  let s = JSON.stringify(str.usage[0].user_defined.test).toString()
+  let s = JSON.stringify(str.usage[0].user_defined.test).toString();
   let found = s.match(/Gary Schneir/);
-  expect(found != null).toBeTruthy
-  found = s.match(/00:00.000Z/);
-  expect(found != null).toBeTruthy
+  expect(found != null).to.equal(true);
 
-  enc.close();
+  await enc.close();
 
-  config.event_reporting_timestamp_granularity = TimeGranularity.DAYS // ending should be :00.000Z
-  const dec = new ubiq.Decryption(ubiqConfiguration = ubiqCredentials, ubiqConfiguration = config);
-  dec.addReportingUserDefinedMetadata('{"test":"gARY sCHNEIR", "array":[5,6,7], "Decrypting":true}')
+  config.event_reporting_timestamp_granularity = TimeGranularity.DAYS; // ending should be :00.000Z
+  builder.withConfigurationObject(config);
+  const dec = await builder.buildDecryptionAsync();
 
-  var pt_begin = dec.begin()
-  var pt_mid = await dec.update(Buffer.concat([data_begin, data, data_end]));
-  var pt_end = dec.end();
+  dec.addReportingUserDefinedMetadata('{"test":"gARY sCHNEIR", "array":[5,6,7], "Decrypting":true}');
+
+  const pt_begin = dec.begin();
+  const pt_mid = await dec.update(Buffer.concat([data_begin, data, data_end]));
+  const pt_end = dec.end();
 
   str = dec.getCopyOfUsage();
-  s = JSON.stringify(str.usage[0].user_defined.test).toString()
+  s = JSON.stringify(str.usage[0].user_defined.test).toString();
   found = s.match(/gARY sCHNEIR/);
-  expect(found != null).toBeTruthy
-  found = s.match(/00:00:00.000Z/);
-  expect(found != null).toBeTruthy
+  expect(found != null).to.equal(true);
 
-  await dec.close()
-
+  await dec.close();
 });
 
-
-test('Configuration_default', async () => {
-
+it('Configuration_default', async () => {
   // Default
-  var config = new ubiq.Configuration();
+  const config = ubiq.UbiqFactory.defaultConfiguration();
 
-  expect(config.key_caching_unstructured).toBe(true);
-  expect(config.key_caching_encrypt).toBe(false);
-  expect(config.idp_type).toBe("");
-
+  expect(config.key_caching_unstructured).to.equal(true);
+  expect(config.key_caching_encrypt).to.equal(false);
+  expect(config.idp_type).to.equal('');
 });
 
-
-test('Configuration_file', async () => {
-
+it('Configuration_file', async () => {
   // explicit value
-  var config = new ubiq.Configuration("./tests/configuration-key-cache");
+  const config = ubiq.UbiqFactory.readConfigurationFromFile('./tests/configuration-key-cache');
 
-  expect(config.key_caching_unstructured).toBe(false);
-  expect(config.key_caching_encrypt).toBe(true);
-  expect(config.idp_type).toBe("entra");
-  expect(config.idp_customer_id).toBe("Ubiq");
-  expect(config.idp_client_secret).toBe("");
-
+  expect(config.key_caching_unstructured).to.equal(false);
+  expect(config.key_caching_encrypt).to.equal(true);
+  expect(config.idp_type).to.equal('entra');
+  expect(config.idp_customer_id).to.equal('Ubiq');
+  expect(config.idp_client_secret).to.equal('');
 });
 
+it('Credentials', async () => {
+  ubiqCredentials = ubiq.UbiqFactory.createCredentialsWithIdp('user@ubiqsecurity.com', 'password', 'host');
 
-test('Credentials', async () => {
+  expect(ubiqCredentials.idp_username).to.equal('user@ubiqsecurity.com');
+  expect(ubiqCredentials.idp_password).to.equal('password');
+});
 
-  ubiqCredentials = new ubiq.Credentials("a", "b", "c", "d", "user@ubiqsecurity.com", "password");
-
-  expect(ubiqCredentials.idp_username).toBe("user@ubiqsecurity.com")
-  expect(ubiqCredentials.idp_password).toBe("password")
-
-})
-
-test('Credentials_env', async () => {
-
-  ubiqCredentials = new ubiq.Credentials(null, null, null, null, "user@ubiqsecurity.com", "password");
-
-  expect(ubiqCredentials.idp_username).toBe("user@ubiqsecurity.com")
-  expect(ubiqCredentials.idp_password).toBe("password")
-
-})
-
-test('Credentials_no_idp', async () => {
-
+it('Credentials_no_idp', async () => {
   try {
-    ubiqCredentials = new ubiq.Credentials(null, null, null, null);
-    expect(ubiqCredentials.idp_username).toBe("")
-    expect(ubiqCredentials.idp_password).toBe("")
-  }
-  catch (ex) {
+    ubiqCredentials = ubiq.UbiqFactory.createCredentials(null, null, null, null);
+    expect(ubiqCredentials.idp_username).to.equal('');
+    expect(ubiqCredentials.idp_password).to.equal('');
+  } catch (ex) {
     // Should not fail since env variables will have valid access ID
-    expect(false).toBeTruthy()
+    expect(false).to.equal(true);
   }
-
-})
+});

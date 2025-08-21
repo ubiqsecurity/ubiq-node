@@ -39,7 +39,7 @@ npm install
 
 ### Requirements
 
-Node.js version 16 or later
+Node.js version 20 or later
 npm version 6 or later
 
 All dependencies are pre-required in the module itself.
@@ -51,9 +51,9 @@ available in your [Ubiq Dashboard][dashboard] [Credentials][credentials] The cre
 
 A configuration can also be supplied to control how usage is reported back to the ubiq servers. The configuration file can be loaded from an explicit file or read from the default location `~/.ubiq/configuration`. See [below](#Configuration%20File) for a sample configuration file and content description.
 
-The credentials object needs to be initialized using the configuration object and the `credentials.initAsync` method. The credentials object only needs to be initialized one time, even if it is used to encrypt / decrypt many different object.
+The library uses a combination of factory and builders to construct the necessary object.
 
-Require the Security Client module in your JS class.
+Require the Ubiq ecurity Client module in your JS class.
 
 ```javascript
 const ubiq = require("ubiq-security");
@@ -62,31 +62,25 @@ const ubiq = require("ubiq-security");
 ### Read credentials from a specific file and use a specific profile
 
 ```javascript
-const credentials = new ubiq.ConfigCredentials(credentials_file, profile);
+const credentials = ubiq.UbiqFactory.readCredentialsFromFile(credentials_file, profile);
 ```
 
 ### Read configuration from a specific file
 
 ```javascript
-const configuration = new ubiq.Configuration(configurationFile);
-
-// Use the configuration to finish initalizing the credentials
-await credentials.initAsync(configuration);
+const configuration = ubiq.UbiqFactory.readConfigurationFromFile(configurationFile);
 ```
 
 ### Read credentials from ~/.ubiq/credentials and use the default profile
 
 ```javascript
-const credentials = new ubiq.ConfigCredentials();
+const credentials = ubiq.UbiqFactory.defaultCredentials();
 ```
 
 ### Read configuration from ~/.ubiq/configuration
 
 ```javascript
-const configuration = new ubiq.Configuration();
-
-// Use the configuration to finish initalizing the credentials
-await credentials.initAsync(configuration);
+const configuration = ubiq.UbiqFactory.defaultConfiguration();
 ```
 
 ### Use the following environment variables to set the credential values
@@ -96,13 +90,13 @@ UBIQ_SECRET_SIGNING_KEY
 UBIQ_SECRET_CRYPTO_ACCESS_KEY
 
 ```javascript
-const credentials = new ubiq.Credentials();
+const credentials = ubiq.UbiqFactory.defaultCredentials();
 ```
 
 ### Explicitly set the credentials
 
 ```javascript
-const credentials = new Credentials(
+const credentials = ubiq.UbiqFactory.createCredentials(;
   "<access_key_id>",
   "<secret_signing_key>",
   "<secret_crypto_access_key>"
@@ -119,13 +113,13 @@ IDP_USERNAME
 IDP_PASSWORD
 
 ```javascript
-const credentials = new ubiq.Credentials();
+const credentials = ubiq.UbiqFactory.defaultCredentials();
 ```
 
 ### Explicitly set the credentials
 
 ```javascript
-const credentials = new Credentials(null,null,null,null, <username>, <password>)
+const credentials = ubiq.UbiqFactory.createCredentialsWithIdp(<username>, <password>, <host>)
 ```
 
 ## Ubiq Unstructured Encryption
@@ -171,15 +165,15 @@ const BLOCK_SIZE = 1024 * 1024
 ...
   var readStream = fs.createReadStream(input_file,{ highWaterMark: BLOCK_SIZE  });
 
-  let enc = await new ubiq.Encryption(credentials, 1);
+  let enc = await (new ubiq.CryptographyBuilder()).withCredentialsObject(credentials).buildEncryptionAsync();
   // Write out the header information
   let encrypted_data = enc.begin()
 
-  readStream.on('data', function(chunk) {
+  readStream.on('data', (chunk) {
     encrypted_data += enc.update(chunk)
-  }).on('end', function() {
+  }).on('end', async() {
       encrypted_data += enc.end()
-      enc.close()
+      await enc.close()
   });
 ```
 
@@ -197,7 +191,7 @@ In this example, the same data encryption key is used to encrypt several differe
 ```javascript
   const ubiq = require('ubiq-security')
 
-  let enc = await new ubiq.Encryption(credentials, 1);
+  let enc = await (new ubiq.CryptographyBuilder()).withCredentialsObject(credentials).buildEncryptionAsync();
 
   // object1 is a full plain text object
   let encrypted_1 = enc.begin()
@@ -221,7 +215,7 @@ In this example, the same data encryption key is used to encrypt several differe
   // Do something with the encrypted data
 
   // Encryption of n objects using same data encryption key is complete.  Free resources
-  enc.close()
+  await enc.close()
 
 ```
 
@@ -239,11 +233,12 @@ const ubiq = require("ubiq-security");
 // Process 1 MiB of plaintext data at a time
 const BLOCK_SIZE = 1024 * 1024;
 
-let dec = new ubiq.Decryption(credentials);
+let dec = await (new ubiq.CryptographyBuilder()).withCredentialsObject(credentials).buildDecryptionAsync();
+
 let plaintext_data = dec.begin();
 
 readStream
-  .on("data", async function (chunk) {
+  .on("data", async (chunk) {
     readStream.pause();
     await dec.update(chunk).then(function (response) {
       if (response) {
@@ -252,9 +247,9 @@ readStream
     });
     readStream.resume();
   })
-  .on("end", async function () {
+  .on("end", async () {
     plaintext_data += dec.end();
-    dec.close();
+    await dec.close();
   });
 ```
 
@@ -287,17 +282,10 @@ Create an structured encryption object using the credentials. Then pass the name
 const DatasetName = "SSN";
 const plainText = "123-45-6789";
 
-const credentials = new ubiq.ConfigCredentials("./credentials", "default");
-const configuration = new ubiq.Configuration();
+const credentials = ubiq.UbiqFactory.readCredentialsFromFile("./credentials", "default");
+const configuration = ubiq.UbiqFactory.defaultConfiguration();
 
-// Use the configuration to finish initalizing the credentials
-await credentials.initAsync(configuration);
-
-const ubiqEncryptDecrypt =
-  new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({
-    ubiqCredentials: credentials,
-    ubiqConfiguration: configuration,
-  });
+const ubiqEncryptDecrypt = await (new ubiq.CryptographyBuilder()).withCredentialsObject(credentials).withConfigurationObject(configuration).buildStructuredAsync();
 
 const encrypted_data = await ubiqEncryptDecrypt.EncryptAsync(
   DatasetName,
@@ -316,17 +304,10 @@ Note that you would only need to create the "StructuredEncryptDecrypt" object on
 
 ```javascript
 const cipher_text = "300-0E-274t";
-const credentials = new ubiq.ConfigCredentials("./credentials", "default");
-const configuration = new ubiq.Configuration();
+const credentials = ubiq.UbiqFactory.readCredentialsFromFile("./credentials", "default");
+const configuration = ubiq.UbiqFactory.defaultConfiguration();
 
-// Use the configuration to finish initalizing the credentials
-await credentials.initAsync(configuration);
-
-const ubiqEncryptDecrypt =
-  new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({
-    ubiqCredentials: credentials,
-    ubiqConfiguration: configuration,
-  });
+const ubiqEncryptDecrypt = await (new ubiq.CryptographyBuilder()).withCredentialsObject(credentials).withConfigurationObject(configuration).buildStructuredAsync();
 
 const decrypted_text = await ubiqEncryptDecrypt.DecryptAsync(
   DatasetName,
@@ -346,15 +327,15 @@ Examples are shown below.
 
 ```javascript
   ...
-  const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials: credentials, ubiqConfiguration: configuration });
-  ubiqEncryptDecrypt.addReportingUserDefinedMetadata('{\"some_meaningful_flag\" : true }')
+  const ubiqEncryptDecrypt = await (new ubiq.CryptographyBuilder()).withCredentialsObject(credentials).withConfigurationObject(configuration).buildStructuredAsync();
+ubiqEncryptDecrypt.addReportingUserDefinedMetadata('{\"some_meaningful_flag\" : true }')
 
   // Structured Encrypt and Decrypt operations
 ```
 
 ```javascript
   ...
-  let enc = await new ubiq.Encryption(credentials, 1);
+  let enc = await (new ubiq.CryptographyBuilder()).withCredentialsObject(credentials).withConfigurationObject(configuration).buildEncryptionAsync();
   enc.addReportingUserDefinedMetadata('{\"some_key\" : \"some_value\" }')
    ....
   // Unstructured Encrypt operations
@@ -366,7 +347,7 @@ Within an encryption session, either Encrypt or Decrypt, the client library can 
 
 ```javascript
   ...
-  const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials: credentials, ubiqConfiguration: configuration });
+  const ubiqEncryptDecrypt = await (new ubiq.CryptographyBuilder()).withCredentialsObject(credentials).withConfigurationObject(configuration).buildEncryptionAsync();
   ubiqEncryptDecrypt.addReportingUserDefinedMetadata('{\"some_meaningful_flag\" : true }')
   let cipherText = await ubiqEncryptDecrypt.EncryptAsync(
     dataset_name,
@@ -381,20 +362,13 @@ Within an encryption session, either Encrypt or Decrypt, the client library can 
 The same plaintext data will result in different cipher text when encrypted using different data keys. The Encrypt For Search function will encrypt the same plain text for a given dataset using all previously used data keys. This will provide a collection of cipher text values that can be used when searching for existing records where the data was encrypted and the specific version of the data key is not known in advance.
 
 ```javascript
-const credentials = new ubiq.ConfigCredentials("./credentials", "default");
-const configuration = new ubiq.Configuration("./configuration");
-
-// Use the configuration to finish initalizing the credentials
-await credentials.initAsync(configuration);
+const credentials = ubiq.UbiqFactory.readCredentialsFromFile("./credentials", "default");
+const configuration = ubiq.UbiqFactory.readConfigurationFromFile("./configuration");
 
 const dataset_name = "SSN";
 const plainText = "123-45-6789";
 
-const ubiqEncryptDecrypt =
-  new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({
-    ubiqCredentials: credentials,
-    ubiqConfiguration: configuration,
-  });
+const ubiqEncryptDecrypt =  await (new ubiq.CryptographyBuilder()).withCredentialsObject(credentials).withConfigurationObject(configuration).buildStructuredAsync();
 
 const searchText = await ubiqEncryptDecrypt.EncryptForSearchAsync(
   dataset_name,

@@ -1,7 +1,9 @@
 # Changelog
 
-## 2.2.4 - 2025-08-06
+## 2.3.0 - 2025-08-20
 * Updated structured encryption to match algorithms in Second Public Draft - https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-38Gr1.2pd.pdf
+* Updated to node 20 in order to update packages to resolve security vulnerabilities
+* Changed to Factory and Builder models for credentials, configuration, structured encryption objects, and unstructured encryption and decryption objects
 
 ## 2.2.3 - 2025-02-27
 * Minor change in the configuration file for IDP support

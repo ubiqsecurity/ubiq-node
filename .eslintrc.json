@@ -15,5 +15,8 @@
 	},
 	"globals": {
 		"BigInt": true
+	},
+	"env": {
+		"jest": true
 	}
 }

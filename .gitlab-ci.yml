@@ -23,7 +23,7 @@ stages:
 
 
 build:
-    image: node:16
+    image: node:20
     variables:
         GIT_SUBMODULE_STRATEGY: recursive
     stage: build
@@ -39,7 +39,7 @@ build:
         - npm install
 
 .tests:
-    image: node:16
+    image: node:20
     stage: test
     script:
         - npm install

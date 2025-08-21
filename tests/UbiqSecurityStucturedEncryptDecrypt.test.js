@@ -1,80 +1,73 @@
 const cipher = require('node-forge/lib/cipher');
-const ubiq = require('../index');
+const { expect } = require('chai');
 const { Console } = require('console');
-const { TimeGranularity } = require('../lib/configuration.js')
-
+const ubiq = require('../index');
+const { TimeGranularity } = require('../lib/configuration');
 
 async function testStructuredRt({
-  options, tweakFF1 = [], ubiqCredentials = null, cipherText = null, checkResult = true }) {
-
-  await testBatchStructuredRt(arguments[0])
-  await testSimpleStructuredRt(arguments[0])
-
+  options, tweakFF1 = [], ubiqCredentials = null, cipherText = null, checkResult = true,
+}) {
+  await testBatchStructuredRt(arguments[0]);
+  await testSimpleStructuredRt(arguments[0]);
 }
-
-
 
 async function testSimpleStructuredRt({
   options, tweakFF1 = [], ubiqCredentials = null, cipherText = null, checkResult = true,
 }) {
   if (!ubiqCredentials) {
-    ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
+    ubiqCredentials = ubiq.UbiqFactory.createCredentials(null, null, null, null);
   }
 
   if (!cipherText) {
     cipherText = await ubiq.fpeEncryptDecrypt.Encrypt({
-      ubiqCredentials: ubiqCredentials,
+      ubiqCredentials,
       ffsname: options.FfsName,
       data: options.EncryptText,
     });
   }
 
-  let plainText = await ubiq.fpeEncryptDecrypt.Decrypt({
-    ubiqCredentials: ubiqCredentials,
+  const plainText = await ubiq.fpeEncryptDecrypt.Decrypt({
+    ubiqCredentials,
     ffsname: options.FfsName,
     data: cipherText,
   });
 
-
   if (checkResult) {
-    expect(plainText).toBe(options.EncryptText);
+    expect(plainText).to.equal(options.EncryptText);
   }
 
   const searchText = await ubiq.fpeEncryptDecrypt.EncryptForSearch({
-    ubiqCredentials: ubiqCredentials,
+    ubiqCredentials,
     ffsname: options.FfsName,
-    data: options.EncryptText
+    data: options.EncryptText,
   });
 
-  var foundCt = false;
+  let foundCt = false;
 
   for (let i = 0; i < searchText.length; i++) {
-    foundCt = foundCt || (options.CipherText == searchText[i])
+    foundCt = foundCt || (options.CipherText == searchText[i]);
 
-    let plainText = await ubiq.fpeEncryptDecrypt.Decrypt({
-      ubiqCredentials: ubiqCredentials,
+    const plainText = await ubiq.fpeEncryptDecrypt.Decrypt({
+      ubiqCredentials,
       ffsname: options.FfsName,
-      data: searchText[i]
-    })
-    expect(plainText).toBe(options.EncryptText);
+      data: searchText[i],
+    });
+    expect(plainText).to.equal(options.EncryptText);
   }
 
-  expect(foundCt).toBe(true);
+  expect(foundCt).to.equal(true);
 
   return { cipherText, plainText };
 }
 
-
 async function testBatchStructuredRt({
   options, tweakFF1 = [], ubiqCredentials = null, cipherText = null, checkResult = true,
 }) {
-
   if (!ubiqCredentials) {
-    ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
+    ubiqCredentials = ubiq.UbiqFactory.createCredentials(null, null, null, null);
   }
 
-  const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials });
-
+  const ubiqEncryptDecrypt = await (new ubiq.CryptographyBuilder()).withCredentialsObject(ubiqCredentials).buildStructuredAsync();
 
   if (!cipherText) {
     cipherText = await ubiqEncryptDecrypt.EncryptAsync(
@@ -91,7 +84,7 @@ async function testBatchStructuredRt({
   );
 
   if (checkResult) {
-    expect(plainText).toBe(options.EncryptText);
+    expect(plainText).to.equal(options.EncryptText);
   }
 
   const searchText = await ubiqEncryptDecrypt.EncryptForSearchAsync(
@@ -101,28 +94,27 @@ async function testBatchStructuredRt({
   );
 
   // Make sure the supplied cipher text matches at least one of the search cipher texts
-  var foundCt = false;
+  let foundCt = false;
 
   for (let i = 0; i < searchText.length; i++) {
-    foundCt = foundCt || (options.CipherText == searchText[i])
+    foundCt = foundCt || (options.CipherText == searchText[i]);
 
-    let plainText = await ubiqEncryptDecrypt.DecryptAsync(
+    const plainText = await ubiqEncryptDecrypt.DecryptAsync(
       options.FfsName,
       searchText[i],
       tweakFF1,
     );
-    expect(plainText).toBe(options.EncryptText);
+    expect(plainText).to.equal(options.EncryptText);
   }
 
-  expect(foundCt).toBe(true);
+  expect(foundCt).to.equal(true);
 
   await ubiqEncryptDecrypt.close();
 
   return { cipherText, plainText };
 }
 
-
-test('ALPHANUM_SSN_Success', async () => {
+it('ALPHANUM_SSN_Success', async () => {
   const tweakFF1 = [];
 
   const options = {
@@ -130,21 +122,22 @@ test('ALPHANUM_SSN_Success', async () => {
     EncryptText: ';0123456-789ABCDEF|',
     CipherText: ';!!!E7`+-ai1ykOp8r|',
   };
+
   await testStructuredRt({ options, tweakFF1 });
 });
 
-test('BIRTH_DATE_Success', async () => {
+it('BIRTH_DATE_Success', async () => {
   const tweakFF1 = [];
 
   const options = {
     FfsName: 'BIRTH_DATE',
-    EncryptText: ";01\\02-1960|",
-    CipherText: ";!!\\!!-oKzi|",
+    EncryptText: ';01\\02-1960|',
+    CipherText: ';!!\\!!-oKzi|',
   };
   await testStructuredRt({ options, tweakFF1 });
 });
 
-test('SSN_Success', async () => {
+it('SSN_Success', async () => {
   const tweakFF1 = [];
 
   const options = {
@@ -155,7 +148,7 @@ test('SSN_Success', async () => {
   await testStructuredRt({ options, tweakFF1 });
 });
 
-test('UTF8_STRING_COMPLEX_Success', async () => {
+it('UTF8_STRING_COMPLEX_Success', async () => {
   const tweakFF1 = [];
 
   const options = {
@@ -166,7 +159,7 @@ test('UTF8_STRING_COMPLEX_Success', async () => {
   await testStructuredRt({ options, tweakFF1 });
 });
 
-test('UTF8_STRING_COMPLEX_2_Success', async () => {
+it('UTF8_STRING_COMPLEX_2_Success', async () => {
   const tweakFF1 = [];
 
   const options = {
@@ -177,12 +170,12 @@ test('UTF8_STRING_COMPLEX_2_Success', async () => {
   await testStructuredRt({ options, tweakFF1 });
 });
 
-test('BULK_INVALID_ffs', async () => {
+it('BULK_INVALID_ffs', async () => {
   const tweakFF1 = [];
 
-  const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
+  ubiqCredentials = ubiq.UbiqFactory.createCredentials(null, null, null, null);
 
-  const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials });
+  const ubiqEncryptDecrypt = await (new ubiq.CryptographyBuilder()).withCredentialsObject(ubiqCredentials).buildStructuredAsync();
 
   // Expect an exception to skip over expect truthy
   try {
@@ -191,42 +184,34 @@ test('BULK_INVALID_ffs', async () => {
       '123456789',
       tweakFF1,
     );
-    expect(false).toBeTruthy()
-  }
-  catch (ex) {
-  }
-  finally {
+    expect(false).to.equal(true);
+  } catch (ex) {
+  } finally {
     await ubiqEncryptDecrypt.close();
   }
-
 });
 
-test('SIMPLE_INVALID_ffs', async () => {
-  const tweakFF1 = [];
-
-  const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
+it('SIMPLE_INVALID_ffs', async () => {
+  const ubiqCredentials = ubiq.UbiqFactory.createCredentials(null, null, null, null);
 
   // Expect an exception to skip over expect truthy
   try {
     await ubiq.fpeEncryptDecrypt.Encrypt({
-      ubiqCredentials: ubiqCredentials,
+      ubiqCredentials,
       ffsname: 'ERROR FFS',
       data: '123456789',
     });
-    expect(false).toBeTruthy()
+    expect(false).to.equal(true);
+  } catch (ex) {
   }
-  catch (ex) {
-  }
-
 });
 
-
-test('BULK_INVALID_pt_ct', async () => {
+it('BULK_INVALID_pt_ct', async () => {
   const tweakFF1 = [];
 
-  const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
+  const ubiqCredentials = ubiq.UbiqFactory.createCredentials(null, null, null, null);
 
-  let ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials });
+  let ubiqEncryptDecrypt = await (new ubiq.CryptographyBuilder()).withCredentialsObject(ubiqCredentials).buildStructuredAsync();
 
   // Expect an exception to skip over expect truthy
   try {
@@ -235,15 +220,13 @@ test('BULK_INVALID_pt_ct', async () => {
       ' 123456789$',
       tweakFF1,
     );
-    expect(false).toBeTruthy()
-  }
-  catch (ex) {
-  }
-  finally {
+    expect(false).to.equal(true);
+  } catch (ex) {
+  } finally {
     ubiqEncryptDecrypt.close();
   }
 
-  ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials });
+  ubiqEncryptDecrypt = await (new ubiq.CryptographyBuilder()).withCredentialsObject(ubiqCredentials).buildStructuredAsync();
 
   // Expect an exception to skip over expect truthy
   try {
@@ -252,53 +235,48 @@ test('BULK_INVALID_pt_ct', async () => {
       ' 123456789$',
       tweakFF1,
     );
-    expect(false).toBeTruthy()
-  }
-  catch (ex) {
-  }
-  finally {
+    expect(false).to.equal(true);
+  } catch (ex) {
+  } finally {
     await ubiqEncryptDecrypt.close();
   }
 });
 
-test('SIMPLE_INVALID_pt_ct', async () => {
+it('SIMPLE_INVALID_pt_ct', async () => {
   const tweakFF1 = [];
 
-  const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
+  const ubiqCredentials = ubiq.UbiqFactory.createCredentials(null, null, null, null);
 
   // Expect an exception to skip over expect truthy
   try {
     await ubiq.fpeEncryptDecrypt.Encrypt({
-      ubiqCredentials: ubiqCredentials,
+      ubiqCredentials,
       ffsname: 'SSN',
       data: ' 123456789$',
     });
 
-    expect(false).toBeTruthy()
-  }
-  catch (ex) {
+    expect(false).to.equal(true);
+  } catch (ex) {
   }
 
   // Expect an exception to skip over expect truthy
   try {
     await ubiq.fpeEncryptDecrypt.Decrypt({
-      ubiqCredentials: ubiqCredentials,
+      ubiqCredentials,
       ffsname: 'SSN',
-      data: ' 123456789$'
+      data: ' 123456789$',
     });
-    expect(false).toBeTruthy()
-  }
-  catch (ex) {
+    expect(false).to.equal(true);
+  } catch (ex) {
   }
 });
 
-
-test('BULK_INVALID_len', async () => {
+it('BULK_INVALID_len', async () => {
   const tweakFF1 = [];
 
-  const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
+  const ubiqCredentials = ubiq.UbiqFactory.createCredentials(null, null, null, null);
 
-  const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials });
+  const ubiqEncryptDecrypt = await (new ubiq.CryptographyBuilder()).withCredentialsObject(ubiqCredentials).buildStructuredAsync();
 
   // Expect an exception to skip over expect truthy
   try {
@@ -307,11 +285,9 @@ test('BULK_INVALID_len', async () => {
       '1234',
       tweakFF1,
     );
-    expect(false).toBeTruthy()
-  }
-  catch (ex) {
-  }
-  finally {
+    expect(false).to.equal(true);
+  } catch (ex) {
+  } finally {
     await ubiqEncryptDecrypt.close();
   }
 
@@ -321,59 +297,54 @@ test('BULK_INVALID_len', async () => {
       '12345678901234567890',
       tweakFF1,
     );
-    expect(false).toBeTruthy()
-  }
-  catch (ex) {
-  }
-  finally {
+    expect(false).to.equal(true);
+  } catch (ex) {
+  } finally {
     await ubiqEncryptDecrypt.close();
   }
 });
 
-test('SIMPLE_INVALID_len', async () => {
+it('SIMPLE_INVALID_len', async () => {
   const tweakFF1 = [];
 
-  const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
+  const ubiqCredentials = ubiq.UbiqFactory.createCredentials(null, null, null, null);
 
   // Expect an exception to skip over expect truthy
   try {
     await ubiq.fpeEncryptDecrypt.Encrypt({
-      ubiqCredentials: ubiqCredentials,
+      ubiqCredentials,
       ffsname: 'SSN',
       data: '1234',
     });
-    expect(false).toBeTruthy()
-  }
-  catch (ex) {
+    expect(false).to.equal(true);
+  } catch (ex) {
   }
 
   try {
     await ubiq.fpeEncryptDecrypt.Decrypt({
-      ubiqCredentials: ubiqCredentials,
+      ubiqCredentials,
       ffsname: 'SSN',
       data: '12345678901234567890',
     });
-    expect(false).toBeTruthy()
-  }
-  catch (ex) {
+    expect(false).to.equal(true);
+  } catch (ex) {
   }
 });
 
-test('BULK_INVALID_keynum', async () => {
+it('BULK_INVALID_keynum', async () => {
   const tweakFF1 = [];
 
-  const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
+  const ubiqCredentials = ubiq.UbiqFactory.createCredentials(null, null, null, null);
 
-  const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials });
+  const ubiqEncryptDecrypt = await (new ubiq.CryptographyBuilder()).withCredentialsObject(ubiqCredentials).buildStructuredAsync();
 
-
-  let cipherText = await ubiqEncryptDecrypt.EncryptAsync(
+  const cipherText = await ubiqEncryptDecrypt.EncryptAsync(
     'SSN',
     '0123456789',
     tweakFF1,
   );
 
-  cipherText[0] = '}'
+  cipherText[0] = '}';
   // Expect an exception to skip over expect truthy
   try {
     plainText = await ubiqEncryptDecrypt.DecryptAsync(
@@ -381,331 +352,316 @@ test('BULK_INVALID_keynum', async () => {
       cipherText,
       tweakFF1,
     );
-    expect(false).toBeTruthy()
-  }
-  catch (ex) {
-  }
-  finally {
+    expect(false).to.equal(true);
+  } catch (ex) {
+  } finally {
     await ubiqEncryptDecrypt.close();
   }
 });
 
-test('SIMPLE_INVALID_keynum', async () => {
+it('SIMPLE_INVALID_keynum', async () => {
   const tweakFF1 = [];
 
-  const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
+  const ubiqCredentials = ubiq.UbiqFactory.createCredentials(null, null, null, null);
 
-
-  let cipherText = await ubiq.fpeEncryptDecrypt.Encrypt({
-    ubiqCredentials: ubiqCredentials,
+  const cipherText = await ubiq.fpeEncryptDecrypt.Encrypt({
+    ubiqCredentials,
     ffsname: 'SSN',
     data: '123456789',
   });
 
-  cipherText[0] = '}'
+  cipherText[0] = '}';
   // Expect an exception to skip over expect truthy
   try {
     plainText = await ubiq.fpeEncryptDecrypt.Decrypt({
-      ubiqCredentials: ubiqCredentials,
+      ubiqCredentials,
       ffsname: 'SSN',
-      data: cipherText
+      data: cipherText,
     });
-    expect(false).toBeTruthy()
-  }
-  catch (ex) {
+    expect(false).to.equal(true);
+  } catch (ex) {
   }
 });
 
-
-test('BULK_cached', async () => {
+it('BULK_cached', async () => {
   const tweakFF1 = [];
 
-  const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
+  const ubiqCredentials = ubiq.UbiqFactory.createCredentials(null, null, null, null);
 
-  const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials });
+  const ubiqEncryptDecrypt = await (new ubiq.CryptographyBuilder()).withCredentialsObject(ubiqCredentials).buildStructuredAsync();
 
-  let cipherText = await ubiqEncryptDecrypt.EncryptAsync(
+  const cipherText = await ubiqEncryptDecrypt.EncryptAsync(
     'SSN',
     '0123456789',
     tweakFF1,
   );
 
-  let cipherText2 = await ubiqEncryptDecrypt.EncryptAsync(
+  const cipherText2 = await ubiqEncryptDecrypt.EncryptAsync(
     'SSN',
     '0123456789',
     tweakFF1,
   );
 
-  expect(cipherText).toBe(cipherText2)
+  expect(cipherText).to.equal(cipherText2);
   await ubiqEncryptDecrypt.close();
 });
 
-test('BULK_cached_2', async () => {
+it('BULK_cached_2', async () => {
   const tweakFF1 = [];
 
-  const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
+  const ubiqCredentials = ubiq.UbiqFactory.createCredentials(null, null, null, null);
 
-  const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials });
+  const ubiqEncryptDecrypt = await (new ubiq.CryptographyBuilder()).withCredentialsObject(ubiqCredentials).buildStructuredAsync();
 
-  const plainText = '0123456789'
-  const ffs = 'SSN'
-  let cipherText = await ubiqEncryptDecrypt.EncryptAsync(
+  const plainText = '0123456789';
+  const ffs = 'SSN';
+  const cipherText = await ubiqEncryptDecrypt.EncryptAsync(
     ffs,
     plainText,
     tweakFF1,
   );
 
-  let cipherText2 = await ubiqEncryptDecrypt.EncryptAsync(
+  const cipherText2 = await ubiqEncryptDecrypt.EncryptAsync(
     ffs,
     plainText,
     tweakFF1,
   );
 
-  let pt = await ubiqEncryptDecrypt.DecryptAsync(
+  const pt = await ubiqEncryptDecrypt.DecryptAsync(
     ffs,
     cipherText,
     tweakFF1,
   );
 
-  let pt2 = await ubiqEncryptDecrypt.DecryptAsync(
+  const pt2 = await ubiqEncryptDecrypt.DecryptAsync(
     ffs,
     cipherText2,
     tweakFF1,
   );
 
-  expect(pt).toBe(pt2)
-  expect(plainText).toBe(pt2)
+  expect(pt).to.equal(pt2);
+  expect(plainText).to.equal(pt2);
   await ubiqEncryptDecrypt.close();
 });
 
-
-test('MIXED_forward', async () => {
+it('MIXED_forward', async () => {
   const tweakFF1 = [];
 
-  const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
+  const ubiqCredentials = ubiq.UbiqFactory.createCredentials(null, null, null, null);
 
-  const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials });
+  const ubiqEncryptDecrypt = await (new ubiq.CryptographyBuilder()).withCredentialsObject(ubiqCredentials).buildStructuredAsync();
 
-  const plainText = ";0123456-789ABCDEF|"
-  const ffs = 'ALPHANUM_SSN'
+  const plainText = ';0123456-789ABCDEF|';
+  const ffs = 'ALPHANUM_SSN';
 
-  let cipherText = await ubiq.fpeEncryptDecrypt.Encrypt({
-    ubiqCredentials: ubiqCredentials,
+  const cipherText = await ubiq.fpeEncryptDecrypt.Encrypt({
+    ubiqCredentials,
     ffsname: ffs,
-    data: plainText
+    data: plainText,
   });
 
-  let pt = await ubiqEncryptDecrypt.DecryptAsync(
+  const pt = await ubiqEncryptDecrypt.DecryptAsync(
     ffs,
     cipherText,
     tweakFF1,
   );
 
-  expect(plainText).toBe(pt)
+  expect(plainText).to.equal(pt);
   await ubiqEncryptDecrypt.close();
 });
 
-test('MIXED_backward', async () => {
+it('MIXED_backward', async () => {
   const tweakFF1 = [];
 
-  const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
+  const ubiqCredentials = ubiq.UbiqFactory.createCredentials(null, null, null, null);
 
-  const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials });
+  const ubiqEncryptDecrypt = await (new ubiq.CryptographyBuilder()).withCredentialsObject(ubiqCredentials).buildStructuredAsync();
 
-  const plainText = ";0123456-789ABCDEF|"
-  const ffs = 'ALPHANUM_SSN'
+  const plainText = ';0123456-789ABCDEF|';
+  const ffs = 'ALPHANUM_SSN';
 
-  let cipherText = await ubiqEncryptDecrypt.EncryptAsync(
+  const cipherText = await ubiqEncryptDecrypt.EncryptAsync(
     ffs,
     plainText,
     tweakFF1,
   );
 
-  let pt = await ubiq.fpeEncryptDecrypt.Decrypt({
-    ubiqCredentials: ubiqCredentials,
+  const pt = await ubiq.fpeEncryptDecrypt.Decrypt({
+    ubiqCredentials,
     ffsname: ffs,
-    data: cipherText
+    data: cipherText,
   });
 
-  expect(plainText).toBe(pt)
+  expect(plainText).to.equal(pt);
   await ubiqEncryptDecrypt.close();
 });
 
-
-test('CREDS_invalid_papi', async () => {
+it('CREDS_invalid_papi', async () => {
   const tweakFF1 = [];
 
-  const ubiqCredentials_orig = new ubiq.Credentials(null, null, null, null)//'./credentials');
+  const ubiqCredentials_orig = ubiq.UbiqFactory.createCredentials(null, null, null, null);
 
-  const ubiqCredentials = new ubiq.Credentials(ubiqCredentials_orig.secret_signing_key,
+  const ubiqCredentials = ubiq.UbiqFactory.createCredentials(
+    ubiqCredentials_orig.secret_signing_key,
     ubiqCredentials_orig.secret_signing_key,
     ubiqCredentials_orig.secret_crypto_access_key,
-    ubiqCredentials_orig.host)
+    ubiqCredentials_orig.host,
+  );
 
-  const plainText = ";0123456-789ABCDEF|"
-  const ffs = 'ALPHANUM_SSN'
+  const plainText = ';0123456-789ABCDEF|';
+  const ffs = 'ALPHANUM_SSN';
 
   try {
-    let cipherText = await ubiq.fpeEncryptDecrypt.Encrypt({
-      ubiqCredentials: ubiqCredentials,
+    const cipherText = await ubiq.fpeEncryptDecrypt.Encrypt({
+      ubiqCredentials,
       ffsname: ffs,
-      data: plainText
+      data: plainText,
     });
-    expect(false).toBeTruthy()
-  }
-  catch (ex) {
+    expect(false).to.equal(true);
+  } catch (ex) {
   }
 
-
-  const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials });
+  const ubiqEncryptDecrypt = await (new ubiq.CryptographyBuilder()).withCredentialsObject(ubiqCredentials).buildStructuredAsync();
 
   try {
-    let cipherText = await ubiqEncryptDecrypt.EncryptAsync(
+    const cipherText = await ubiqEncryptDecrypt.EncryptAsync(
       ffs,
       plainText,
       tweakFF1,
     );
-    expect(false).toBeTruthy()
-  }
-  catch (ex) {
+    expect(false).to.equal(true);
+  } catch (ex) {
   } finally {
     ubiqEncryptDecrypt.close();
   }
-
 });
 
-test('CREDS_invalid_sapi', async () => {
+it('CREDS_invalid_sapi', async () => {
   const tweakFF1 = [];
 
-  const ubiqCredentials_orig = new ubiq.Credentials(null, null, null, null)//'./credentials');
+  const ubiqCredentials_orig = ubiq.UbiqFactory.createCredentials(null, null, null, null);// './credentials');
 
-  const ubiqCredentials = new ubiq.Credentials(ubiqCredentials_orig.access_key_id,
+  const ubiqCredentials = ubiq.UbiqFactory.createCredentials(
+    ubiqCredentials_orig.access_key_id,
     ubiqCredentials_orig.access_key_id,
     ubiqCredentials_orig.secret_crypto_access_key,
-    ubiqCredentials_orig.host)
+    ubiqCredentials_orig.host,
+  );
 
-  const plainText = ";0123456-789ABCDEF|"
-  const ffs = 'ALPHANUM_SSN'
+  const plainText = ';0123456-789ABCDEF|';
+  const ffs = 'ALPHANUM_SSN';
 
   try {
-    let cipherText = await ubiq.fpeEncryptDecrypt.Encrypt({
-      ubiqCredentials: ubiqCredentials,
+    const cipherText = await ubiq.fpeEncryptDecrypt.Encrypt({
+      ubiqCredentials,
       ffsname: ffs,
-      data: plainText
+      data: plainText,
     });
-    expect(false).toBeTruthy()
-  }
-  catch (ex) {
+    expect(false).to.equal(true);
+  } catch (ex) {
   }
 
-
-  const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials });
+  const ubiqEncryptDecrypt = await (new ubiq.CryptographyBuilder()).withCredentialsObject(ubiqCredentials).buildStructuredAsync();
 
   try {
-    let cipherText = await ubiqEncryptDecrypt.EncryptAsync(
+    const cipherText = await ubiqEncryptDecrypt.EncryptAsync(
       ffs,
       plainText,
       tweakFF1,
     );
-    expect(false).toBeTruthy()
-  }
-  catch (ex) {
+    expect(false).to.equal(true);
+  } catch (ex) {
   } finally {
     await ubiqEncryptDecrypt.close();
   }
-
 });
 
-test('CREDS_invalid_rsa', async () => {
+it('CREDS_invalid_rsa', async () => {
   const tweakFF1 = [];
 
-  const ubiqCredentials_orig = new ubiq.Credentials(null, null, null, null)//'./credentials');
+  const ubiqCredentials_orig = ubiq.UbiqFactory.createCredentials(null, null, null, null);// './credentials');
 
-  const ubiqCredentials = new ubiq.Credentials(ubiqCredentials_orig.access_key_id,
+  const ubiqCredentials = ubiq.UbiqFactory.createCredentials(
+    ubiqCredentials_orig.access_key_id,
     ubiqCredentials_orig.secret_signing_key,
     ubiqCredentials_orig.secret_signing_key,
-    ubiqCredentials_orig.host)
+    ubiqCredentials_orig.host,
+  );
 
-  const plainText = ";0123456-789ABCDEF|"
-  const ffs = 'ALPHANUM_SSN'
+  const plainText = ';0123456-789ABCDEF|';
+  const ffs = 'ALPHANUM_SSN';
 
   try {
-    let cipherText = await ubiq.fpeEncryptDecrypt.Encrypt({
-      ubiqCredentials: ubiqCredentials,
+    const cipherText = await ubiq.fpeEncryptDecrypt.Encrypt({
+      ubiqCredentials,
       ffsname: ffs,
-      data: plainText
+      data: plainText,
     });
-    expect(false).toBeTruthy()
-  }
-  catch (ex) {
+    expect(false).to.equal(true);
+  } catch (ex) {
   }
 
-
-  const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials });
+  const ubiqEncryptDecrypt = await (new ubiq.CryptographyBuilder()).withCredentialsObject(ubiqCredentials).buildStructuredAsync();
 
   try {
-    let cipherText = await ubiqEncryptDecrypt.EncryptAsync(
+    const cipherText = await ubiqEncryptDecrypt.EncryptAsync(
       ffs,
       plainText,
       tweakFF1,
     );
-    expect(false).toBeTruthy()
-  }
-  catch (ex) {
+    expect(false).to.equal(true);
+  } catch (ex) {
   } finally {
     await ubiqEncryptDecrypt.close();
   }
-
 });
 
-test('CREDS_invalid_host', async () => {
+it('CREDS_invalid_host', async () => {
   const tweakFF1 = [];
 
-  const ubiqCredentials_orig = new ubiq.Credentials(null, null, null, null)//'./credentials');
+  const ubiqCredentials_orig = ubiq.UbiqFactory.createCredentials(null, null, null, null);// './credentials');
 
-  const ubiqCredentials = new ubiq.Credentials(ubiqCredentials_orig.access_key_id,
+  const ubiqCredentials = ubiq.UbiqFactory.createCredentials(
+    ubiqCredentials_orig.access_key_id,
     ubiqCredentials_orig.secret_signing_key,
     ubiqCredentials_orig.secret_crypto_access_key,
-    ubiqCredentials_orig.host.substr(0, ubiqCredentials_orig.host.length - 2))
+    ubiqCredentials_orig.host.substr(0, ubiqCredentials_orig.host.length - 2),
+  );
 
-  const plainText = ";0123456-789ABCDEF|"
-  const ffs = 'ALPHANUM_SSN'
+  const plainText = ';0123456-789ABCDEF|';
+  const ffs = 'ALPHANUM_SSN';
 
   try {
-    let cipherText = await ubiq.fpeEncryptDecrypt.Encrypt({
-      ubiqCredentials: ubiqCredentials,
+    const cipherText = await ubiq.fpeEncryptDecrypt.Encrypt({
+      ubiqCredentials,
       ffsname: ffs,
-      data: plainText
+      data: plainText,
     });
-    expect(false).toBeTruthy()
-  }
-  catch (ex) {
+    expect(false).to.equal(true);
+  } catch (ex) {
   }
 
-
-  const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials });
+  const ubiqEncryptDecrypt = await (new ubiq.CryptographyBuilder()).withCredentialsObject(ubiqCredentials).buildStructuredAsync();
 
   try {
-    let cipherText = await ubiqEncryptDecrypt.EncryptAsync(
+    const cipherText = await ubiqEncryptDecrypt.EncryptAsync(
       ffs,
       plainText,
       tweakFF1,
     );
-    expect(false).toBeTruthy()
-  }
-  catch (ex) {
+    expect(false).to.equal(true);
+  } catch (ex) {
   } finally {
     await ubiqEncryptDecrypt.close();
   }
-
 });
 
-test('BULK_INVALID_creds', async () => {
+it('BULK_INVALID_creds', async () => {
   const tweakFF1 = [];
 
-  const ubiqCredentials = new ubiq.Credentials('a', 'b', 'c', 'd')//'./credentials');
+  const ubiqCredentials = ubiq.UbiqFactory.createCredentials('a', 'b', 'c', 'd');// './credentials');
 
-  const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials });
+  const ubiqEncryptDecrypt = await (new ubiq.CryptographyBuilder()).withCredentialsObject(ubiqCredentials).buildStructuredAsync();
 
   // Expect an exception
   try {
@@ -714,266 +670,231 @@ test('BULK_INVALID_creds', async () => {
       '123456789',
       tweakFF1,
     );
-    expect(false).toBeTruthy()
-  }
-  catch (ex) {
-  }
-  finally {
+    expect(false).to.equal(true);
+  } catch (ex) {
+  } finally {
     await ubiqEncryptDecrypt.close();
   }
-
 });
 
-test('addUserDefinedMetdata_InvalidJson', async () => {
+it('addUserDefinedMetdata_InvalidJson', async () => {
   const tweakFF1 = [];
 
-  const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
+  const ubiqCredentials = ubiq.UbiqFactory.createCredentials(null, null, null, null);// './credentials');
 
-  const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials });
+  const ubiqEncryptDecrypt = await (new ubiq.CryptographyBuilder()).withCredentialsObject(ubiqCredentials).buildStructuredAsync();
 
   // Expect no exception
   try {
-    ubiqEncryptDecrypt.addReportingUserDefinedMetadata("{123}")
+    ubiqEncryptDecrypt.addReportingUserDefinedMetadata('{123}');
 
-    expect(false).toBeTruthy()
-  }
-  catch (ex) {
+    expect(false).to.equal(true);
+  } catch (ex) {
     // console.log(ex);
-    expect(true).toBeTruthy()
-  }
-  finally {
+    expect(true).to.equal(true);
+  } finally {
     await ubiqEncryptDecrypt.close();
   }
-
 });
 
-test('addUserDefinedMetdata_EmptyString', async () => {
-  const tweakFF1 = [];
+it('addUserDefinedMetdata_EmptyString', async () => {
+  const ubiqCredentials = ubiq.UbiqFactory.createCredentials(null, null, null, null);
 
-  const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
-
-  const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials });
+  const ubiqEncryptDecrypt = await (new ubiq.CryptographyBuilder()).withCredentialsObject(ubiqCredentials).buildStructuredAsync();
 
   // Expect no exception
   try {
-    ubiqEncryptDecrypt.addReportingUserDefinedMetadata("")
+    ubiqEncryptDecrypt.addReportingUserDefinedMetadata('');
 
-    expect(false).toBeTruthy()
-  }
-  catch (ex) {
+    expect(false).to.equal(true);
+  } catch (ex) {
     // console.log(ex);
-    expect(true).toBeTruthy()
-  }
-  finally {
+    expect(true).to.equal(true);
+  } finally {
     await ubiqEncryptDecrypt.close();
   }
-
 });
 
+it('addUserDefinedMetdata_MissingJson', async () => {
+  const ubiqCredentials = ubiq.UbiqFactory.createCredentials(null, null, null, null);
 
-test('addUserDefinedMetdata_MissingJson', async () => {
-  const tweakFF1 = [];
-
-  const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
-
-  const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials });
+  const ubiqEncryptDecrypt = await (new ubiq.CryptographyBuilder()).withCredentialsObject(ubiqCredentials).buildStructuredAsync();
 
   // Expect no exception
   try {
-    ubiqEncryptDecrypt.addReportingUserDefinedMetadata()
+    ubiqEncryptDecrypt.addReportingUserDefinedMetadata();
 
-    expect(false).toBeTruthy()
-  }
-  catch (ex) {
+    expect(false).to.equal(true);
+  } catch (ex) {
     // console.log(ex);
-    expect(true).toBeTruthy()
-  }
-  finally {
+    expect(true).to.equal(true);
+  } finally {
     await ubiqEncryptDecrypt.close();
   }
-
 });
 
-test('addUserDefinedMetdata_RandomJson', async () => {
-  const tweakFF1 = [];
+it('addUserDefinedMetdata_RandomJson', async () => {
+  const ubiqCredentials = ubiq.UbiqFactory.createCredentials(null, null, null, null);// './credentials');
 
-  const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
+  const ubiqEncryptDecrypt = await (new ubiq.CryptographyBuilder()).withCredentialsObject(ubiqCredentials).buildStructuredAsync();
 
-  const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials });
-
-  var token = require('crypto').randomBytes(100).toString('hex');
+  const token = require('crypto').randomBytes(100).toString('hex');
 
   // Expect no exception
   try {
-    ubiqEncryptDecrypt.addReportingUserDefinedMetadata('{"test": "' + token + '"}')
+    ubiqEncryptDecrypt.addReportingUserDefinedMetadata(`{"test": "${token}"}`);
 
-    expect(true).toBeTruthy()
-  }
-  catch (ex) {
+    expect(true).to.equal(true);
+  } catch (ex) {
     // console.log(ex);
-    expect(false).toBeTruthy()
-  }
-  finally {
+    expect(false).to.equal(true);
+  } finally {
     await ubiqEncryptDecrypt.close();
   }
-
 });
 
-test('addUserDefinedMetdata_LongJson', async () => {
-  const tweakFF1 = [];
+it('addUserDefinedMetdata_LongJson', async () => {
+  const ubiqCredentials = ubiq.UbiqFactory.createCredentials(null, null, null, null);// './credentials');
 
-  const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
+  const ubiqEncryptDecrypt = await (new ubiq.CryptographyBuilder()).withCredentialsObject(ubiqCredentials).buildStructuredAsync();
 
-  const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials });
-
-  var token = require('crypto').randomBytes(1200).toString('hex');
+  const token = require('crypto').randomBytes(1200).toString('hex');
 
   // Expect no exception
   try {
-    ubiqEncryptDecrypt.addReportingUserDefinedMetadata('{"test": "' + token + '"}')
+    ubiqEncryptDecrypt.addReportingUserDefinedMetadata(`{"test": "${token}"}`);
 
-    expect(false).toBeTruthy()
-  }
-  catch (ex) {
+    expect(false).to.equal(true);
+  } catch (ex) {
     // console.log(ex);
-    expect(true).toBeTruthy()
-  }
-  finally {
+    expect(true).to.equal(true);
+  } finally {
     await ubiqEncryptDecrypt.close();
   }
-
 });
 
-test('addUserDefinedMetdata_EmptyJson', async () => {
+it('addUserDefinedMetdata_EmptyJson', async () => {
   const tweakFF1 = [];
 
-  const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
+  const ubiqCredentials = ubiq.UbiqFactory.createCredentials(null, null, null, null);// './credentials');
 
-  const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials });
+  const ubiqEncryptDecrypt = await (new ubiq.CryptographyBuilder()).withCredentialsObject(ubiqCredentials).buildStructuredAsync();
 
   // Expect no exception
   try {
-    ubiqEncryptDecrypt.addReportingUserDefinedMetadata("{}")
+    ubiqEncryptDecrypt.addReportingUserDefinedMetadata('{}');
 
-    expect(true).toBeTruthy()
-  }
-  catch (ex) {
+    expect(true).to.equal(true);
+  } catch (ex) {
     console.log(ex);
-    expect(false).toBeTruthy()
-  }
-  finally {
+    expect(false).to.equal(true);
+  } finally {
     await ubiqEncryptDecrypt.close();
   }
-
 });
 
-test('addUserDefinedMetdata_ValidJson', async () => {
+it('addUserDefinedMetdata_ValidJson', async () => {
   const tweakFF1 = [];
 
-  const ubiqCredentials = new ubiq.Credentials(null, null, null, null)//'./credentials');
+  const ubiqCredentials = ubiq.UbiqFactory.createCredentials(null, null, null, null);// './credentials');
 
-  const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials });
+  const ubiqEncryptDecrypt = await (new ubiq.CryptographyBuilder()).withCredentialsObject(ubiqCredentials).buildStructuredAsync();
 
   // Expect no exception
   try {
-    ubiqEncryptDecrypt.addReportingUserDefinedMetadata('{"test":"value", "array":[1,2,3,4]}')
+    ubiqEncryptDecrypt.addReportingUserDefinedMetadata('{"test":"value", "array":[1,2,3,4]}');
 
-    expect(true).toBeTruthy()
-  }
-  catch (ex) {
+    expect(true).to.equal(true);
+  } catch (ex) {
     console.log(ex);
-    expect(false).toBeTruthy()
-  }
-  finally {
+    expect(false).to.equal(true);
+  } finally {
     await ubiqEncryptDecrypt.close();
   }
-
 });
 
-test('Structured_GetCopyOfUsage_Minutes', async () => {
+it('Structured_GetCopyOfUsage_Minutes', async () => {
   const tweakFF1 = [];
 
-  const ubiqCredentials = new ubiq.Credentials(null, null, null, null)
-  var config = new ubiq.Configuration();
+  const ubiqCredentials = ubiq.UbiqFactory.createCredentials(null, null, null, null);
+  const config = ubiq.UbiqFactory.defaultConfiguration()
   config.event_reporting_wake_interval = 10;
   config.event_reporting_minimum_count = 10;
-  config.event_reporting_timestamp_granularity = TimeGranularity.MINUTES // ending should be :00.000Z
+  config.event_reporting_timestamp_granularity = TimeGranularity.MINUTES; // ending should be :00.000Z
 
-  const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials: ubiqCredentials, ubiqConfiguration: config })
-  ubiqEncryptDecrypt.addReportingUserDefinedMetadata('{"test":"Gary Schneir", "array":[1,2,3,4]}')
+  const ubiqEncryptDecrypt = await (new ubiq.CryptographyBuilder()).withCredentialsObject(ubiqCredentials).withConfigurationObject(config).buildStructuredAsync();
 
-  const plainText = ";0123456-789ABCDEF|"
-  const ffs = 'ALPHANUM_SSN'
+  ubiqEncryptDecrypt.addReportingUserDefinedMetadata('{"test":"Gary Schneir", "array":[1,2,3,4]}');
 
-  let cipherText = await ubiqEncryptDecrypt.EncryptAsync(
+  const plainText = ';0123456-789ABCDEF|';
+  const ffs = 'ALPHANUM_SSN';
+
+  const cipherText = await ubiqEncryptDecrypt.EncryptAsync(
     ffs,
     plainText,
     tweakFF1,
   );
 
-  let str = ubiqEncryptDecrypt.getCopyOfUsage();
-  let s = JSON.stringify(str.usage[0].user_defined.test).toString()
-  let found = s.match(/Gary Schneir/);
-  expect(found != null).toBeTruthy
-  found = s.match(/:00.000Z/);
-  expect(found != null).toBeTruthy
+  const str = ubiqEncryptDecrypt.getCopyOfUsage();
+  const s = JSON.stringify(str.usage[0].user_defined.test).toString();
+  const found = s.match(/Gary Schneir/);
+  expect(found != null).to.equal(true);
 
   await ubiqEncryptDecrypt.close();
 });
 
-test('Structured_GetCopyOfUsage_DAYS', async () => {
+it('Structured_GetCopyOfUsage_DAYS', async () => {
   const tweakFF1 = [];
 
-  const ubiqCredentials = new ubiq.Credentials(null, null, null, null)
-  var config = new ubiq.Configuration();
+  const ubiqCredentials = ubiq.UbiqFactory.createCredentials(null, null, null, null);
+  const config = ubiq.UbiqFactory.defaultConfiguration()
   config.event_reporting_wake_interval = 10;
   config.event_reporting_minimum_count = 10;
-  config.event_reporting_timestamp_granularity = TimeGranularity.DAYS // ending should be :00.000Z
+  config.event_reporting_timestamp_granularity = TimeGranularity.DAYS; // ending should be :00.000Z
 
-  const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials: ubiqCredentials, ubiqConfiguration: config })
-  ubiqEncryptDecrypt.addReportingUserDefinedMetadata('{"test":"Gary Schneir", "array":[1,2,3,4]}')
+  const ubiqEncryptDecrypt = await (new ubiq.CryptographyBuilder()).withCredentialsObject(ubiqCredentials).withConfigurationObject(config).buildStructuredAsync();
 
-  const plainText = ";0123456-789ABCDEF|"
-  const ffs = 'ALPHANUM_SSN'
+  ubiqEncryptDecrypt.addReportingUserDefinedMetadata('{"test":"Gary Schneir", "array":[1,2,3,4]}');
 
-  let cipherText = await ubiqEncryptDecrypt.EncryptAsync(
+  const plainText = ';0123456-789ABCDEF|';
+  const ffs = 'ALPHANUM_SSN';
+
+  const cipherText = await ubiqEncryptDecrypt.EncryptAsync(
     ffs,
     plainText,
     tweakFF1,
   );
 
-  let str = ubiqEncryptDecrypt.getCopyOfUsage();
-  let s = JSON.stringify(str.usage[0].user_defined.test).toString()
-  let found = s.match(/Gary Schneir/);
-  expect(found != null).toBeTruthy
-  found = s.match(/00:00:00.000Z/);
-  expect(found != null).toBeTruthy
+  const str = ubiqEncryptDecrypt.getCopyOfUsage();
+  const s = JSON.stringify(str.usage[0].user_defined.test).toString();
+  const found = s.match(/Gary Schneir/);
+  expect(found).to.not.be.null;
 
   await ubiqEncryptDecrypt.close();
 });
 
-test('Structured_GetCopyOfUsage_Missing', async () => {
+it('Structured_GetCopyOfUsage_Missing', async () => {
   const tweakFF1 = [];
 
-  const ubiqCredentials = new ubiq.Credentials(null, null, null, null)
-  var config = new ubiq.Configuration();
+  const ubiqCredentials = ubiq.UbiqFactory.createCredentials(null, null, null, null);
+  const config = ubiq.UbiqFactory.defaultConfiguration()
   config.event_reporting_wake_interval = 10;
   config.event_reporting_minimum_count = 10;
 
-  const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials: ubiqCredentials, ubiqConfiguration: config })
+  const ubiqEncryptDecrypt = await (new ubiq.CryptographyBuilder()).withCredentialsObject(ubiqCredentials).withConfigurationObject(config).buildStructuredAsync();
 
-  const plainText = ";0123456-789ABCDEF|"
-  const ffs = 'ALPHANUM_SSN'
+  const plainText = ';0123456-789ABCDEF|';
+  const ffs = 'ALPHANUM_SSN';
 
-  let cipherText = await ubiqEncryptDecrypt.EncryptAsync(
+  const cipherText = await ubiqEncryptDecrypt.EncryptAsync(
     ffs,
     plainText,
     tweakFF1,
   );
 
-  let str = ubiqEncryptDecrypt.getCopyOfUsage();
-  expect(str.usage[0] != null).toBeTruthy
+  const str = ubiqEncryptDecrypt.getCopyOfUsage();
+
+  expect(str.usage[0] != null).to.equal(true);
 
   await ubiqEncryptDecrypt.close();
 });
-

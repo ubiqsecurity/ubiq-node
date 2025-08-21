@@ -29,6 +29,7 @@
 // REFLECT AN EQUITABLE ALLOCATION OF RISK BETWEEN THE PARTIES AND THAT IN
 // THEIR ABSENCE THE TERMS OF THIS LICENSE WOULD BE SUBSTANTIALLY DIFFERENT.
 
+const { expect } = require('chai');
 const ubiq = require('../index');
 const { Command } = require('commander');
 const pkginfo = require('../package.json');
@@ -37,20 +38,20 @@ const program = new Command();
 const fs = require('fs');
 const path = require('node:path');
 
-const UBIQ_TEST_DATA_FILE = "UBIQ_TEST_DATA_FILE"
-const UBIQ_MAX_AVG_ENCRYPT = "UBIQ_MAX_AVG_ENCRYPT"
-const UBIQ_MAX_AVG_DECRYPT = "UBIQ_MAX_AVG_DECRYPT"
-const UBIQ_MAX_TOTAL_ENCRYPT = "UBIQ_MAX_TOTAL_ENCRYPT"
-const UBIQ_MAX_TOTAL_DECRYPT = "UBIQ_MAX_TOTAL_DECRYPT"
+const UBIQ_TEST_DATA_FILE = 'UBIQ_TEST_DATA_FILE';
+const UBIQ_MAX_AVG_ENCRYPT = 'UBIQ_MAX_AVG_ENCRYPT';
+const UBIQ_MAX_AVG_DECRYPT = 'UBIQ_MAX_AVG_DECRYPT';
+const UBIQ_MAX_TOTAL_ENCRYPT = 'UBIQ_MAX_TOTAL_ENCRYPT';
+const UBIQ_MAX_TOTAL_DECRYPT = 'UBIQ_MAX_TOTAL_DECRYPT';
 
 function getEnv(value, key) {
-  let ret = (value) ? value : process.env[key]
+  const ret = (value) || process.env[key];
 
   // console.log('value:' + value);
   // console.log('key:' + key);
   // console.log('ret:' + ret);
 
-  return ret
+  return ret;
 }
 
 async function loadTest() {
@@ -85,7 +86,7 @@ Encrypt or decrypt data using the Ubiq structured encrypt
   //   input: null
   // }
 
-  var failed = false
+  let failed = false;
 
   program
     .name('load_test.js')
@@ -134,27 +135,27 @@ Encrypt or decrypt data using the Ubiq structured encrypt
   const options = program.opts();
   if (options.version) {
     console.log(`version: ${pkginfo.version}`);
-    return true
+    return true;
   }
 
-  options.input = getEnv(options.input, UBIQ_TEST_DATA_FILE)
-  options.max_avg_encrypt = getEnv(options.max_avg_encrypt, UBIQ_MAX_AVG_ENCRYPT)
-  options.max_avg_decrypt = getEnv(options.max_avg_decrypt, UBIQ_MAX_AVG_DECRYPT)
-  options.max_total_encrypt = getEnv(options.max_total_encrypt, UBIQ_MAX_TOTAL_ENCRYPT)
-  options.max_total_decrypt = getEnv(options.max_total_decrypt, UBIQ_MAX_TOTAL_DECRYPT)
+  options.input = getEnv(options.input, UBIQ_TEST_DATA_FILE);
+  options.max_avg_encrypt = getEnv(options.max_avg_encrypt, UBIQ_MAX_AVG_ENCRYPT);
+  options.max_avg_decrypt = getEnv(options.max_avg_decrypt, UBIQ_MAX_AVG_DECRYPT);
+  options.max_total_encrypt = getEnv(options.max_total_encrypt, UBIQ_MAX_TOTAL_ENCRYPT);
+  options.max_total_decrypt = getEnv(options.max_total_decrypt, UBIQ_MAX_TOTAL_DECRYPT);
 
   if (!options.input) {
-    console.log('Please provide a valid input file:' + options.input);
-    return true
+    console.log(`Please provide a valid input file:${options.input}`);
+    return true;
   }
 
   try {
-    credentials = null
+    credentials = null;
 
     if (options.credentials) {
-      credentials = new ubiq.ConfigCredentials(options.credentials, options.profile);
+      credentials = ubiq.UbiqFactory.readCredentialsFromFile(options.credentials, options.profile);
     } else {
-      credentials = new ubiq.Credentials(null, null, null, null)
+      credentials = ubiq.UbiqFactory.createCredentials(null, null, null, null);
     }
 
     // Test to see if the credentials have been found and loaded properly
@@ -163,49 +164,45 @@ Encrypt or decrypt data using the Ubiq structured encrypt
       || credentials.secret_crypto_access_key === undefined) {
       console.log('  Unable to load credentials file properly.');
       console.log('  Check credentials file pathname and selected profile');
-      return true
+      return true;
     }
 
+    const files = new Array();
 
-    let files = new Array();
-
-    stats = fs.lstatSync(options.input)
+    stats = fs.lstatSync(options.input);
     if (stats.isFile()) {
-      console.log("Is a File: " + options.input);
+      console.log(`Is a File: ${options.input}`);
       files.push(options.input);
-    }
-    else if (stats.isDirectory()) {
-      console.log("Is a directory: " + options.input);
-      fs.readdirSync(options.input).forEach(file => {
-        console.log("File: " + file);
+    } else if (stats.isDirectory()) {
+      console.log(`Is a directory: ${options.input}`);
+      fs.readdirSync(options.input).forEach((file) => {
+        console.log(`File: ${file}`);
         files.push(path.resolve(options.input, file));
       });
-    }
-    else {
-      console.log("Unknown: " + options.input);
+    } else {
+      console.log(`Unknown: ${options.input}`);
     }
 
-
-    const ubiqEncryptDecrypt = new ubiq.structuredEncryptDecrypt.StructuredEncryptDecrypt({ ubiqCredentials: credentials });
+    const ubiqEncryptDecrypt = await (new ubiq.CryptographyBuilder()).withCredentialsObject(ubiqCredentials).buildStructuredAsync();
     const tweakFF1 = [];
 
-    var perf_times = new Map();
-    var errors = new Array();
+    const perf_times = new Map();
+    const errors = new Array();
     let count = 0;
 
-    for (let file of files) {
-      console.log("Reading data from: " + file);
-      let rawdata = fs.readFileSync(file);
-      let dataArray = JSON.parse(rawdata);
-      console.log("Records read: " + dataArray.length);
+    for (const file of files) {
+      console.log(`Reading data from: ${file}`);
+      const rawdata = fs.readFileSync(file);
+      const dataArray = JSON.parse(rawdata);
+      console.log(`Records read: ${dataArray.length}`);
 
       count += dataArray.length;
 
       for (let l = 0; l < dataArray.length; l++) {
-        let obj = dataArray[l]
+        const obj = dataArray[l];
 
         if (l % 1000 == 0) {
-          console.log("Processing record: " + l)
+          console.log(`Processing record: ${l}`);
         }
 
         // First call seed
@@ -224,12 +221,11 @@ Encrypt or decrypt data using the Ubiq structured encrypt
           perf_times.set(obj.dataset, {
             encrypt_duration: 0,
             decrypt_duration: 0,
-            recordCount: 0
-          })
-
+            recordCount: 0,
+          });
         }
 
-        let s = process.hrtime();
+        const s = process.hrtime();
 
         const ct = await ubiqEncryptDecrypt.EncryptAsync(
           obj.dataset,
@@ -237,123 +233,119 @@ Encrypt or decrypt data using the Ubiq structured encrypt
           tweakFF1,
         );
 
-        let e = process.hrtime();
+        const e = process.hrtime();
         const pt = await ubiqEncryptDecrypt.DecryptAsync(
           obj.dataset,
           obj.ciphertext,
           tweakFF1,
         );
 
-        let d = process.hrtime();
-
+        const d = process.hrtime();
 
         if (ct != obj.ciphertext || pt != obj.plaintext) {
-          errors.push({ dataset: obj.dataset, plaintext: obj.plaintext })
+          errors.push({ dataset: obj.dataset, plaintext: obj.plaintext });
         }
 
-
-        let x = perf_times.get(obj.dataset)
+        const x = perf_times.get(obj.dataset);
         x.recordCount += 1;
         x.encrypt_duration += (e[0] * 1000000000 + e[1]) - (s[0] * 1000000000 + s[1]);
         x.decrypt_duration += (d[0] * 1000000000 + d[1]) - (e[0] * 1000000000 + e[1]);
         perf_times.set(obj.dataset, x);
-
       }
     } // End of looping on files
 
     ubiqEncryptDecrypt.close();
 
-    var total = {
+    const total = {
       encrypt_duration: 0,
       decrypt_duration: 0,
     };
 
-    failed = (errors.length != 0)
+    failed = (errors.length != 0);
 
     if (errors.length == 0) {
-      console.log("All data validated")
+      console.log('All data validated');
 
-      console.log("Encrypt records count " + count + ".  Times in (microseconds)")
+      console.log(`Encrypt records count ${count}.  Times in (microseconds)`);
       for (var entry of perf_times.entries()) {
         total.encrypt_duration += entry[1].encrypt_duration;
         entry[1].encrypt_duration = Math.round(entry[1].encrypt_duration /= 1000);
-        console.log("\tDataset: " + entry[0] + ", record_count: " + entry[1].recordCount + ", Average: " + Math.round(entry[1].encrypt_duration / entry[1].recordCount) + ", total " + entry[1].encrypt_duration)
+        console.log(`\tDataset: ${entry[0]}, record_count: ${entry[1].recordCount}, Average: ${Math.round(entry[1].encrypt_duration / entry[1].recordCount)}, total ${entry[1].encrypt_duration}`);
       }
       total.encrypt_duration = Math.round(total.encrypt_duration / 1000);
-      console.log("\t  Total: Average: " + Math.round(total.encrypt_duration / count) + ", total " + total.encrypt_duration)
+      console.log(`\t  Total: Average: ${Math.round(total.encrypt_duration / count)}, total ${total.encrypt_duration}`);
 
-      console.log("\nDecrypt records count " + count + ".  Times in (microseconds)")
+      console.log(`\nDecrypt records count ${count}.  Times in (microseconds)`);
       for (var entry of perf_times.entries()) {
         total.decrypt_duration += entry[1].decrypt_duration;
-        entry[1].decrypt_duration = Math.round(entry[1].decrypt_duration / 1000)
-        console.log("\tDataset: " + entry[0] + ", record_count: " + entry[1].recordCount + ", Average: " + Math.round(entry[1].decrypt_duration / entry[1].recordCount) + ", total " + entry[1].decrypt_duration)
+        entry[1].decrypt_duration = Math.round(entry[1].decrypt_duration / 1000);
+        console.log(`\tDataset: ${entry[0]}, record_count: ${entry[1].recordCount}, Average: ${Math.round(entry[1].decrypt_duration / entry[1].recordCount)}, total ${entry[1].decrypt_duration}`);
       }
       total.decrypt_duration = Math.round(total.decrypt_duration /= 1000);
 
-      console.log("\t  Total: Average: " + Math.round(total.decrypt_duration / count) + ", total " + total.decrypt_duration)
+      console.log(`\t  Total: Average: ${Math.round(total.decrypt_duration / count)}, total ${total.decrypt_duration}`);
 
       if (options.max_avg_encrypt > 0) {
         if (options.max_avg_encrypt <= Math.round(total.encrypt_duration / count)) {
-          failed = true
-          console.error("FAILED: Exceeded maximum allowed average encrypt threshold of " + options.max_avg_encrypt + " microseconds")
+          failed = true;
+          console.error(`FAILED: Exceeded maximum allowed average encrypt threshold of ${options.max_avg_encrypt} microseconds`);
         } else {
-          console.log("PASSED: Maximum allowed average encrypt threshold of " + options.max_avg_encrypt + " microseconds")
+          console.log(`PASSED: Maximum allowed average encrypt threshold of ${options.max_avg_encrypt} microseconds`);
         }
       } else {
-        console.log("NOTE: No Maximum allowed average encrypt threshold supplied")
+        console.log('NOTE: No Maximum allowed average encrypt threshold supplied');
       }
 
       if (options.max_avg_decrypt > 0) {
         if (options.max_avg_decrypt <= Math.round(total.decrypt_duration / count)) {
-          failed = true
-          console.error("FAILED: Exceeded maximum allowed average decrypt threshold of " + options.max_avg_decrypt + " microseconds")
+          failed = true;
+          console.error(`FAILED: Exceeded maximum allowed average decrypt threshold of ${options.max_avg_decrypt} microseconds`);
         } else {
-          console.log("PASSED: Maximum allowed average decrypt threshold of " + options.max_avg_decrypt + " microseconds")
+          console.log(`PASSED: Maximum allowed average decrypt threshold of ${options.max_avg_decrypt} microseconds`);
         }
       } else {
-        console.log("NOTE: No Maximum allowed average decrypt threshold supplied")
+        console.log('NOTE: No Maximum allowed average decrypt threshold supplied');
       }
 
       if (options.max_total_encrypt > 0) {
         if (options.max_total_encrypt <= Math.round(total.encrypt_duration)) {
-          failed = true
-          console.error("FAILED: Exceeded maximum allowed total encrypt threshold of " + options.max_total_encrypt + " microseconds")
+          failed = true;
+          console.error(`FAILED: Exceeded maximum allowed total encrypt threshold of ${options.max_total_encrypt} microseconds`);
         } else {
-          console.log("PASSED: Maximum allowed total encrypt threshold of " + options.max_total_encrypt + " microseconds")
+          console.log(`PASSED: Maximum allowed total encrypt threshold of ${options.max_total_encrypt} microseconds`);
         }
       } else {
-        console.log("NOTE: No Maximum allowed total encrypt threshold supplied")
+        console.log('NOTE: No Maximum allowed total encrypt threshold supplied');
       }
 
       if (options.max_total_decrypt > 0) {
         if (options.max_total_decrypt <= Math.round(total.decrypt_duration)) {
-          failed = true
-          console.error("FAILED: Exceeded maximum allowed total decrypt threshold of " + options.max_total_decrypt + " microseconds")
+          failed = true;
+          console.error(`FAILED: Exceeded maximum allowed total decrypt threshold of ${options.max_total_decrypt} microseconds`);
         } else {
-          console.log("PASSED: Maximum allowed total decrypt threshold of " + options.max_total_decrypt + " microseconds")
+          console.log(`PASSED: Maximum allowed total decrypt threshold of ${options.max_total_decrypt} microseconds`);
         }
       } else {
-        console.log("NOTE: No Maximum allowed total decrypt threshold supplied")
+        console.log('NOTE: No Maximum allowed total decrypt threshold supplied');
       }
     } else {
-      console.error("ERROR: Encrypt / Decrypt operation failed to validate for " + errors.length + " record(s)")
+      console.error(`ERROR: Encrypt / Decrypt operation failed to validate for ${errors.length} record(s)`);
       if (!options.print_errors) {
-        console.error("       use -p option to print information about records that failed validation")
+        console.error('       use -p option to print information about records that failed validation');
       } else {
         for (let l = 0; l < errors.length; l++) {
-          console.error("  dataset: '" + errors[l].dataset + "'  plaintext: '" + errors[l].plaintext + "'")
+          console.error(`  dataset: '${errors[l].dataset}'  plaintext: '${errors[l].plaintext}'`);
         }
       }
     }
-
-
   } catch (err) {
-    failed = true
+    failed = true;
     console.error(err);
   }
-  return failed
+  return failed;
 }
 
-test('LoadTest', async () => {
-  expect(await loadTest()).toBe(false)
-});
+// Timeout value is same as CI run for 1M encrypt / decrypt
+it('LoadTest', async () => {
+  expect(await loadTest()).to.equal(false);
+}).timeout(10000000);

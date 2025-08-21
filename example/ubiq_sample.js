@@ -129,8 +129,8 @@ async function main() {
     return;
   }
 
-  const credentials = new ubiq.ConfigCredentials(credentials_file, profile);
-  const configuration = new ubiq.Configuration(configuration_file);
+  const credentials = ubiq.UbiqFactory.readCredentialsFromFile(credentials_file, profile);
+  const configuration = ubiq.UbiqFactory.readConfigurationFromFile(configuration_file);
 
   // Test to see if the credentials have been found and loaded properly
   if (credentials.access_key_id === undefined
@@ -140,9 +140,6 @@ async function main() {
     console.log('  Check credentials file pathname and selected profile');
     return;
   }
-
-  // Need to call the credentials init function to make sure the object is setup correctly
-  await credentials.initAsync(configuration)
 
   function getStuff(infile) {
     return fs.readFileSync(infile);
@@ -175,8 +172,8 @@ async function main() {
     console.log(`done: ${outfile}`);
   }
 
-  async function pieceWiseEncrypt(uses) {
-    const enc = await new ubiq.Encryption(credentials, uses);
+  async function pieceWiseEncrypt() {
+    const enc = await (new ubiq.CryptographyBuilder()).withCredentialsObject(credentials).withConfigurationObject(configuration).buildEncryptionAsync();
     // This returns the packed byte string
     const begin_res = enc.begin();
     const ws = fs.createWriteStream(outfile, { encoding: 'binary' });
@@ -185,17 +182,17 @@ async function main() {
     readStream.on('data', (chunk) => {
       const res = enc.update(chunk);
       ws.write(res);
-    }).on('end', () => {
+    }).on('end', async () => {
       // TO indicate all the parsing has been complete
       ws.write(enc.end());
       ws.close();
-      enc.close();
+      await enc.close();
     });
     console.log(`done: ${outfile}`);
   }
 
   async function pieceWiseDecrypt() {
-    const dec = new ubiq.Decryption(credentials);
+    const dec = await (new ubiq.CryptographyBuilder()).withCredentialsObject(credentials).withConfigurationObject(configuration).buildDecryptionAsync();
     const begin_res = dec.begin();
     const ws = fs.createWriteStream(outfile, { encoding: 'binary' });
     ws.write(begin_res);
@@ -211,7 +208,7 @@ async function main() {
     }).on('close', async () => {
       ws.write(dec.end());
       ws.close();
-      dec.close();
+      await dec.close();
     });
     console.log(`done: ${outfile}`);
   }
@@ -233,7 +230,7 @@ async function main() {
       simpleDecrypt();
     }
   } else if (process_mode === 'encrypt') {
-    pieceWiseEncrypt(1);
+    pieceWiseEncrypt();
   } else {
     pieceWiseDecrypt();
   }

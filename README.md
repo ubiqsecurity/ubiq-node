@@ -59,6 +59,10 @@ Require the Ubiq ecurity Client module in your JS class.
 const ubiq = require("ubiq-security");
 ```
 
+### Multithreaded environments
+
+Due to the current implementation of workers and threads in NodeJs, objects are not actually shared.  They are serialized and copied between the main and each worker thread.  This means that anything that happens to a cache or in a network call in one thread will not be reflected in the object in a different thread.  Therefore, in a multithreaded environment, the Ubiq objects will need to be created and destroyed in each thread.
+
 ### Read credentials from a specific file and use a specific profile
 
 ```javascript

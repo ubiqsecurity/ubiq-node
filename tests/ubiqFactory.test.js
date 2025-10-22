@@ -1,12 +1,9 @@
 ﻿const { expect } = require('chai');
 const ubiq = require('../index');
 
-const UBIQ_SERVER = 'UBIQ_SERVER';
-
-
 it('Test_factory_readCredentialsFromFile', async () => {
   let x = ubiq.UbiqFactory.readCredentialsFromFile(null, null)
-  expect(x.host).to.equal(process.env[UBIQ_SERVER]);
+  expect(x.host).to.equal(process.env.UBIQ_SERVER);
 });
 
 it('Test_factory_createCredentials', async () => {
@@ -21,7 +18,7 @@ it('Test_factory_createCredentialsWithIdp', async () => {
 
 it('Test_factory_defaultCredentials', async () => {
   let x = ubiq.UbiqFactory.defaultCredentials()
-  expect(x.host).to.equal(process.env[UBIQ_SERVER]);
+  expect(x.host).to.equal(process.env.UBIQ_SERVER);
 });
 
 it('Test_factory_readConfigurationFromFile', async () => {

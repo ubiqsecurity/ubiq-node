@@ -46,18 +46,24 @@ build:
         - npm test
 
 # Run tests for variables in the ALL or feature environment
-test_feature:
+test_dev:
     extends: .tests
     rules:
-    - if: $CI_COMMIT_REF_NAME != $CI_DEFAULT_BRANCH
-    environment: feature
+    - if: $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH && $CI_PIPELINE_SOURCE != 'merge_request_event'
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $CI_PIPELINE_SOURCE == 'schedule'
+    environment: ubs-usw2-dvc
 
 # Run tests for variables in the ALL or master environment
-test_master:
+test_prod:
     extends: .tests
     rules:
     - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
-    environment: master
+      when: on_success
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+      when: on_success
+    - if: $CI_PIPELINE_SOURCE == 'schedule'
+      when: on_success
+    environment: ubs-usw2-prcv3
 
 sast:
     variables:

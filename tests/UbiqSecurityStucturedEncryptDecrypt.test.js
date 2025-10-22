@@ -45,7 +45,7 @@ async function testSimpleStructuredRt({
   let foundCt = false;
 
   for (let i = 0; i < searchText.length; i++) {
-    foundCt = foundCt || (options.CipherText == searchText[i]);
+    foundCt = foundCt || (cipherText == searchText[i]);
 
     const plainText = await ubiq.fpeEncryptDecrypt.Decrypt({
       ubiqCredentials,
@@ -97,7 +97,7 @@ async function testBatchStructuredRt({
   let foundCt = false;
 
   for (let i = 0; i < searchText.length; i++) {
-    foundCt = foundCt || (options.CipherText == searchText[i]);
+    foundCt = foundCt || (cipherText == searchText[i]);
 
     const plainText = await ubiqEncryptDecrypt.DecryptAsync(
       options.FfsName,
@@ -119,8 +119,7 @@ it('ALPHANUM_SSN_Success', async () => {
 
   const options = {
     FfsName: 'ALPHANUM_SSN',
-    EncryptText: ';0123456-789ABCDEF|',
-    CipherText: ';!!!E7`+-ai1ykOp8r|',
+    EncryptText: ';0123456-789ABCDEF|'
   };
 
   await testStructuredRt({ options, tweakFF1 });
@@ -131,8 +130,7 @@ it('BIRTH_DATE_Success', async () => {
 
   const options = {
     FfsName: 'BIRTH_DATE',
-    EncryptText: ';01\\02-1960|',
-    CipherText: ';!!\\!!-oKzi|',
+    EncryptText: ';01\\02-1960|'
   };
   await testStructuredRt({ options, tweakFF1 });
 });
@@ -142,8 +140,7 @@ it('SSN_Success', async () => {
 
   const options = {
     FfsName: 'SSN',
-    EncryptText: '-0-1-2-3-4-5-6-7-8-9-',
-    CipherText: '-0-0-0-0-1-I-L-8-j-D-',
+    EncryptText: '-0-1-2-3-4-5-6-7-8-9-'
   };
   await testStructuredRt({ options, tweakFF1 });
 });
@@ -153,8 +150,7 @@ it('UTF8_STRING_COMPLEX_Success', async () => {
 
   const options = {
     FfsName: 'UTF8_STRING_COMPLEX',
-    EncryptText: 'ÑÒÓķĸĹϺϻϼϽϾÔÕϿは世界abcdefghijklmnopqrstuvwxyzこんにちÊʑʒʓËÌÍÎÏðñòóôĵĶʔʕ',
-    CipherText: 'ÑÒÓにΪΪΪΪΪΪ3ÔÕoeϽΫAÛMĸOZphßÚdyÌô0ÝϼPtĸTtSKにVÊϾέÛはʑʒʓÏRϼĶufÝK3MXaʔʕ',
+    EncryptText: 'ÑÒÓķĸĹϺϻϼϽϾÔÕϿは世界abcdefghijklmnopqrstuvwxyzこんにちÊʑʒʓËÌÍÎÏðñòóôĵĶʔʕ'
   };
   await testStructuredRt({ options, tweakFF1 });
 });
@@ -164,8 +160,7 @@ it('UTF8_STRING_COMPLEX_2_Success', async () => {
 
   const options = {
     FfsName: 'UTF8_STRING_COMPLEX',
-    EncryptText: 'ķĸĹϺϻϼϽϾϿは世界abcdefghijklmnopqrstuvwxyzこんにちÊËÌÍÎÏðñòóôĵĶ',
-    CipherText: 'にΪΪΪΪΪΪ3oeϽΫAÛMĸOZphßÚdyÌô0ÝϼPtĸTtSKにVÊϾέÛはÏRϼĶufÝK3MXa',
+    EncryptText: 'ķĸĹϺϻϼϽϾϿは世界abcdefghijklmnopqrstuvwxyzこんにちÊËÌÍÎÏðñòóôĵĶ'
   };
   await testStructuredRt({ options, tweakFF1 });
 });

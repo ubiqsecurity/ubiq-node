@@ -104,6 +104,9 @@ Encrypt or decrypt data using the Ubiq structured encryption
                              (default: ~/.ubiq/configuration)
   -s                       Perform the EncryptForSearch.  
                            Only compatibile with the -e option
+  -N, --number             Treat input as a number (default: false)
+  -T, --datetime           Treat input as a datetime (default: false)
+  -D, --date               Treat input as a date (default: false)
 ```
 #### Demonstrate encrypting a social security number and returning a cipher text
 

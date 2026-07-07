@@ -41,6 +41,8 @@ build:
 .tests:
     image: node:20
     stage: test
+    variables:
+        GIT_SUBMODULE_STRATEGY: recursive
     script:
         - npm install
         - npm test

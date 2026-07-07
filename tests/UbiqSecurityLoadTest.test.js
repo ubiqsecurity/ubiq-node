@@ -33,6 +33,11 @@ const { expect } = require('chai');
 const ubiq = require('../index');
 const { Command } = require('commander');
 const pkginfo = require('../package.json');
+const { UbiqWebServices } = require('../lib/ubiqWebServices');
+const { Configuration } = require('../lib/configuration');
+const { Credentials } = require('../lib/credentials');
+const { DatasetRecord } = require('../lib/dataset-record');
+const { DatasetCache } = require('../lib/dataset-cache');
 
 const program = new Command();
 const fs = require('fs');
@@ -46,12 +51,64 @@ const UBIQ_MAX_TOTAL_DECRYPT = 'UBIQ_MAX_TOTAL_DECRYPT';
 
 function getEnv(value, key) {
   const ret = (value) || process.env[key];
-
-  // console.log('value:' + value);
-  // console.log('key:' + key);
-  // console.log('ret:' + ret);
-
   return ret;
+}
+
+async function encrypt(encObject, dataset, plaintext) {
+  const tweak = [];
+  // console.log(`encrypt: ${x}`)
+  switch (dataset.dataType) {
+    case "integer":
+      // console.log(`encrypt: I ${typeof plaintext}`)
+      return await encObject.EncryptNumberAsync(dataset.name, plaintext, tweak);
+      break;
+    case "date":
+      return await encObject.EncryptDateAsync(dataset.name, plaintext, tweak);
+      break;
+    case "datetime":
+      return await encObject.EncryptDateTimeAsync(dataset.name, plaintext, tweak);
+      break;
+    default:
+      return await encObject.EncryptAsync(dataset.name, plaintext, tweak);
+
+  }
+}
+
+async function decrypt(decObject, dataset, ciphertext) {
+  const tweak = [];
+  switch (dataset.dataType) {
+    case "integer":
+      // console.log(`decrypt: I ${typeof ciphertext}`)
+      return await decObject.DecryptNumberAsync(dataset.name, ciphertext, tweak);
+      break;
+    case "date":
+      return await decObject.DecryptDateAsync(dataset.name, ciphertext, tweak);
+      break;
+    case "datetime":
+      return await decObject.DecryptDateTimeAsync(dataset.name, ciphertext, tweak);
+      break;
+    default:
+      return await decObject.DecryptAsync(dataset.name, ciphertext, tweak);
+
+  }
+}
+
+const files = new Array();
+
+function collectFiles(inputPath) {
+  const stats = fs.lstatSync(inputPath);
+  if (stats.isFile()) {
+    console.log(`Is a File: ${inputPath}`);
+    files.push(inputPath);
+  } else if (stats.isDirectory()) {
+    console.log(`Is a directory: ${inputPath}`);
+    fs.readdirSync(inputPath).forEach((file) => {
+      const fullPath = path.resolve(inputPath, file);
+      collectFiles(fullPath); // recurse
+    });
+  } else {
+    console.log(`Unknown: ${inputPath}`);
+  }
 }
 
 async function loadTest() {
@@ -151,11 +208,16 @@ Encrypt or decrypt data using the Ubiq structured encrypt
 
   try {
     credentials = null;
+    configuration = null
 
     if (options.credentials) {
       credentials = ubiq.UbiqFactory.readCredentialsFromFile(options.credentials, options.profile);
     } else {
       credentials = ubiq.UbiqFactory.createCredentials(null, null, null, null);
+    }
+
+    if (!configuration) {
+      configuration = new Configuration();
     }
 
     // Test to see if the credentials have been found and loaded properly
@@ -167,23 +229,11 @@ Encrypt or decrypt data using the Ubiq structured encrypt
       return true;
     }
 
-    const files = new Array();
+    collectFiles(options.input)
 
-    stats = fs.lstatSync(options.input);
-    if (stats.isFile()) {
-      console.log(`Is a File: ${options.input}`);
-      files.push(options.input);
-    } else if (stats.isDirectory()) {
-      console.log(`Is a directory: ${options.input}`);
-      fs.readdirSync(options.input).forEach((file) => {
-        console.log(`File: ${file}`);
-        files.push(path.resolve(options.input, file));
-      });
-    } else {
-      console.log(`Unknown: ${options.input}`);
-    }
+    datasetCache = new DatasetCache(credentials, new UbiqWebServices(credentials), configuration);
 
-    const ubiqEncryptDecrypt = await (new ubiq.CryptographyBuilder()).withCredentialsObject(ubiqCredentials).buildStructuredAsync();
+    const ubiqEncryptDecrypt = await (new ubiq.CryptographyBuilder()).withCredentialsObject(credentials).buildStructuredAsync();
     const tweakFF1 = [];
 
     const perf_times = new Map();
@@ -205,18 +255,12 @@ Encrypt or decrypt data using the Ubiq structured encrypt
           console.log(`Processing record: ${l}`);
         }
 
+        const dataset = await datasetCache.GetAsync(obj.dataset);
+
         // First call seed
         if (!perf_times.has(obj.dataset)) {
-          let tmp = await ubiqEncryptDecrypt.EncryptAsync(
-            obj.dataset,
-            obj.plaintext,
-            tweakFF1,
-          );
-          tmp = await ubiqEncryptDecrypt.DecryptAsync(
-            obj.dataset,
-            obj.ciphertext,
-            tweakFF1,
-          );
+          let tmp = await encrypt(ubiqEncryptDecrypt, dataset, obj.plaintext)
+          tmp = await decrypt(ubiqEncryptDecrypt, dataset, obj.ciphertext)
 
           perf_times.set(obj.dataset, {
             encrypt_duration: 0,
@@ -226,23 +270,44 @@ Encrypt or decrypt data using the Ubiq structured encrypt
         }
 
         const s = process.hrtime();
-
-        const ct = await ubiqEncryptDecrypt.EncryptAsync(
-          obj.dataset,
-          obj.plaintext,
-          tweakFF1,
-        );
-
+        const ct = await encrypt(ubiqEncryptDecrypt, dataset, obj.plaintext)
         const e = process.hrtime();
-        const pt = await ubiqEncryptDecrypt.DecryptAsync(
-          obj.dataset,
-          obj.ciphertext,
-          tweakFF1,
-        );
+        const pt = await decrypt(ubiqEncryptDecrypt, dataset, obj.ciphertext)
 
         const d = process.hrtime();
 
-        if (ct != obj.ciphertext || pt != obj.plaintext) {
+        match = false
+        switch (dataset.dataType) {
+          case "integer":
+            match = (BigInt(obj.plaintext) == pt && BigInt(obj.ciphertext) == ct)
+            if (!match) {
+              console.log(`dataset ${dataset.name} ${dataset.dataType} `)
+              console.log(`\tI plaintext '${BigInt(obj.plaintext)}'(${pt})`)
+              console.log(`\tI ciphertext '${BigInt(obj.ciphertext)}'(${ct})`)
+            }
+            break;
+          case "date":
+          case "datetime":
+            match = (new Date(obj.plaintext).getTime() == (new Date(pt)).getTime()) && (new Date(obj.ciphertext).getTime() == (new Date(ct)).getTime())
+            if (!match) {
+              console.log(`dataset ${dataset.name} ${dataset.dataType} `)
+
+              console.log(`\t PT ${(new Date(obj.plaintext)).getTime()} ${(new Date(pt)).getTime()}`)
+              console.log(`\t CT ${(new Date(obj.ciphertext)).getTime()} ${(new Date(ct)).getTime()}`)
+            }
+            break;
+          default:
+            match = (obj.plaintext == pt && obj.ciphertext == ct)
+            if (!match) {
+              console.log(`dataset ${dataset.name} ${dataset.dataType} `)
+              console.log(`\tplaintext '${obj.plaintext} (${pt})`)
+              console.log(`\tciphertext '${obj.ciphertext} (${ct})`)
+            }
+            break
+
+        }
+
+        if (!match) {
           errors.push({ dataset: obj.dataset, plaintext: obj.plaintext });
         }
 

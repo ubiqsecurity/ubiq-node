@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.4.0 - 2026-06-01
+* Updated to include capabilities for new dataset types including integers, dates, datetime
+
 ## 2.3.0 - 2025-08-20
 * Updated structured encryption to match algorithms in Second Public Draft - https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-38Gr1.2pd.pdf
 * Updated to node 20 in order to update packages to resolve security vulnerabilities

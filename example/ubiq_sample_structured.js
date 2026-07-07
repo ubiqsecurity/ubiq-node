@@ -79,7 +79,10 @@ Encrypt or decrypt data using the Ubiq structured datasets
     .option('-c, --credentials <CREDENTIALS>', 'Set the file name with the API credentials (default: ~/.ubiq/credentials)', null)
     .option('-P, --profile <PROFILE>', 'Identify the profile within the credentials file (default: default', null)
     .option('-g, --config <CONFIGURATION>', 'Set the file name for loading system configuration parameters (default: ~/.ubiq/configuration)', null)
-    .option('-s, --search', 'Perform the EncryptForSearch', false);
+    .option('-s, --search', 'Perform the EncryptForSearch', false)
+    .option('-N, --number', 'Treat input as a number', false)
+    .option('-T, --datetime', 'Treat input as a datetime', false)
+    .option('-D, --date', 'Treat input as a date', false);
 
   try {
     program.parse(process.argv);
@@ -125,31 +128,85 @@ Encrypt or decrypt data using the Ubiq structured datasets
       const ubiqEncryptDecrypt = await (new ubiq.CryptographyBuilder()).withCredentialsObject(credentials).withConfigurationObject(configuration).buildStructuredAsync();
 
       if (options.search) {
-        const cipherText = await ubiqEncryptDecrypt.EncryptForSearchAsync(options.dataset,
-          options.encrypt,
-          tweakFF1);
+        let cipherText = []
+        if (options.number) {
+          cipherText = await ubiqEncryptDecrypt.EncryptNumberForSearchAsync(options.dataset,
+            options.encrypt,
+            tweakFF1);
+        } else if (options.date) {
+          cipherText = await ubiqEncryptDecrypt.EncryptDateForSearchAsync(options.dataset,
+            options.encrypt,
+            tweakFF1);
+        } else if (options.datetime) {
+          cipherText = await ubiqEncryptDecrypt.EncryptDateTimeForSearchAsync(options.dataset,
+            options.encrypt,
+            tweakFF1);
+        } else {
+          cipherText = await ubiqEncryptDecrypt.EncryptForSearchAsync(options.dataset,
+            options.encrypt,
+            tweakFF1);
+        }
         console.log('EncryptForSearch results:')
-
         for (const c of cipherText) {
           console.log("\t" + c)
         }
       } else {
-        const cipherText = await ubiqEncryptDecrypt.EncryptAsync(
-          options.dataset,
-          options.encrypt,
-          tweakFF1,
-        );
+        cipherText = "";
+        if (options.number) {
+          cipherText = await ubiqEncryptDecrypt.EncryptNumberAsync(
+            options.dataset,
+            options.encrypt,
+            tweakFF1)
+        } else if (options.date) {
+          cipherText = await ubiqEncryptDecrypt.EncryptDateAsync(
+            options.dataset,
+            options.encrypt,
+            tweakFF1)
+        } else if (options.datetime) {
+          cipherText = await ubiqEncryptDecrypt.EncryptDateTimeAsync(
+            options.dataset,
+            options.encrypt,
+            tweakFF1)
+        } else {
+          cipherText = await ubiqEncryptDecrypt.EncryptAsync(
+            options.dataset,
+            options.encrypt,
+            tweakFF1,
+          );
+        }
         console.log(cipherText);
       }
       await ubiqEncryptDecrypt.close();
     }
+
     if (options.decrypt) {
       const ubiqEncryptDecrypt = await (new ubiq.CryptographyBuilder()).withCredentialsObject(credentials).withConfigurationObject(configuration).buildStructuredAsync();
-      const plainText = await ubiqEncryptDecrypt.DecryptAsync(
-        options.dataset,
-        options.decrypt,
-        tweakFF1,
-      );
+      let plainText = ""
+      if (options.number) {
+        plainText = await ubiqEncryptDecrypt.DecryptNumberAsync(
+          options.dataset,
+          options.decrypt,
+          tweakFF1,
+        );
+      } else if (options.date) {
+        plainText = await ubiqEncryptDecrypt.DecryptDateAsync(
+          options.dataset,
+          options.decrypt,
+          tweakFF1,
+        );
+      } else if (options.datetime) {
+        plainText = await ubiqEncryptDecrypt.DecryptDateTimeAsync(
+          options.dataset,
+          options.decrypt,
+          tweakFF1,
+        );
+      } else {
+        plainText = await ubiqEncryptDecrypt.DecryptAsync(
+          options.dataset,
+          options.decrypt,
+          tweakFF1,
+        );
+      }
       console.log(plainText);
       await ubiqEncryptDecrypt.close();
     }

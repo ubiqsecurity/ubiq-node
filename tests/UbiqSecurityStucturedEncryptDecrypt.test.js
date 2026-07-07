@@ -4,60 +4,18 @@ const { Console } = require('console');
 const ubiq = require('../index');
 const { TimeGranularity } = require('../lib/configuration');
 
+const verbose = false
+
 async function testStructuredRt({
   options, tweakFF1 = [], ubiqCredentials = null, cipherText = null, checkResult = true,
 }) {
   await testBatchStructuredRt(arguments[0]);
-  await testSimpleStructuredRt(arguments[0]);
 }
 
-async function testSimpleStructuredRt({
+async function testStructuredRtSearchFirst({
   options, tweakFF1 = [], ubiqCredentials = null, cipherText = null, checkResult = true,
 }) {
-  if (!ubiqCredentials) {
-    ubiqCredentials = ubiq.UbiqFactory.createCredentials(null, null, null, null);
-  }
-
-  if (!cipherText) {
-    cipherText = await ubiq.fpeEncryptDecrypt.Encrypt({
-      ubiqCredentials,
-      ffsname: options.FfsName,
-      data: options.EncryptText,
-    });
-  }
-
-  const plainText = await ubiq.fpeEncryptDecrypt.Decrypt({
-    ubiqCredentials,
-    ffsname: options.FfsName,
-    data: cipherText,
-  });
-
-  if (checkResult) {
-    expect(plainText).to.equal(options.EncryptText);
-  }
-
-  const searchText = await ubiq.fpeEncryptDecrypt.EncryptForSearch({
-    ubiqCredentials,
-    ffsname: options.FfsName,
-    data: options.EncryptText,
-  });
-
-  let foundCt = false;
-
-  for (let i = 0; i < searchText.length; i++) {
-    foundCt = foundCt || (cipherText == searchText[i]);
-
-    const plainText = await ubiq.fpeEncryptDecrypt.Decrypt({
-      ubiqCredentials,
-      ffsname: options.FfsName,
-      data: searchText[i],
-    });
-    expect(plainText).to.equal(options.EncryptText);
-  }
-
-  expect(foundCt).to.equal(true);
-
-  return { cipherText, plainText };
+  await testBatchStructuredRtSearchFirst(arguments[0]);
 }
 
 async function testBatchStructuredRt({
@@ -75,6 +33,7 @@ async function testBatchStructuredRt({
       options.EncryptText,
       tweakFF1,
     );
+    if (verbose) { console.log(`cipherText: ${cipherText}`) }
   }
 
   const plainText = await ubiqEncryptDecrypt.DecryptAsync(
@@ -82,6 +41,7 @@ async function testBatchStructuredRt({
     cipherText,
     tweakFF1,
   );
+  if (verbose) { console.log(`plainText: ${plainText}`) }
 
   if (checkResult) {
     expect(plainText).to.equal(options.EncryptText);
@@ -108,7 +68,61 @@ async function testBatchStructuredRt({
   }
 
   expect(foundCt).to.equal(true);
+  await ubiqEncryptDecrypt.close();
 
+  return { cipherText, plainText };
+}
+
+async function testBatchStructuredRtSearchFirst({
+  options, tweakFF1 = [], ubiqCredentials = null, cipherText = null, checkResult = true,
+}) {
+  if (!ubiqCredentials) {
+    ubiqCredentials = ubiq.UbiqFactory.createCredentials(null, null, null, null);
+  }
+
+  const ubiqEncryptDecrypt = await (new ubiq.CryptographyBuilder()).withCredentialsObject(ubiqCredentials).buildStructuredAsync();
+
+  const searchText = await ubiqEncryptDecrypt.EncryptForSearchAsync(
+    options.FfsName,
+    options.EncryptText,
+    tweakFF1,
+  );
+
+  if (!cipherText) {
+    cipherText = await ubiqEncryptDecrypt.EncryptAsync(
+      options.FfsName,
+      options.EncryptText,
+      tweakFF1,
+    );
+    if (verbose) { console.log(`cipherText: ${cipherText}`) }
+  }
+
+  const plainText = await ubiqEncryptDecrypt.DecryptAsync(
+    options.FfsName,
+    cipherText,
+    tweakFF1,
+  );
+  if (verbose) { console.log(`plainText: ${plainText}`) }
+
+  if (checkResult) {
+    expect(plainText).to.equal(options.EncryptText);
+  }
+
+  // Make sure the supplied cipher text matches at least one of the search cipher texts
+  let foundCt = false;
+
+  for (let i = 0; i < searchText.length; i++) {
+    foundCt = foundCt || (cipherText == searchText[i]);
+
+    const plainText = await ubiqEncryptDecrypt.DecryptAsync(
+      options.FfsName,
+      searchText[i],
+      tweakFF1,
+    );
+    expect(plainText).to.equal(options.EncryptText);
+  }
+
+  expect(foundCt).to.equal(true);
   await ubiqEncryptDecrypt.close();
 
   return { cipherText, plainText };
@@ -119,10 +133,21 @@ it('ALPHANUM_SSN_Success', async () => {
 
   const options = {
     FfsName: 'ALPHANUM_SSN',
-    EncryptText: ';0123456-789ABCDEF|'
+    EncryptText: '0123456789ABCDEF'
   };
 
   await testStructuredRt({ options, tweakFF1 });
+});
+
+it('ALPHANUM_SSN_SF_Success', async () => {
+  const tweakFF1 = [];
+
+  const options = {
+    FfsName: 'ALPHANUM_SSN',
+    EncryptText: '0123456789ABCDEF'
+  };
+
+  await testStructuredRtSearchFirst({ options, tweakFF1 });
 });
 
 it('BIRTH_DATE_Success', async () => {
@@ -781,7 +806,7 @@ it('addUserDefinedMetdata_EmptyJson', async () => {
 
     expect(true).to.equal(true);
   } catch (ex) {
-    console.log(ex);
+    console.error(ex);
     expect(false).to.equal(true);
   } finally {
     await ubiqEncryptDecrypt.close();
@@ -801,7 +826,7 @@ it('addUserDefinedMetdata_ValidJson', async () => {
 
     expect(true).to.equal(true);
   } catch (ex) {
-    console.log(ex);
+    console.error(ex);
     expect(false).to.equal(true);
   } finally {
     await ubiqEncryptDecrypt.close();
@@ -891,5 +916,119 @@ it('Structured_GetCopyOfUsage_Missing', async () => {
 
   expect(str.usage[0] != null).to.equal(true);
 
+  await ubiqEncryptDecrypt.close();
+});
+
+it('Structured_loadCache_empty_string', async function () {
+  this.timeout(600000) // The decrypt of wrapped data key takes a while for all datasets and all keys.  
+  const tweakFF1 = [];
+
+  const ubiqCredentials = ubiq.UbiqFactory.createCredentials(null, null, null, null);
+  const config = ubiq.UbiqFactory.defaultConfiguration()
+  config.event_reporting_wake_interval = 10;
+  config.event_reporting_minimum_count = 10;
+
+  const ubiqEncryptDecrypt = await (new ubiq.CryptographyBuilder()).withCredentialsObject(ubiqCredentials).withConfigurationObject(config).buildStructuredAsync();
+
+  const { dataset, key_count } = await ubiqEncryptDecrypt.loadCache("")
+  expect(key_count > 0).to.equal(true)
+  await ubiqEncryptDecrypt.close();
+});
+
+it('Structured_loadCache_empty_array', async function () {
+  this.timeout(600000) // The decrypt of wrapped data key takes a while for all datasets and all keys.  
+  const tweakFF1 = [];
+
+  const ubiqCredentials = ubiq.UbiqFactory.createCredentials(null, null, null, null);
+  const config = ubiq.UbiqFactory.defaultConfiguration()
+  config.event_reporting_wake_interval = 10;
+  config.event_reporting_minimum_count = 10;
+
+  const ubiqEncryptDecrypt = await (new ubiq.CryptographyBuilder()).withCredentialsObject(ubiqCredentials).withConfigurationObject(config).buildStructuredAsync();
+
+  const { dataset, key_count } = await ubiqEncryptDecrypt.loadCache([])
+  expect(key_count > 0).to.equal(true)
+  await ubiqEncryptDecrypt.close();
+});
+
+it('Structured_loadCache_SSN', async () => {
+  const tweakFF1 = [];
+
+  const ubiqCredentials = ubiq.UbiqFactory.createCredentials(null, null, null, null);
+  const config = ubiq.UbiqFactory.defaultConfiguration()
+  config.event_reporting_wake_interval = 10;
+  config.event_reporting_minimum_count = 10;
+
+  const ubiqEncryptDecrypt = await (new ubiq.CryptographyBuilder()).withCredentialsObject(ubiqCredentials).withConfigurationObject(config).buildStructuredAsync();
+
+  const { dataset, key_count } = await ubiqEncryptDecrypt.loadCache("SSN")
+  expect(key_count > 0).to.equal(true)
+  expect(dataset.name).to.equal('SSN')
+  await ubiqEncryptDecrypt.close();
+});
+
+it('Structured_loadCache_ARRAY_ONE', async () => {
+  const tweakFF1 = [];
+
+  const ubiqCredentials = ubiq.UbiqFactory.createCredentials(null, null, null, null);
+  const config = ubiq.UbiqFactory.defaultConfiguration()
+  config.event_reporting_wake_interval = 10;
+  config.event_reporting_minimum_count = 10;
+
+  const ubiqEncryptDecrypt = await (new ubiq.CryptographyBuilder()).withCredentialsObject(ubiqCredentials).withConfigurationObject(config).buildStructuredAsync();
+
+  let a = ["SSN"]
+  const { dataset, key_count } = await ubiqEncryptDecrypt.loadCache(a)
+  expect(key_count > 0).to.equal(true)
+  expect(dataset.name).to.equal('SSN')
+  await ubiqEncryptDecrypt.close();
+});
+
+it('Structured_loadCache_ARRAY_TWO', async () => {
+  const tweakFF1 = [];
+
+  const ubiqCredentials = ubiq.UbiqFactory.createCredentials(null, null, null, null);
+  const config = ubiq.UbiqFactory.defaultConfiguration()
+  config.event_reporting_wake_interval = 10;
+  config.event_reporting_minimum_count = 10;
+
+  const ubiqEncryptDecrypt = await (new ubiq.CryptographyBuilder()).withCredentialsObject(ubiqCredentials).withConfigurationObject(config).buildStructuredAsync();
+
+  let a = ["SSN", "ALPHANUM_SSN"]
+  const { dataset, key_count } = await ubiqEncryptDecrypt.loadCache(a)
+  expect(key_count > 0).to.equal(true)
+  found = false
+  found = found || dataset.name == 'SSN'
+  found = found || dataset.name == 'ALPHANUM_SSN'
+  expect(true).to.equal(true)
+  await ubiqEncryptDecrypt.close();
+});
+
+it('Structured_loadCache_ARRAY_TWO_X_TWO', async () => {
+  const tweakFF1 = [];
+
+  const ubiqCredentials = ubiq.UbiqFactory.createCredentials(null, null, null, null);
+  const config = ubiq.UbiqFactory.defaultConfiguration()
+  config.event_reporting_wake_interval = 10;
+  config.event_reporting_minimum_count = 10;
+
+  const ubiqEncryptDecrypt = await (new ubiq.CryptographyBuilder()).withCredentialsObject(ubiqCredentials).withConfigurationObject(config).buildStructuredAsync();
+
+  let a = ["SSN", "ALPHANUM_SSN"]
+  const { dataset, key_count } = await ubiqEncryptDecrypt.loadCache(a)
+  expect(key_count > 0).to.equal(true)
+  found = false
+  found = found || dataset.name == 'SSN'
+  found = found || dataset.name == 'ALPHANUM_SSN'
+  expect(true).to.equal(true)
+  {
+    const { dataset, key_count } = await ubiqEncryptDecrypt.loadCache(a)
+    expect(key_count > 0).to.equal(true)
+    found = false
+    found = found || dataset.name == 'SSN'
+    found = found || dataset.name == 'ALPHANUM_SSN'
+    expect(true).to.equal(true)
+
+  }
   await ubiqEncryptDecrypt.close();
 });

@@ -34,6 +34,7 @@ To build and install directly from a clone of the gitlab repository source:
 ```sh
 git clone https://gitlab.com/ubiqsecurity/ubiq-node.git
 cd ubiq-node
+git submodule update --init --recursive
 npm install
 ```
 
@@ -321,6 +322,157 @@ console.log("DECRYPTED decrypted_text= " + decrypted_text + "\n");
 ubiqEncryptDecrypt.close();
 ```
 
+
+### Encrypt For Search
+
+The same plaintext data will result in different cipher text when encrypted using different data keys. The Encrypt For Search function will encrypt the same plain text for a given dataset using all previously used data keys. This will provide a collection of cipher text values that can be used when searching for existing records where the data was encrypted and the specific version of the data key is not known in advance.
+
+```javascript
+const credentials = ubiq.UbiqFactory.readCredentialsFromFile("./credentials", "default");
+const configuration = ubiq.UbiqFactory.readConfigurationFromFile("./configuration");
+
+const dataset_name = "SSN";
+const plainText = "123-45-6789";
+
+const ubiqEncryptDecrypt =  await (new ubiq.CryptographyBuilder()).withCredentialsObject(credentials).withConfigurationObject(configuration).buildStructuredAsync();
+
+const searchText = await ubiqEncryptDecrypt.EncryptForSearchAsync(
+  dataset_name,
+  plainText,
+  []
+);
+```
+
+### Encrypt / Decrypt / EncrypForSearch for Numbers
+This requires pre-configuration of an Integer dataset with the corresponding length, either 32 or 64 bit.  Javascript does not distinguish between 32 or 64 bit numbers for for compatibility purposes with other languages, make sure to use the appropriate dataset type.
+
+```javascript
+const tweakFF1 = [];
+
+const Int32DatasetName = "int32";
+const Int64DatasetName = "int64";
+
+const credentials = ubiq.UbiqFactory.readCredentialsFromFile("./credentials", "default");
+const configuration = ubiq.UbiqFactory.defaultConfiguration();
+
+const ubiqEncryptDecrypt = await (new ubiq.CryptographyBuilder()).withCredentialsObject(credentials).withConfigurationObject(configuration).buildStructuredAsync();
+
+  // 32 Bit datasets can support unencrypted values
+  // between -99,999,999 and 99,999,999
+  // Encrypted result will be between -1,470,375,551 and 1,470,375,551
+  const intVal = 9 
+  const int32 = await ubiqEncryptDecrypt.EncryptNumberAsync(Int32DatasetName, 9, tweakFF1);
+  const result32 = await ubiqEncryptDecrypt.DecryptNumberAsync(Int32DatasetName, int32, tweakFF1);
+  const search32 = await ubiqEncryptDecrypt.encryptNumberForSearchAsync(int32DatasetName, intVal, tweakFF1);
+
+  // 64 Bit datasets can support unencrypted values
+  // between -9,999,999,999,999,999 and 9,999,999,999,999,999
+  // Unencrypted value can be value between -9,999,999,999,999,999 and 9,999,999,999,999,999
+  // Encrypted result will be between -2,032,385,242,251,560,000 and 2,032,385,242,251,560,000
+  const intVal = 9 
+  const int64 = await ubiqEncryptDecrypt.EncryptNumberAsync(Int64DatasetName, 9, tweakFF1);
+  const result64 = await ubiqEncryptDecrypt.DecryptNumberAsync(Int64DatasetName, int32, tweakFF1);
+  const search64 = await ubiqEncryptDecrypt.encryptNumberForSearchAsync(Int64DatasetName, intVal, tweakFF1);
+```
+
+### Encrypt / Decrypt / EncrypForSearch for DateTime
+This requires pre-configuration of a DateTime dataset.
+
+```javascript
+const tweakFF1 = [];
+
+const datasetName = "datetime";
+
+const credentials = ubiq.UbiqFactory.readCredentialsFromFile("./credentials", "default");
+const configuration = ubiq.UbiqFactory.defaultConfiguration();
+
+const ubiqEncryptDecrypt = await (new ubiq.CryptographyBuilder()).withCredentialsObject(credentials).withConfigurationObject(configuration).buildStructuredAsync();
+
+  // Datetime values can support unencrypted values between 
+  // 1653-02-10 06:13:21 AM UTC and 11/20/2286 17:46:39 UTC
+  // Encrypted result will be between 1/16/0018 11:01:21 and 12/16/3921 12:58:39
+  const plainDateTime = new Date(new Date().setUTCMilliseconds(0))
+  const ct = await ubiqEncryptDecrypt.EncryptDateTimeAsync(datasetName, plainDateTime, tweakFF1);
+  const result = await ubiqEncryptDecrypt.DecryptDateTimeAsync(datasetName, ct, tweakFF1);
+  const search = await ubiqEncryptDecrypt.encryptDateTimeForSearchAsync(datasetName, plainDateTime, tweakFF1);
+```
+
+### Encrypt / Decrypt / EncrypForSearch for Date
+This requires pre-configuration of a Date dataset.
+
+```javascript
+const tweakFF1 = [];
+
+const datasetName = "date";
+
+const credentials = ubiq.UbiqFactory.readCredentialsFromFile("./credentials", "default");
+const configuration = ubiq.UbiqFactory.defaultConfiguration();
+
+const ubiqEncryptDecrypt = await (new ubiq.CryptographyBuilder()).withCredentialsObject(credentials).withConfigurationObject(configuration).buildStructuredAsync();
+
+  // Datetime values can support unencrypted values between 
+  // 1653-02-10 06:13:21 AM UTC and 11/20/2286 17:46:39 UTC
+  // Encrypted result will be between 1/16/0018 11:01:21 and 12/16/3921 12:58:39
+  const plainDateTime = new Date(new Date().setUTCHours(0, 0, 0, 0)),
+  const ct = uawait biqEncryptDecrypt.EncryptDateAsync(datasetName, plainDateTime, tweakFF1);
+  const result = await ubiqEncryptDecrypt.DecryptDateAsync(datasetName, ct, tweakFF1);
+  const search = await ubiqEncryptDecrypt.encryptDateForSearchAsync(datasetName, plainDateTime, tweakFF1);
+```
+
+### Encrypt / Decrypt / EncrypForSearch for Token, either 64 characters or 128 characters
+This requires pre-configuration of a Token dataset of the appropriate length
+
+```javascript
+const tweakFF1 = [];
+
+const token64 = "token64";
+const token128 = "token128";
+
+const credentials = ubiq.UbiqFactory.readCredentialsFromFile("./credentials", "default");
+const configuration = ubiq.UbiqFactory.defaultConfiguration();
+
+const ubiqEncryptDecrypt = await (new ubiq.CryptographyBuilder()).withCredentialsObject(credentials).withConfigurationObject(configuration).buildStructuredAsync();
+
+  // Input can be any string less 40 characters
+  // Output will string 64 characters long and base62 (A-Za-z0-9)
+  const ct = await ubiqEncryptDecrypt.EncryptAsync(token64,"abc", tweakFF1);
+  const result = await ubiqEncryptDecrypt.DecryptAsync(token64, ct, tweakFF1);
+  const search = await ubiqEncryptDecrypt.encryptForSearchAsync(token64, "abc", tweakFF1);
+
+  // Input can be any string less 80 characters
+  // Output will string 128 characters long and base62 (A-Za-z0-9)
+  const ct = await ubiqEncryptDecrypt.EncryptAsync(token128,"abc", tweakFF1);
+  const result = await ubiqEncryptDecrypt.DecryptAsync(token128, ct, tweakFF1);
+  const search = await ubiqEncryptDecrypt.encryptForSearchAsync(token128, "abc", tweakFF1);
+
+```
+
+### Encrypt / Decrypt / EncrypForSearch for Generic String.  Input is optionally base32 or base64 encoded and padded if necessary to reach minimum length.
+This requires pre-configuration of a generic string dataset with the corresponding encoding and padding character
+
+```javascript
+const tweakFF1 = [];
+
+const generic32 = "generic32";
+const generic64 = "generic64";
+
+const credentials = ubiq.UbiqFactory.readCredentialsFromFile("./credentials", "default");
+const configuration = ubiq.UbiqFactory.defaultConfiguration();
+
+const ubiqEncryptDecrypt = await (new ubiq.CryptographyBuilder()).withCredentialsObject(credentials).withConfigurationObject(configuration).buildStructuredAsync();
+
+  // Input can be any UTF-8 string.  Output string is defined during dataset configuration
+  const ct = await ubiqEncryptDecrypt.EncryptAsync(generic32,"abc", tweakFF1);
+  const result = await ubiqEncryptDecrypt.DecryptAsync(generic32, ct, tweakFF1);
+  const search = await ubiqEncryptDecrypt.encryptForSearchAsync(generic32, "abc", tweakFF1);
+
+  // Input can be any UTF-8 string.  Output string is defined during dataset configuration
+  const ct = await ubiqEncryptDecrypt.EncryptAsync(generic64,"abc", tweakFF1);
+  const result = await ubiqEncryptDecrypt.DecryptAsync(generic64, ct, tweakFF1);
+  const search = await ubiqEncryptDecrypt.encryptForSearchAsync(generic64, "abc", tweakFF1);
+
+```
+
 ### Custom Metadata for Usage Reporting
 
 There are cases where a developer would like to attach metadata to usage information reported by the application. Both the structured and unstructured interfaces allow user_defined metadata to be sent with the usage information reported by the libraries.
@@ -361,25 +513,6 @@ Within an encryption session, either Encrypt or Decrypt, the client library can 
 ...
 ```
 
-### Encrypt For Search
-
-The same plaintext data will result in different cipher text when encrypted using different data keys. The Encrypt For Search function will encrypt the same plain text for a given dataset using all previously used data keys. This will provide a collection of cipher text values that can be used when searching for existing records where the data was encrypted and the specific version of the data key is not known in advance.
-
-```javascript
-const credentials = ubiq.UbiqFactory.readCredentialsFromFile("./credentials", "default");
-const configuration = ubiq.UbiqFactory.readConfigurationFromFile("./configuration");
-
-const dataset_name = "SSN";
-const plainText = "123-45-6789";
-
-const ubiqEncryptDecrypt =  await (new ubiq.CryptographyBuilder()).withCredentialsObject(credentials).withConfigurationObject(configuration).buildStructuredAsync();
-
-const searchText = await ubiqEncryptDecrypt.EncryptForSearchAsync(
-  dataset_name,
-  plainText,
-  []
-);
-```
 
 Additional information on how to use these structured datasets in your own applications is available by contacting
 Ubiq. You may also view some use-cases implemented in the unit test [UbiqSecurityStructuredEncryptDecrypt.test.js] and the sample application [UbiqSampleStructured.js] source code
@@ -409,7 +542,7 @@ A sample configuration file is shown below. The configuration is in JSON format.
   - "DAYS"  
     // values are reported to the day
 
-  #### NodeJs specific parameters
+  #### NodeJs specific parameterss
 
   - <b>lock_sleep_before_retry</b> indicates the number of milliseconds to wait before trying to lock a cache resource if the first attempt fails
   - <b>lock_max_retry_count</b> indicates the number of times to try to lock a cache resource before giving up
